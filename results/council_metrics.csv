@@ -1,0 +1,15 @@
+system,label,precision,recall,f1_score,support
+CyberCouncil (Full Council + Judge),DDoS,1.0,0.6667,0.8,6
+CyberCouncil (Full Council + Judge),Insider Threat,1.0,1.0,1.0,4
+CyberCouncil (Full Council + Judge),Malware,0.7143,0.625,0.6667,8
+CyberCouncil (Full Council + Judge),Man-in-the-Middle,0.75,0.75,0.75,4
+CyberCouncil (Full Council + Judge),Other,0.5,0.6667,0.5714,3
+CyberCouncil (Full Council + Judge),Phishing,0.6,0.9,0.72,10
+CyberCouncil (Full Council + Judge),Ransomware,1.0,0.8,0.8889,5
+CyberCouncil (Full Council + Judge),SQL Injection,1.0,1.0,1.0,5
+CyberCouncil (Full Council + Judge),Zero-Day Exploit,1.0,0.6,0.75,5
+CyberCouncil (Full Council + Judge),macro avg,0.8405,0.7787,0.7941,50
+CyberCouncil (Full Council + Judge),weighted avg,0.8243,0.78,0.7848,50
+
+system,accuracy,precision_w,recall_w,f1_w
+CyberCouncil (Full Council + Judge),0.78,0.8243,0.78,0.7848

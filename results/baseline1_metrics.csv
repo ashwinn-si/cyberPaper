@@ -1,0 +1,15 @@
+system,label,precision,recall,f1_score,support
+Baseline 1 — Single Agent,DDoS,1.0,1.0,1.0,6
+Baseline 1 — Single Agent,Insider Threat,1.0,1.0,1.0,4
+Baseline 1 — Single Agent,Malware,0.8889,1.0,0.9412,8
+Baseline 1 — Single Agent,Man-in-the-Middle,1.0,1.0,1.0,4
+Baseline 1 — Single Agent,Other,0.6667,0.6667,0.6667,3
+Baseline 1 — Single Agent,Phishing,1.0,0.9,0.9474,10
+Baseline 1 — Single Agent,Ransomware,1.0,1.0,1.0,5
+Baseline 1 — Single Agent,SQL Injection,1.0,1.0,1.0,5
+Baseline 1 — Single Agent,Zero-Day Exploit,1.0,1.0,1.0,5
+Baseline 1 — Single Agent,macro avg,0.9506,0.9519,0.9506,50
+Baseline 1 — Single Agent,weighted avg,0.9622,0.96,0.9601,50
+
+system,accuracy,precision_w,recall_w,f1_w
+Baseline 1 — Single Agent,0.96,0.9622,0.96,0.9601

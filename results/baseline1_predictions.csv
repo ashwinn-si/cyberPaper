@@ -1,0 +1,51 @@
+#,true_label,predicted_label,correct
+1,Phishing,Phishing,✓
+2,Phishing,Phishing,✓
+3,Phishing,Phishing,✓
+4,Phishing,Phishing,✓
+5,Phishing,Phishing,✓
+6,Phishing,Phishing,✓
+7,Phishing,Phishing,✓
+8,Phishing,Other,✗
+9,Phishing,Phishing,✓
+10,Phishing,Phishing,✓
+11,Malware,Malware,✓
+12,Malware,Malware,✓
+13,Malware,Malware,✓
+14,Malware,Malware,✓
+15,Malware,Malware,✓
+16,Malware,Malware,✓
+17,Malware,Malware,✓
+18,Malware,Malware,✓
+19,SQL Injection,SQL Injection,✓
+20,SQL Injection,SQL Injection,✓
+21,SQL Injection,SQL Injection,✓
+22,SQL Injection,SQL Injection,✓
+23,SQL Injection,SQL Injection,✓
+24,DDoS,DDoS,✓
+25,DDoS,DDoS,✓
+26,DDoS,DDoS,✓
+27,DDoS,DDoS,✓
+28,DDoS,DDoS,✓
+29,DDoS,DDoS,✓
+30,Ransomware,Ransomware,✓
+31,Ransomware,Ransomware,✓
+32,Ransomware,Ransomware,✓
+33,Ransomware,Ransomware,✓
+34,Ransomware,Ransomware,✓
+35,Zero-Day Exploit,Zero-Day Exploit,✓
+36,Zero-Day Exploit,Zero-Day Exploit,✓
+37,Zero-Day Exploit,Zero-Day Exploit,✓
+38,Zero-Day Exploit,Zero-Day Exploit,✓
+39,Zero-Day Exploit,Zero-Day Exploit,✓
+40,Insider Threat,Insider Threat,✓
+41,Insider Threat,Insider Threat,✓
+42,Insider Threat,Insider Threat,✓
+43,Insider Threat,Insider Threat,✓
+44,Man-in-the-Middle,Man-in-the-Middle,✓
+45,Man-in-the-Middle,Man-in-the-Middle,✓
+46,Man-in-the-Middle,Man-in-the-Middle,✓
+47,Man-in-the-Middle,Man-in-the-Middle,✓
+48,Other,Malware,✗
+49,Other,Other,✓
+50,Other,Other,✓
