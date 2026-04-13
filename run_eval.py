@@ -1,63 +1,73 @@
-"""
-run_eval.py — Full dataset evaluation runner for the CyberCouncil pipeline.
-
-Usage:
-    python3 run_eval.py
-
-Outputs (all in results/):
-    eval_results.json          — machine-readable metrics
-    council_metrics.csv        — per-class precision / recall / F1
-    council_predictions.csv    — per-sample true vs predicted
-    council_confusion.png      — confusion matrix heatmap
-    council_metrics_bar.png    — accuracy / precision / recall / F1 bar chart
-"""
-
 import json
-from evaluation.evaluator import run_evaluation
-from evaluation.reporter  import save_report
+from evaluation.evaluator import run_evaluation, run_baseline2_majority_vote
+from evaluation.richness_evaluator import run_richness_comparison
 
-DATASET_PATH = "data/threats.json"          # 50-sample dataset (run build_dataset.py first)
-OUTPUT_JSON  = "results/eval_results.json"
-
-
-def main():
-    metrics, true_labels, pred_labels = run_evaluation(DATASET_PATH)
-
-    print("\n" + "=" * 50)
-    print("  CYBERCOUNCIL — EVALUATION RESULTS")
-    print("=" * 50)
-    print(f"  Accuracy  : {metrics['accuracy']:.4f}")
-    print(f"  Precision : {metrics['precision']:.4f}")
-    print(f"  Recall    : {metrics['recall']:.4f}")
-    print(f"  F1 Score  : {metrics['f1_score']:.4f}")
-    print("\nClassification Report:")
-    print(metrics["report"])
-
-    # ── JSON (raw) ────────────────────────────────────────────
-    with open(OUTPUT_JSON, "w") as f:
-        json.dump({
-            "system":      "CyberCouncil — Full Council + Judge",
-            "dataset":     DATASET_PATH,
-            "accuracy":    metrics["accuracy"],
-            "precision":   metrics["precision"],
-            "recall":      metrics["recall"],
-            "f1_score":    metrics["f1_score"],
-            "predictions": [
-                {"true": t, "pred": p}
-                for t, p in zip(true_labels, pred_labels)
-            ]
-        }, f, indent=2)
-    print(f"\n  Saved JSON → {OUTPUT_JSON}")
-
-    # ── PNG charts + CSV ──────────────────────────────────────
-    save_report(
-        prefix       = "council",
-        system_label = "CyberCouncil (Full Council + Judge)",
-        metrics      = metrics,
-        true_labels  = true_labels,
-        pred_labels  = pred_labels,
-    )
+DATASET = "data/sample_threats.json"
+RESULTS_DIR = "results/"
 
 
-if __name__ == "__main__":
-    main()
+# ── 1. Label Classification Metrics ───────────────────────────────────────
+print("\n" + "="*60)
+print("PART 1 — LABEL CLASSIFICATION METRICS")
+print("="*60)
+
+print("\n[Running] Full Council + Judge...")
+council_metrics, council_true, council_pred = run_evaluation(DATASET)
+
+print("[Running] Baseline 2 — Council, No Judge...")
+b2_metrics, b2_true, b2_pred = run_baseline2_majority_vote(DATASET)
+
+print("\n--- Classification Results ---")
+header = f"{'System':<35} {'Accuracy':>9} {'Precision':>10} {'Recall':>8} {'F1':>8}"
+print(header)
+print("-" * len(header))
+
+systems = [
+    ("Full Council + Judge",        council_metrics),
+    ("Baseline 2 (Council No Judge)", b2_metrics),
+]
+for name, m in systems:
+    print(f"{name:<35} {m['accuracy']:>9.4f} {m['precision']:>10.4f} {m['recall']:>8.4f} {m['f1_score']:>8.4f}")
+
+print("\nDetailed Classification Report (Full Council):")
+print(council_metrics["report"])
+
+
+# ── 2. Output Richness Metrics ─────────────────────────────────────────────
+print("\n" + "="*60)
+print("PART 2 — OUTPUT RICHNESS METRICS")
+print("="*60)
+
+richness = run_richness_comparison(DATASET)
+
+dims = ["threat_classified", "mitre_mapped", "severity_scored", "response_plan", "contradiction_noted", "total"]
+dim_labels = {
+    "threat_classified":   "Threat classified",
+    "mitre_mapped":        "MITRE ATT&CK mapped",
+    "severity_scored":     "Severity scored",
+    "response_plan":       "Response plan present",
+    "contradiction_noted": "Contradiction addressed",
+    "total":               "TOTAL RICHNESS SCORE",
+}
+
+print(f"\n{'Dimension':<30} {'Single Agent':>14} {'Full Council':>14}")
+print("-" * 60)
+for d in dims:
+    single_val = richness["single_agent"][d]
+    council_val = richness["full_council"][d]
+    marker = " <--" if d == "total" else ""
+    print(f"{dim_labels[d]:<30} {single_val:>14.3f} {council_val:>14.3f}{marker}")
+
+
+# ── 3. Save all results ────────────────────────────────────────────────────
+with open(RESULTS_DIR + "eval_results.json", "w") as f:
+    json.dump({
+        "full_council_metrics":   {k: v for k, v in council_metrics.items() if k != "report"},
+        "baseline2_metrics":      {k: v for k, v in b2_metrics.items() if k != "report"},
+        "richness_comparison":    richness,
+        "council_predictions":    list(zip(council_true, council_pred)),
+        "baseline2_predictions":  list(zip(b2_true, b2_pred)),
+    }, f, indent=2)
+
+print("\n\nAll results saved to results/eval_results.json")
+print("="*60)

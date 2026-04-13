@@ -1,0 +1,17 @@
+next_phase.md
+requirements.txt
+todo.md
+projectIdea.md
+run.md
+results/README.md
+prompts/prompt_b.txt
+prompts/prompt_c.txt
+prompts/prompt_a.txt
+prompts/prompt_judge.txt
+results/baseline1_confusion.png
+results/council_confusion.png
+results/comparison_chart.png
+results/baseline1_metrics_bar.png
+results/baseline2_confusion.png
+results/baseline2_metrics_bar.png
+results/council_metrics_bar.png

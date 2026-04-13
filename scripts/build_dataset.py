@@ -519,17 +519,50 @@ def main():
     )
     args = parser.parse_args()
 
-    os.makedirs(os.path.dirname(args.out) if os.path.dirname(args.out) else ".", exist_ok=True)
+
+    # Optionally limit number of samples via .env (MAX_SAMPLES)
+    from dotenv import load_dotenv
+    load_dotenv()
+
+    import random
+    max_samples = os.getenv("MAX_SAMPLES")
+    if max_samples is not None:
+        try:
+            max_samples = int(max_samples)
+            # Group by category
+            from collections import defaultdict
+            by_cat = defaultdict(list)
+            for item in DATASET:
+                by_cat[item["true_label"]].append(item)
+            # Calculate per-category sample count (as even as possible)
+            categories = list(by_cat.keys())
+            n_cats = len(categories)
+            base = max_samples // n_cats
+            extra = max_samples % n_cats
+            dataset_out = []
+            for i, cat in enumerate(categories):
+                n = base + (1 if i < extra else 0)
+                cat_items = by_cat[cat]
+                if len(cat_items) <= n:
+                    dataset_out.extend(cat_items)
+                else:
+                    dataset_out.extend(random.sample(cat_items, n))
+            random.shuffle(dataset_out)
+        except Exception as e:
+            print(f"Warning: Invalid MAX_SAMPLES value or sampling error: {e}, using all samples.")
+            dataset_out = DATASET
+    else:
+        dataset_out = DATASET
 
     print(f"\n  CyberCouncil Dataset Builder")
     print(f"  ─────────────────────────────")
-    print_summary(DATASET)
+    print_summary(dataset_out)
 
     indent = 2 if args.pretty else None
     with open(args.out, "w") as f:
-        json.dump(DATASET, f, indent=indent)
+        json.dump(dataset_out, f, indent=indent)
 
-    print(f"  Written {len(DATASET)} records to: {args.out}")
+    print(f"  Written {len(dataset_out)} records to: {args.out}")
     print(f"  Use with: python run_eval.py  (update DATASET_PATH if needed)\n")
 
 

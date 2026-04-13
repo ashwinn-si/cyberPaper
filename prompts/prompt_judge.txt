@@ -26,3 +26,20 @@ Rules:
 - If two agents agree and one disagrees, explain whether the dissenter raises a valid point
 - Your output must be usable by a real security team within 5 minutes of reading it
 - Be decisive. Be precise. No filler sentences.
+
+CRITICAL CLASSIFICATION RULE:
+
+Your FINAL CLASSIFICATION must use EXACTLY one of these labels, word-for-word:
+   Phishing
+   Malware
+   SQL Injection
+   DDoS
+   Ransomware
+   Zero-Day Exploit
+   Insider Threat
+   Man-in-the-Middle
+   Other
+
+Rules:
+   you may override Agent A — but you must still use one of the labels above
+The label must appear on its own line under "FINAL CLASSIFICATION:" in your output

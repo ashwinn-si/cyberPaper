@@ -46,10 +46,31 @@ def run_evaluation(dataset_path: str) -> tuple:
     pred_labels: list = []
 
     for item in tqdm(dataset, desc="CyberCouncil Evaluation"):
-        result    = council.analyze(item["threat_description"])
+        result = council.analyze_sync(item["threat_description"])
         predicted = extract_label(result["final_report"])
         true_labels.append(item["true_label"])
         pred_labels.append(predicted)
         print(f"  [{item['id']}] true={item['true_label']!r:20s}  pred={predicted!r}")
+
+    return compute_metrics(true_labels, pred_labels), true_labels, pred_labels
+
+
+def run_baseline2_majority_vote(dataset_path: str):
+    with open(dataset_path) as f:
+        dataset = json.load(f)
+
+    council = CyberCouncil()
+    true_labels, pred_labels = [], []
+
+    for item in tqdm(dataset, desc="Baseline 2 - Council No Judge"):
+        threat = item["threat_description"]
+        agent_outputs = [agent.analyze(threat) for agent in council.agents]
+
+        # Only Agent A (index 0) is a classifier — extract label from classifier only.
+        # Agent B and Agent C do not output threat categories by design.
+        predicted = extract_label(agent_outputs[0]["output"])
+
+        true_labels.append(item["true_label"])
+        pred_labels.append(predicted)
 
     return compute_metrics(true_labels, pred_labels), true_labels, pred_labels

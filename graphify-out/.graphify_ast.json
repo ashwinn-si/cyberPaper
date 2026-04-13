@@ -1,0 +1,3588 @@
+{
+  "nodes": [
+    {
+      "id": "run_eval_py",
+      "label": "run_eval.py",
+      "file_type": "code",
+      "source_file": "run_eval.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_py",
+      "label": "server.py",
+      "file_type": "code",
+      "source_file": "server.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_serve_index",
+      "label": "serve_index()",
+      "file_type": "code",
+      "source_file": "server.py",
+      "source_location": "L50"
+    },
+    {
+      "id": "server_analyze",
+      "label": "analyze()",
+      "file_type": "code",
+      "source_file": "server.py",
+      "source_location": "L59"
+    },
+    {
+      "id": "server_health",
+      "label": "health()",
+      "file_type": "code",
+      "source_file": "server.py",
+      "source_location": "L91"
+    },
+    {
+      "id": "server_config",
+      "label": "config()",
+      "file_type": "code",
+      "source_file": "server.py",
+      "source_location": "L108"
+    },
+    {
+      "id": "server_rationale_1",
+      "label": "server.py \u2014 Flask API server for the CyberCouncil web frontend.  Endpoints:",
+      "file_type": "rationale",
+      "source_file": "server.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "run_baselines_py",
+      "label": "run_baselines.py",
+      "file_type": "code",
+      "source_file": "run_baselines.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "run_baselines_print_metrics",
+      "label": "print_metrics()",
+      "file_type": "code",
+      "source_file": "run_baselines.py",
+      "source_location": "L28"
+    },
+    {
+      "id": "run_baselines_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "run_baselines.py",
+      "source_location": "L36"
+    },
+    {
+      "id": "run_baselines_rationale_1",
+      "label": "run_baselines.py \u2014 Baseline comparison runner for IEEE paper evaluation tables.",
+      "file_type": "rationale",
+      "source_file": "run_baselines.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "main_py",
+      "label": "main.py",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "main_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L21"
+    },
+    {
+      "id": "main_rationale_1",
+      "label": "main.py \u2014 Manual single-threat test runner.  Usage:     python main.py  Edit the",
+      "file_type": "rationale",
+      "source_file": "main.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "frontend_app_js",
+      "label": "app.js",
+      "file_type": "code",
+      "source_file": "frontend/app.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "app",
+      "label": "$()",
+      "file_type": "code",
+      "source_file": "frontend/app.js",
+      "source_location": "L24"
+    },
+    {
+      "id": "app_checkhealth",
+      "label": "checkHealth()",
+      "file_type": "code",
+      "source_file": "frontend/app.js",
+      "source_location": "L50"
+    },
+    {
+      "id": "app_loadconfig",
+      "label": "loadConfig()",
+      "file_type": "code",
+      "source_file": "frontend/app.js",
+      "source_location": "L69"
+    },
+    {
+      "id": "app_bindevents",
+      "label": "bindEvents()",
+      "file_type": "code",
+      "source_file": "frontend/app.js",
+      "source_location": "L91"
+    },
+    {
+      "id": "app_startloadingsteps",
+      "label": "startLoadingSteps()",
+      "file_type": "code",
+      "source_file": "frontend/app.js",
+      "source_location": "L145"
+    },
+    {
+      "id": "app_stoploadingsteps",
+      "label": "stopLoadingSteps()",
+      "file_type": "code",
+      "source_file": "frontend/app.js",
+      "source_location": "L164"
+    },
+    {
+      "id": "app_runanalysis",
+      "label": "runAnalysis()",
+      "file_type": "code",
+      "source_file": "frontend/app.js",
+      "source_location": "L175"
+    },
+    {
+      "id": "app_renderresults",
+      "label": "renderResults()",
+      "file_type": "code",
+      "source_file": "frontend/app.js",
+      "source_location": "L220"
+    },
+    {
+      "id": "app_setagentstate",
+      "label": "setAgentState()",
+      "file_type": "code",
+      "source_file": "frontend/app.js",
+      "source_location": "L249"
+    },
+    {
+      "id": "app_showerror",
+      "label": "showError()",
+      "file_type": "code",
+      "source_file": "frontend/app.js",
+      "source_location": "L260"
+    },
+    {
+      "id": "app_copyjudgereport",
+      "label": "copyJudgeReport()",
+      "file_type": "code",
+      "source_file": "frontend/app.js",
+      "source_location": "L268"
+    },
+    {
+      "id": "council_init_py",
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "council/__init__.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "council_orchestrator_py",
+      "label": "orchestrator.py",
+      "file_type": "code",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "orchestrator_cybercouncil",
+      "label": "CyberCouncil",
+      "file_type": "code",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L7"
+    },
+    {
+      "id": "orchestrator_cybercouncil_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L19"
+    },
+    {
+      "id": "orchestrator_cybercouncil_analyze",
+      "label": ".analyze()",
+      "file_type": "code",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L27"
+    },
+    {
+      "id": "orchestrator_rationale_8",
+      "label": "Orchestrates all council agents and the judge synthesizer.      Workflow:",
+      "file_type": "rationale",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L8"
+    },
+    {
+      "id": "orchestrator_rationale_28",
+      "label": "Run the full council analysis pipeline on a threat description.          Returns",
+      "file_type": "rationale",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L28"
+    },
+    {
+      "id": "config_init_py",
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "config/__init__.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "config_agent_config_py",
+      "label": "agent_config.py",
+      "file_type": "code",
+      "source_file": "config/agent_config.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "providers_base_provider_py",
+      "label": "base_provider.py",
+      "file_type": "code",
+      "source_file": "providers/base_provider.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "base_provider_basellmprovider",
+      "label": "BaseLLMProvider",
+      "file_type": "code",
+      "source_file": "providers/base_provider.py",
+      "source_location": "L4"
+    },
+    {
+      "id": "abc",
+      "label": "ABC",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "base_provider_complete",
+      "label": "complete()",
+      "file_type": "code",
+      "source_file": "providers/base_provider.py",
+      "source_location": "L14"
+    },
+    {
+      "id": "base_provider_provider_name",
+      "label": "provider_name()",
+      "file_type": "code",
+      "source_file": "providers/base_provider.py",
+      "source_location": "L28"
+    },
+    {
+      "id": "base_provider_rationale_5",
+      "label": "Abstract interface for all LLM providers.      Any new provider (Gemini, Mistral",
+      "file_type": "rationale",
+      "source_file": "providers/base_provider.py",
+      "source_location": "L5"
+    },
+    {
+      "id": "base_provider_rationale_15",
+      "label": "Send a prompt to the LLM and return the text response.          Args:",
+      "file_type": "rationale",
+      "source_file": "providers/base_provider.py",
+      "source_location": "L15"
+    },
+    {
+      "id": "base_provider_rationale_29",
+      "label": "Return a human-readable label for logging and judge synthesis traceability.",
+      "file_type": "rationale",
+      "source_file": "providers/base_provider.py",
+      "source_location": "L29"
+    },
+    {
+      "id": "providers_llama_provider_py",
+      "label": "llama_provider.py",
+      "file_type": "code",
+      "source_file": "providers/llama_provider.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "llama_provider_llamaprovider",
+      "label": "LlamaProvider",
+      "file_type": "code",
+      "source_file": "providers/llama_provider.py",
+      "source_location": "L4"
+    },
+    {
+      "id": "basellmprovider",
+      "label": "BaseLLMProvider",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "llama_provider_llamaprovider_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "providers/llama_provider.py",
+      "source_location": "L10"
+    },
+    {
+      "id": "llama_provider_llamaprovider_complete",
+      "label": ".complete()",
+      "file_type": "code",
+      "source_file": "providers/llama_provider.py",
+      "source_location": "L15"
+    },
+    {
+      "id": "llama_provider_llamaprovider_provider_name",
+      "label": ".provider_name()",
+      "file_type": "code",
+      "source_file": "providers/llama_provider.py",
+      "source_location": "L29"
+    },
+    {
+      "id": "llama_provider_rationale_5",
+      "label": "Generic Llama (local) provider for running Llama 3 or similar models via a local",
+      "file_type": "rationale",
+      "source_file": "providers/llama_provider.py",
+      "source_location": "L5"
+    },
+    {
+      "id": "providers_init_py",
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "providers/__init__.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "providers_openai_provider_py",
+      "label": "openai_provider.py",
+      "file_type": "code",
+      "source_file": "providers/openai_provider.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "openai_provider_openaiprovider",
+      "label": "OpenAIProvider",
+      "file_type": "code",
+      "source_file": "providers/openai_provider.py",
+      "source_location": "L9"
+    },
+    {
+      "id": "basellmprovider",
+      "label": "BaseLLMProvider",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "openai_provider_openaiprovider_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "providers/openai_provider.py",
+      "source_location": "L20"
+    },
+    {
+      "id": "openai_provider_openaiprovider_complete",
+      "label": ".complete()",
+      "file_type": "code",
+      "source_file": "providers/openai_provider.py",
+      "source_location": "L25"
+    },
+    {
+      "id": "openai_provider_openaiprovider_provider_name",
+      "label": ".provider_name()",
+      "file_type": "code",
+      "source_file": "providers/openai_provider.py",
+      "source_location": "L36"
+    },
+    {
+      "id": "openai_provider_rationale_10",
+      "label": "OpenAI GPT provider.      Default model : gpt-4o     Override model: OpenAIProvi",
+      "file_type": "rationale",
+      "source_file": "providers/openai_provider.py",
+      "source_location": "L10"
+    },
+    {
+      "id": "providers_claude_provider_py",
+      "label": "claude_provider.py",
+      "file_type": "code",
+      "source_file": "providers/claude_provider.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "claude_provider_claudeprovider",
+      "label": "ClaudeProvider",
+      "file_type": "code",
+      "source_file": "providers/claude_provider.py",
+      "source_location": "L9"
+    },
+    {
+      "id": "basellmprovider",
+      "label": "BaseLLMProvider",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "claude_provider_claudeprovider_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "providers/claude_provider.py",
+      "source_location": "L20"
+    },
+    {
+      "id": "claude_provider_claudeprovider_complete",
+      "label": ".complete()",
+      "file_type": "code",
+      "source_file": "providers/claude_provider.py",
+      "source_location": "L25"
+    },
+    {
+      "id": "claude_provider_claudeprovider_provider_name",
+      "label": ".provider_name()",
+      "file_type": "code",
+      "source_file": "providers/claude_provider.py",
+      "source_location": "L34"
+    },
+    {
+      "id": "claude_provider_rationale_10",
+      "label": "Anthropic Claude provider.      Default model : claude-sonnet-4-20250514     Ove",
+      "file_type": "rationale",
+      "source_file": "providers/claude_provider.py",
+      "source_location": "L10"
+    },
+    {
+      "id": "agents_judge_agent_py",
+      "label": "judge_agent.py",
+      "file_type": "code",
+      "source_file": "agents/judge_agent.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "judge_agent_judgeagent",
+      "label": "JudgeAgent",
+      "file_type": "code",
+      "source_file": "agents/judge_agent.py",
+      "source_location": "L6"
+    },
+    {
+      "id": "baseagent",
+      "label": "BaseAgent",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "judge_agent_judgeagent_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "agents/judge_agent.py",
+      "source_location": "L22"
+    },
+    {
+      "id": "judge_agent_judgeagent_synthesize",
+      "label": ".synthesize()",
+      "file_type": "code",
+      "source_file": "agents/judge_agent.py",
+      "source_location": "L30"
+    },
+    {
+      "id": "judge_agent_rationale_7",
+      "label": "Judge Agent \u2014 CISO Synthesizer.      Reads all three specialist outputs and prod",
+      "file_type": "rationale",
+      "source_file": "agents/judge_agent.py",
+      "source_location": "L7"
+    },
+    {
+      "id": "judge_agent_rationale_31",
+      "label": "Build a combined input from all agent outputs and run the judge.          The ju",
+      "file_type": "rationale",
+      "source_file": "agents/judge_agent.py",
+      "source_location": "L31"
+    },
+    {
+      "id": "agents_base_agent_py",
+      "label": "base_agent.py",
+      "file_type": "code",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "base_agent_baseagent",
+      "label": "BaseAgent",
+      "file_type": "code",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L5"
+    },
+    {
+      "id": "abc",
+      "label": "ABC",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "base_agent_baseagent_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L14"
+    },
+    {
+      "id": "base_agent_baseagent_analyze",
+      "label": ".analyze()",
+      "file_type": "code",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L19"
+    },
+    {
+      "id": "base_agent_load_prompt",
+      "label": "load_prompt()",
+      "file_type": "code",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L39"
+    },
+    {
+      "id": "base_agent_rationale_6",
+      "label": "Abstract base for all council agents.      Agents never import a specific LLM li",
+      "file_type": "rationale",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L6"
+    },
+    {
+      "id": "base_agent_rationale_20",
+      "label": "Run this agent's analysis on a threat description.          Returns a dict with:",
+      "file_type": "rationale",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L20"
+    },
+    {
+      "id": "base_agent_rationale_40",
+      "label": "Load a system prompt from a .txt file \u2014 avoids inline prompt strings.",
+      "file_type": "rationale",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L40"
+    },
+    {
+      "id": "agents_init_py",
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "agents/__init__.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "agents_classifier_agent_py",
+      "label": "classifier_agent.py",
+      "file_type": "code",
+      "source_file": "agents/classifier_agent.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "classifier_agent_classifieragent",
+      "label": "ClassifierAgent",
+      "file_type": "code",
+      "source_file": "agents/classifier_agent.py",
+      "source_location": "L6"
+    },
+    {
+      "id": "baseagent",
+      "label": "BaseAgent",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "classifier_agent_classifieragent_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "agents/classifier_agent.py",
+      "source_location": "L18"
+    },
+    {
+      "id": "classifier_agent_rationale_7",
+      "label": "Agent A \u2014 Threat Classifier.      Identifies the threat type from a description",
+      "file_type": "rationale",
+      "source_file": "agents/classifier_agent.py",
+      "source_location": "L7"
+    },
+    {
+      "id": "agents_vuln_agent_py",
+      "label": "vuln_agent.py",
+      "file_type": "code",
+      "source_file": "agents/vuln_agent.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "vuln_agent_vulnagent",
+      "label": "VulnAgent",
+      "file_type": "code",
+      "source_file": "agents/vuln_agent.py",
+      "source_location": "L6"
+    },
+    {
+      "id": "baseagent",
+      "label": "BaseAgent",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "vuln_agent_vulnagent_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "agents/vuln_agent.py",
+      "source_location": "L20"
+    },
+    {
+      "id": "vuln_agent_rationale_7",
+      "label": "Agent B \u2014 Vulnerability Analyst.      Maps the attack to CVE and MITRE ATT&CK fr",
+      "file_type": "rationale",
+      "source_file": "agents/vuln_agent.py",
+      "source_location": "L7"
+    },
+    {
+      "id": "agents_impact_agent_py",
+      "label": "impact_agent.py",
+      "file_type": "code",
+      "source_file": "agents/impact_agent.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "impact_agent_impactagent",
+      "label": "ImpactAgent",
+      "file_type": "code",
+      "source_file": "agents/impact_agent.py",
+      "source_location": "L6"
+    },
+    {
+      "id": "baseagent",
+      "label": "BaseAgent",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "impact_agent_impactagent_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "agents/impact_agent.py",
+      "source_location": "L19"
+    },
+    {
+      "id": "impact_agent_rationale_7",
+      "label": "Agent C \u2014 Impact Assessor.      Scores real-world damage potential and recommend",
+      "file_type": "rationale",
+      "source_file": "agents/impact_agent.py",
+      "source_location": "L7"
+    },
+    {
+      "id": "scripts_build_dataset_py",
+      "label": "build_dataset.py",
+      "file_type": "code",
+      "source_file": "scripts/build_dataset.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "build_dataset_print_summary",
+      "label": "print_summary()",
+      "file_type": "code",
+      "source_file": "scripts/build_dataset.py",
+      "source_location": "L493"
+    },
+    {
+      "id": "build_dataset_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "scripts/build_dataset.py",
+      "source_location": "L507"
+    },
+    {
+      "id": "build_dataset_rationale_1",
+      "label": "scripts/build_dataset.py \u2014 Curated cybersecurity threat dataset builder.  Produc",
+      "file_type": "rationale",
+      "source_file": "scripts/build_dataset.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "evaluation_richness_evaluator_py",
+      "label": "richness_evaluator.py",
+      "file_type": "code",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "richness_evaluator_has_threat_classification",
+      "label": "has_threat_classification()",
+      "file_type": "code",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L33"
+    },
+    {
+      "id": "richness_evaluator_has_mitre_mapping",
+      "label": "has_mitre_mapping()",
+      "file_type": "code",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L39"
+    },
+    {
+      "id": "richness_evaluator_has_severity_score",
+      "label": "has_severity_score()",
+      "file_type": "code",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L44"
+    },
+    {
+      "id": "richness_evaluator_has_response_plan",
+      "label": "has_response_plan()",
+      "file_type": "code",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L56"
+    },
+    {
+      "id": "richness_evaluator_has_contradiction_note",
+      "label": "has_contradiction_note()",
+      "file_type": "code",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L70"
+    },
+    {
+      "id": "richness_evaluator_score_output",
+      "label": "score_output()",
+      "file_type": "code",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L82"
+    },
+    {
+      "id": "richness_evaluator_evaluate_richness",
+      "label": "evaluate_richness()",
+      "file_type": "code",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L100"
+    },
+    {
+      "id": "richness_evaluator_run_richness_comparison",
+      "label": "run_richness_comparison()",
+      "file_type": "code",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L148"
+    },
+    {
+      "id": "richness_evaluator_rationale_1",
+      "label": "Output Richness Evaluator ------------------------- Scores each system's output",
+      "file_type": "rationale",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "richness_evaluator_rationale_34",
+      "label": "Check if output contains a named threat category.",
+      "file_type": "rationale",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L34"
+    },
+    {
+      "id": "richness_evaluator_rationale_40",
+      "label": "Check if output contains a MITRE ATT&CK technique ID like T1566 or T1190.",
+      "file_type": "rationale",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L40"
+    },
+    {
+      "id": "richness_evaluator_rationale_45",
+      "label": "Check if output contains a numeric severity score.",
+      "file_type": "rationale",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L45"
+    },
+    {
+      "id": "richness_evaluator_rationale_57",
+      "label": "Check if output contains numbered or bulleted defensive actions.",
+      "file_type": "rationale",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L57"
+    },
+    {
+      "id": "richness_evaluator_rationale_71",
+      "label": "Check if output explicitly addresses contradictions between agents.",
+      "file_type": "rationale",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L71"
+    },
+    {
+      "id": "richness_evaluator_rationale_83",
+      "label": "Score a single text output on all 5 richness dimensions.     Returns a dict with",
+      "file_type": "rationale",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L83"
+    },
+    {
+      "id": "richness_evaluator_rationale_101",
+      "label": "Run all threats through the council and score output richness.      Args:",
+      "file_type": "rationale",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L101"
+    },
+    {
+      "id": "richness_evaluator_rationale_149",
+      "label": "Compare full council vs single agent on output richness.     Returns both result",
+      "file_type": "rationale",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L149"
+    },
+    {
+      "id": "evaluation_metrics_py",
+      "label": "metrics.py",
+      "file_type": "code",
+      "source_file": "evaluation/metrics.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "metrics_compute_metrics",
+      "label": "compute_metrics()",
+      "file_type": "code",
+      "source_file": "evaluation/metrics.py",
+      "source_location": "L10"
+    },
+    {
+      "id": "metrics_rationale_11",
+      "label": "Compute standard classification metrics for model evaluation.      All aggregate",
+      "file_type": "rationale",
+      "source_file": "evaluation/metrics.py",
+      "source_location": "L11"
+    },
+    {
+      "id": "evaluation_baselines_py",
+      "label": "baselines.py",
+      "file_type": "code",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "baselines_run_single_agent_baseline",
+      "label": "run_single_agent_baseline()",
+      "file_type": "code",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L39"
+    },
+    {
+      "id": "baselines_run_majority_vote_baseline",
+      "label": "run_majority_vote_baseline()",
+      "file_type": "code",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L69"
+    },
+    {
+      "id": "baselines_rationale_1",
+      "label": "Baseline implementations for ablation and comparison studies.  Baseline 1 \u2014 Sing",
+      "file_type": "rationale",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "baselines_rationale_40",
+      "label": "Baseline 1: Only Agent A's provider with a minimal system prompt.     No special",
+      "file_type": "rationale",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L40"
+    },
+    {
+      "id": "baselines_rationale_70",
+      "label": "Baseline 2: All 3 specialist agents run independently; result is majority vote.",
+      "file_type": "rationale",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L70"
+    },
+    {
+      "id": "evaluation_reporter_py",
+      "label": "reporter.py",
+      "file_type": "code",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "reporter_save_report",
+      "label": "save_report()",
+      "file_type": "code",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L59"
+    },
+    {
+      "id": "reporter_save_metrics_csv",
+      "label": "_save_metrics_csv()",
+      "file_type": "code",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L98"
+    },
+    {
+      "id": "reporter_save_predictions_csv",
+      "label": "_save_predictions_csv()",
+      "file_type": "code",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L130"
+    },
+    {
+      "id": "reporter_save_confusion_matrix",
+      "label": "_save_confusion_matrix()",
+      "file_type": "code",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L142"
+    },
+    {
+      "id": "reporter_save_metrics_bar",
+      "label": "_save_metrics_bar()",
+      "file_type": "code",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L181"
+    },
+    {
+      "id": "reporter_save_comparison_chart",
+      "label": "save_comparison_chart()",
+      "file_type": "code",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L227"
+    },
+    {
+      "id": "reporter_rationale_1",
+      "label": "evaluation/reporter.py \u2014 Results reporter: PNG charts + CSV export.  Called by r",
+      "file_type": "rationale",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "reporter_rationale_67",
+      "label": "Generate and save all report artefacts for one evaluation run.      Args:",
+      "file_type": "rationale",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L67"
+    },
+    {
+      "id": "reporter_rationale_228",
+      "label": "systems = {         \"label\": { \"accuracy\": 0.8, \"precision\": ..., \"recall\": ...,",
+      "file_type": "rationale",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L228"
+    },
+    {
+      "id": "evaluation_init_py",
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "evaluation/__init__.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "evaluation_evaluator_py",
+      "label": "evaluator.py",
+      "file_type": "code",
+      "source_file": "evaluation/evaluator.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "evaluator_extract_label",
+      "label": "extract_label()",
+      "file_type": "code",
+      "source_file": "evaluation/evaluator.py",
+      "source_location": "L15"
+    },
+    {
+      "id": "evaluator_run_evaluation",
+      "label": "run_evaluation()",
+      "file_type": "code",
+      "source_file": "evaluation/evaluator.py",
+      "source_location": "L30"
+    },
+    {
+      "id": "evaluator_run_baseline2_majority_vote",
+      "label": "run_baseline2_majority_vote()",
+      "file_type": "code",
+      "source_file": "evaluation/evaluator.py",
+      "source_location": "L58"
+    },
+    {
+      "id": "evaluator_rationale_16",
+      "label": "Extract the predicted threat category from the judge's final report.      Search",
+      "file_type": "rationale",
+      "source_file": "evaluation/evaluator.py",
+      "source_location": "L16"
+    },
+    {
+      "id": "evaluator_rationale_31",
+      "label": "Run the CyberCouncil pipeline on a labeled dataset and compute metrics.      Arg",
+      "file_type": "rationale",
+      "source_file": "evaluation/evaluator.py",
+      "source_location": "L31"
+    }
+  ],
+  "edges": [
+    {
+      "source": "run_eval_py",
+      "target": "json",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "run_eval.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "run_eval_py",
+      "target": "evaluation_evaluator",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "run_eval.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "run_eval_py",
+      "target": "evaluation_richness_evaluator",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "run_eval.py",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "server_py",
+      "target": "sys",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "server.py",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "server_py",
+      "target": "os",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "server.py",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "server_py",
+      "target": "json",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "server.py",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "server_py",
+      "target": "argparse",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "server.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "server_py",
+      "target": "time",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "server.py",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "server_py",
+      "target": "flask",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "server.py",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "server_py",
+      "target": "flask_cors",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "server.py",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "server_py",
+      "target": "dotenv",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "server.py",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "server_py",
+      "target": "council_orchestrator",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "server.py",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "server_py",
+      "target": "config_agent_config",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "server.py",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "server_py",
+      "target": "server_serve_index",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.py",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "server_py",
+      "target": "server_analyze",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.py",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "server_py",
+      "target": "server_health",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.py",
+      "source_location": "L91",
+      "weight": 1.0
+    },
+    {
+      "source": "server_py",
+      "target": "server_config",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.py",
+      "source_location": "L108",
+      "weight": 1.0
+    },
+    {
+      "source": "server_rationale_1",
+      "target": "server_py",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "server.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "run_baselines_py",
+      "target": "json",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "run_baselines.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "run_baselines_py",
+      "target": "evaluation_baselines",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "run_baselines.py",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "run_baselines_py",
+      "target": "evaluation_reporter",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "run_baselines.py",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "run_baselines_py",
+      "target": "run_baselines_print_metrics",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "run_baselines.py",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "run_baselines_py",
+      "target": "run_baselines_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "run_baselines.py",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "run_baselines_main",
+      "target": "run_baselines_print_metrics",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "run_baselines.py",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "run_baselines_rationale_1",
+      "target": "run_baselines_py",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "run_baselines.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "main_py",
+      "target": "council_orchestrator",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "main_py",
+      "target": "main_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "main_rationale_1",
+      "target": "main_py",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_app_js",
+      "target": "app",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_app_js",
+      "target": "app_checkhealth",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_app_js",
+      "target": "app_loadconfig",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_app_js",
+      "target": "app_bindevents",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L91",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_app_js",
+      "target": "app_startloadingsteps",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L145",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_app_js",
+      "target": "app_stoploadingsteps",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L164",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_app_js",
+      "target": "app_runanalysis",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L175",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_app_js",
+      "target": "app_renderresults",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L220",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_app_js",
+      "target": "app_setagentstate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L249",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_app_js",
+      "target": "app_showerror",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L260",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_app_js",
+      "target": "app_copyjudgereport",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L268",
+      "weight": 1.0
+    },
+    {
+      "source": "app_loadconfig",
+      "target": "app",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "app_startloadingsteps",
+      "target": "app",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L150",
+      "weight": 1.0
+    },
+    {
+      "source": "app_runanalysis",
+      "target": "app_setagentstate",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L181",
+      "weight": 1.0
+    },
+    {
+      "source": "app_runanalysis",
+      "target": "app_startloadingsteps",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L191",
+      "weight": 1.0
+    },
+    {
+      "source": "app_runanalysis",
+      "target": "app_stoploadingsteps",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L206",
+      "weight": 1.0
+    },
+    {
+      "source": "app_runanalysis",
+      "target": "app_renderresults",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L207",
+      "weight": 1.0
+    },
+    {
+      "source": "app_runanalysis",
+      "target": "app_showerror",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L210",
+      "weight": 1.0
+    },
+    {
+      "source": "app_renderresults",
+      "target": "app",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L237",
+      "weight": 1.0
+    },
+    {
+      "source": "app_setagentstate",
+      "target": "app",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L255",
+      "weight": 1.0
+    },
+    {
+      "source": "app_copyjudgereport",
+      "target": "app",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/app.js",
+      "source_location": "L269",
+      "weight": 1.0
+    },
+    {
+      "source": "council_orchestrator_py",
+      "target": "agents_classifier_agent",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "council_orchestrator_py",
+      "target": "agents_vuln_agent",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "council_orchestrator_py",
+      "target": "agents_impact_agent",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "council_orchestrator_py",
+      "target": "agents_judge_agent",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "council_orchestrator_py",
+      "target": "orchestrator_cybercouncil",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "orchestrator_cybercouncil",
+      "target": "orchestrator_cybercouncil_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "orchestrator_cybercouncil",
+      "target": "orchestrator_cybercouncil_analyze",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "orchestrator_rationale_8",
+      "target": "orchestrator_cybercouncil",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "orchestrator_rationale_28",
+      "target": "orchestrator_cybercouncil_analyze",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "config_agent_config_py",
+      "target": "providers_claude_provider",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "config/agent_config.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "config_agent_config_py",
+      "target": "providers_openai_provider",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "config/agent_config.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "config_agent_config_py",
+      "target": "providers_llama_provider",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "config/agent_config.py",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "providers_base_provider_py",
+      "target": "abc",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/base_provider.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "providers_base_provider_py",
+      "target": "base_provider_basellmprovider",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/base_provider.py",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "base_provider_basellmprovider",
+      "target": "abc",
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/base_provider.py",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "providers_base_provider_py",
+      "target": "base_provider_complete",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/base_provider.py",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "providers_base_provider_py",
+      "target": "base_provider_provider_name",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/base_provider.py",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "base_provider_rationale_5",
+      "target": "base_provider_basellmprovider",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/base_provider.py",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "base_provider_rationale_15",
+      "target": "base_provider_basellmprovider_complete",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/base_provider.py",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "base_provider_rationale_29",
+      "target": "base_provider_basellmprovider_provider_name",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/base_provider.py",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "providers_llama_provider_py",
+      "target": "os",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/llama_provider.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "providers_llama_provider_py",
+      "target": "providers_base_provider",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/llama_provider.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "providers_llama_provider_py",
+      "target": "llama_provider_llamaprovider",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/llama_provider.py",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "llama_provider_llamaprovider",
+      "target": "basellmprovider",
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/llama_provider.py",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "llama_provider_llamaprovider",
+      "target": "llama_provider_llamaprovider_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/llama_provider.py",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "llama_provider_llamaprovider",
+      "target": "llama_provider_llamaprovider_complete",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/llama_provider.py",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "llama_provider_llamaprovider",
+      "target": "llama_provider_llamaprovider_provider_name",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/llama_provider.py",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "llama_provider_rationale_5",
+      "target": "llama_provider_llamaprovider",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/llama_provider.py",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "providers_openai_provider_py",
+      "target": "os",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/openai_provider.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "providers_openai_provider_py",
+      "target": "openai",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/openai_provider.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "providers_openai_provider_py",
+      "target": "dotenv",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/openai_provider.py",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "providers_openai_provider_py",
+      "target": "providers_base_provider",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/openai_provider.py",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "providers_openai_provider_py",
+      "target": "openai_provider_openaiprovider",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/openai_provider.py",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "openai_provider_openaiprovider",
+      "target": "basellmprovider",
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/openai_provider.py",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "openai_provider_openaiprovider",
+      "target": "openai_provider_openaiprovider_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/openai_provider.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "openai_provider_openaiprovider",
+      "target": "openai_provider_openaiprovider_complete",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/openai_provider.py",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "openai_provider_openaiprovider",
+      "target": "openai_provider_openaiprovider_provider_name",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/openai_provider.py",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "openai_provider_rationale_10",
+      "target": "openai_provider_openaiprovider",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/openai_provider.py",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "providers_claude_provider_py",
+      "target": "os",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/claude_provider.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "providers_claude_provider_py",
+      "target": "anthropic",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/claude_provider.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "providers_claude_provider_py",
+      "target": "dotenv",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/claude_provider.py",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "providers_claude_provider_py",
+      "target": "providers_base_provider",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/claude_provider.py",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "providers_claude_provider_py",
+      "target": "claude_provider_claudeprovider",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/claude_provider.py",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_provider_claudeprovider",
+      "target": "basellmprovider",
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/claude_provider.py",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_provider_claudeprovider",
+      "target": "claude_provider_claudeprovider_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/claude_provider.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_provider_claudeprovider",
+      "target": "claude_provider_claudeprovider_complete",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/claude_provider.py",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_provider_claudeprovider",
+      "target": "claude_provider_claudeprovider_provider_name",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/claude_provider.py",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_provider_rationale_10",
+      "target": "claude_provider_claudeprovider",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "providers/claude_provider.py",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_judge_agent_py",
+      "target": "os",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/judge_agent.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_judge_agent_py",
+      "target": "agents_base_agent",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/judge_agent.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_judge_agent_py",
+      "target": "config_agent_config",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/judge_agent.py",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_judge_agent_py",
+      "target": "judge_agent_judgeagent",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/judge_agent.py",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "judge_agent_judgeagent",
+      "target": "baseagent",
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/judge_agent.py",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "judge_agent_judgeagent",
+      "target": "judge_agent_judgeagent_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/judge_agent.py",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "judge_agent_judgeagent",
+      "target": "judge_agent_judgeagent_synthesize",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/judge_agent.py",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "judge_agent_rationale_7",
+      "target": "judge_agent_judgeagent",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/judge_agent.py",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "judge_agent_rationale_31",
+      "target": "judge_agent_judgeagent_synthesize",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/judge_agent.py",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_base_agent_py",
+      "target": "abc",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_base_agent_py",
+      "target": "providers_base_provider",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_base_agent_py",
+      "target": "base_agent_baseagent",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "base_agent_baseagent",
+      "target": "abc",
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "base_agent_baseagent",
+      "target": "base_agent_baseagent_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "base_agent_baseagent",
+      "target": "base_agent_baseagent_analyze",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_base_agent_py",
+      "target": "base_agent_load_prompt",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "base_agent_rationale_6",
+      "target": "base_agent_baseagent",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "base_agent_rationale_20",
+      "target": "base_agent_baseagent_analyze",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "base_agent_rationale_40",
+      "target": "base_agent_baseagent_load_prompt",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_classifier_agent_py",
+      "target": "os",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/classifier_agent.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_classifier_agent_py",
+      "target": "agents_base_agent",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/classifier_agent.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_classifier_agent_py",
+      "target": "config_agent_config",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/classifier_agent.py",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_classifier_agent_py",
+      "target": "classifier_agent_classifieragent",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/classifier_agent.py",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "classifier_agent_classifieragent",
+      "target": "baseagent",
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/classifier_agent.py",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "classifier_agent_classifieragent",
+      "target": "classifier_agent_classifieragent_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/classifier_agent.py",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "classifier_agent_rationale_7",
+      "target": "classifier_agent_classifieragent",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/classifier_agent.py",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_vuln_agent_py",
+      "target": "os",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/vuln_agent.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_vuln_agent_py",
+      "target": "agents_base_agent",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/vuln_agent.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_vuln_agent_py",
+      "target": "config_agent_config",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/vuln_agent.py",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_vuln_agent_py",
+      "target": "vuln_agent_vulnagent",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/vuln_agent.py",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "vuln_agent_vulnagent",
+      "target": "baseagent",
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/vuln_agent.py",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "vuln_agent_vulnagent",
+      "target": "vuln_agent_vulnagent_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/vuln_agent.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "vuln_agent_rationale_7",
+      "target": "vuln_agent_vulnagent",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/vuln_agent.py",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_impact_agent_py",
+      "target": "os",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/impact_agent.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_impact_agent_py",
+      "target": "agents_base_agent",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/impact_agent.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_impact_agent_py",
+      "target": "config_agent_config",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/impact_agent.py",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_impact_agent_py",
+      "target": "impact_agent_impactagent",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/impact_agent.py",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "impact_agent_impactagent",
+      "target": "baseagent",
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/impact_agent.py",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "impact_agent_impactagent",
+      "target": "impact_agent_impactagent_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/impact_agent.py",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "impact_agent_rationale_7",
+      "target": "impact_agent_impactagent",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/impact_agent.py",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_dataset_py",
+      "target": "json",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_dataset.py",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_dataset_py",
+      "target": "argparse",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_dataset.py",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_dataset_py",
+      "target": "os",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_dataset.py",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_dataset_py",
+      "target": "build_dataset_print_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_dataset.py",
+      "source_location": "L493",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_dataset_py",
+      "target": "build_dataset_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_dataset.py",
+      "source_location": "L507",
+      "weight": 1.0
+    },
+    {
+      "source": "build_dataset_main",
+      "target": "build_dataset_print_summary",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_dataset.py",
+      "source_location": "L526",
+      "weight": 1.0
+    },
+    {
+      "source": "build_dataset_rationale_1",
+      "target": "scripts_build_dataset_py",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_dataset.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_richness_evaluator_py",
+      "target": "re",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_richness_evaluator_py",
+      "target": "json",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_richness_evaluator_py",
+      "target": "council_orchestrator",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_richness_evaluator_py",
+      "target": "providers_base_provider",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_richness_evaluator_py",
+      "target": "richness_evaluator_has_threat_classification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_richness_evaluator_py",
+      "target": "richness_evaluator_has_mitre_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_richness_evaluator_py",
+      "target": "richness_evaluator_has_severity_score",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_richness_evaluator_py",
+      "target": "richness_evaluator_has_response_plan",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_richness_evaluator_py",
+      "target": "richness_evaluator_has_contradiction_note",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_richness_evaluator_py",
+      "target": "richness_evaluator_score_output",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_richness_evaluator_py",
+      "target": "richness_evaluator_evaluate_richness",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L100",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_richness_evaluator_py",
+      "target": "richness_evaluator_run_richness_comparison",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L148",
+      "weight": 1.0
+    },
+    {
+      "source": "richness_evaluator_score_output",
+      "target": "richness_evaluator_has_threat_classification",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L88",
+      "weight": 1.0
+    },
+    {
+      "source": "richness_evaluator_score_output",
+      "target": "richness_evaluator_has_mitre_mapping",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L89",
+      "weight": 1.0
+    },
+    {
+      "source": "richness_evaluator_score_output",
+      "target": "richness_evaluator_has_severity_score",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L90",
+      "weight": 1.0
+    },
+    {
+      "source": "richness_evaluator_score_output",
+      "target": "richness_evaluator_has_response_plan",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L91",
+      "weight": 1.0
+    },
+    {
+      "source": "richness_evaluator_score_output",
+      "target": "richness_evaluator_has_contradiction_note",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "richness_evaluator_evaluate_richness",
+      "target": "richness_evaluator_score_output",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L137",
+      "weight": 1.0
+    },
+    {
+      "source": "richness_evaluator_run_richness_comparison",
+      "target": "richness_evaluator_evaluate_richness",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L154",
+      "weight": 1.0
+    },
+    {
+      "source": "richness_evaluator_rationale_1",
+      "target": "evaluation_richness_evaluator_py",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "richness_evaluator_rationale_34",
+      "target": "richness_evaluator_has_threat_classification",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "richness_evaluator_rationale_40",
+      "target": "richness_evaluator_has_mitre_mapping",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "richness_evaluator_rationale_45",
+      "target": "richness_evaluator_has_severity_score",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "richness_evaluator_rationale_57",
+      "target": "richness_evaluator_has_response_plan",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "richness_evaluator_rationale_71",
+      "target": "richness_evaluator_has_contradiction_note",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "richness_evaluator_rationale_83",
+      "target": "richness_evaluator_score_output",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "richness_evaluator_rationale_101",
+      "target": "richness_evaluator_evaluate_richness",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L101",
+      "weight": 1.0
+    },
+    {
+      "source": "richness_evaluator_rationale_149",
+      "target": "richness_evaluator_run_richness_comparison",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L149",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_metrics_py",
+      "target": "sklearn_metrics",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/metrics.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_metrics_py",
+      "target": "metrics_compute_metrics",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/metrics.py",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "metrics_rationale_11",
+      "target": "metrics_compute_metrics",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/metrics.py",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_baselines_py",
+      "target": "json",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_baselines_py",
+      "target": "collections",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_baselines_py",
+      "target": "tqdm",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_baselines_py",
+      "target": "config_agent_config",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_baselines_py",
+      "target": "evaluation_metrics",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_baselines_py",
+      "target": "evaluation_evaluator",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_baselines_py",
+      "target": "agents_classifier_agent",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_baselines_py",
+      "target": "agents_vuln_agent",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_baselines_py",
+      "target": "agents_impact_agent",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_baselines_py",
+      "target": "baselines_run_single_agent_baseline",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_baselines_py",
+      "target": "baselines_run_majority_vote_baseline",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "baselines_rationale_1",
+      "target": "evaluation_baselines_py",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "baselines_rationale_40",
+      "target": "baselines_run_single_agent_baseline",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "baselines_rationale_70",
+      "target": "baselines_run_majority_vote_baseline",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_reporter_py",
+      "target": "os",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_reporter_py",
+      "target": "csv",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_reporter_py",
+      "target": "json",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_reporter_py",
+      "target": "datetime",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_reporter_py",
+      "target": "numpy",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_reporter_py",
+      "target": "matplotlib",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_reporter_py",
+      "target": "matplotlib_pyplot",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_reporter_py",
+      "target": "matplotlib_ticker",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_reporter_py",
+      "target": "seaborn",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_reporter_py",
+      "target": "sklearn_metrics",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_reporter_py",
+      "target": "reporter_save_report",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_reporter_py",
+      "target": "reporter_save_metrics_csv",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_reporter_py",
+      "target": "reporter_save_predictions_csv",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L130",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_reporter_py",
+      "target": "reporter_save_confusion_matrix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L142",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_reporter_py",
+      "target": "reporter_save_metrics_bar",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L181",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_reporter_py",
+      "target": "reporter_save_comparison_chart",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L227",
+      "weight": 1.0
+    },
+    {
+      "source": "reporter_save_report",
+      "target": "reporter_save_metrics_csv",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "reporter_save_report",
+      "target": "reporter_save_predictions_csv",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L85",
+      "weight": 1.0
+    },
+    {
+      "source": "reporter_save_report",
+      "target": "reporter_save_confusion_matrix",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "reporter_save_report",
+      "target": "reporter_save_metrics_bar",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L87",
+      "weight": 1.0
+    },
+    {
+      "source": "reporter_rationale_1",
+      "target": "evaluation_reporter_py",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "reporter_rationale_67",
+      "target": "reporter_save_report",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "reporter_rationale_228",
+      "target": "reporter_save_comparison_chart",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/reporter.py",
+      "source_location": "L228",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_evaluator_py",
+      "target": "json",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/evaluator.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_evaluator_py",
+      "target": "tqdm",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/evaluator.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_evaluator_py",
+      "target": "council_orchestrator",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/evaluator.py",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_evaluator_py",
+      "target": "evaluation_metrics",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/evaluator.py",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_evaluator_py",
+      "target": "evaluator_extract_label",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/evaluator.py",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_evaluator_py",
+      "target": "evaluator_run_evaluation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/evaluator.py",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluation_evaluator_py",
+      "target": "evaluator_run_baseline2_majority_vote",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/evaluator.py",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluator_run_evaluation",
+      "target": "evaluator_extract_label",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/evaluator.py",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluator_run_baseline2_majority_vote",
+      "target": "evaluator_extract_label",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/evaluator.py",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluator_rationale_16",
+      "target": "evaluator_extract_label",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/evaluator.py",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "evaluator_rationale_31",
+      "target": "evaluator_run_evaluation",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "evaluation/evaluator.py",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "server_rationale_1",
+      "target": "orchestrator_cybercouncil",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "server.py",
+      "source_location": "L31",
+      "weight": 0.8
+    },
+    {
+      "source": "main_rationale_1",
+      "target": "orchestrator_cybercouncil",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "main.py",
+      "source_location": "L10",
+      "weight": 0.8
+    },
+    {
+      "source": "orchestrator_cybercouncil",
+      "target": "classifier_agent_classifieragent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L1",
+      "weight": 0.8
+    },
+    {
+      "source": "orchestrator_rationale_8",
+      "target": "classifier_agent_classifieragent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L1",
+      "weight": 0.8
+    },
+    {
+      "source": "orchestrator_rationale_28",
+      "target": "classifier_agent_classifieragent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L1",
+      "weight": 0.8
+    },
+    {
+      "source": "orchestrator_cybercouncil",
+      "target": "vuln_agent_vulnagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L2",
+      "weight": 0.8
+    },
+    {
+      "source": "orchestrator_rationale_8",
+      "target": "vuln_agent_vulnagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L2",
+      "weight": 0.8
+    },
+    {
+      "source": "orchestrator_rationale_28",
+      "target": "vuln_agent_vulnagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L2",
+      "weight": 0.8
+    },
+    {
+      "source": "orchestrator_cybercouncil",
+      "target": "impact_agent_impactagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L3",
+      "weight": 0.8
+    },
+    {
+      "source": "orchestrator_rationale_8",
+      "target": "impact_agent_impactagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L3",
+      "weight": 0.8
+    },
+    {
+      "source": "orchestrator_rationale_28",
+      "target": "impact_agent_impactagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L3",
+      "weight": 0.8
+    },
+    {
+      "source": "orchestrator_cybercouncil",
+      "target": "judge_agent_judgeagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L4",
+      "weight": 0.8
+    },
+    {
+      "source": "orchestrator_rationale_8",
+      "target": "judge_agent_judgeagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L4",
+      "weight": 0.8
+    },
+    {
+      "source": "orchestrator_rationale_28",
+      "target": "judge_agent_judgeagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "council/orchestrator.py",
+      "source_location": "L4",
+      "weight": 0.8
+    },
+    {
+      "source": "llama_provider_llamaprovider",
+      "target": "base_provider_basellmprovider",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "providers/llama_provider.py",
+      "source_location": "L2",
+      "weight": 0.8
+    },
+    {
+      "source": "llama_provider_rationale_5",
+      "target": "base_provider_basellmprovider",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "providers/llama_provider.py",
+      "source_location": "L2",
+      "weight": 0.8
+    },
+    {
+      "source": "openai_provider_openaiprovider",
+      "target": "base_provider_basellmprovider",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "providers/openai_provider.py",
+      "source_location": "L4",
+      "weight": 0.8
+    },
+    {
+      "source": "openai_provider_rationale_10",
+      "target": "base_provider_basellmprovider",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "providers/openai_provider.py",
+      "source_location": "L4",
+      "weight": 0.8
+    },
+    {
+      "source": "claude_provider_claudeprovider",
+      "target": "base_provider_basellmprovider",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "providers/claude_provider.py",
+      "source_location": "L4",
+      "weight": 0.8
+    },
+    {
+      "source": "claude_provider_rationale_10",
+      "target": "base_provider_basellmprovider",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "providers/claude_provider.py",
+      "source_location": "L4",
+      "weight": 0.8
+    },
+    {
+      "source": "judge_agent_judgeagent",
+      "target": "base_agent_baseagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/judge_agent.py",
+      "source_location": "L2",
+      "weight": 0.8
+    },
+    {
+      "source": "judge_agent_rationale_7",
+      "target": "base_agent_baseagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/judge_agent.py",
+      "source_location": "L2",
+      "weight": 0.8
+    },
+    {
+      "source": "judge_agent_rationale_31",
+      "target": "base_agent_baseagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/judge_agent.py",
+      "source_location": "L2",
+      "weight": 0.8
+    },
+    {
+      "source": "base_agent_baseagent",
+      "target": "base_provider_basellmprovider",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L2",
+      "weight": 0.8
+    },
+    {
+      "source": "base_agent_rationale_6",
+      "target": "base_provider_basellmprovider",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L2",
+      "weight": 0.8
+    },
+    {
+      "source": "base_agent_rationale_20",
+      "target": "base_provider_basellmprovider",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L2",
+      "weight": 0.8
+    },
+    {
+      "source": "base_agent_rationale_40",
+      "target": "base_provider_basellmprovider",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/base_agent.py",
+      "source_location": "L2",
+      "weight": 0.8
+    },
+    {
+      "source": "classifier_agent_classifieragent",
+      "target": "base_agent_baseagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/classifier_agent.py",
+      "source_location": "L2",
+      "weight": 0.8
+    },
+    {
+      "source": "classifier_agent_rationale_7",
+      "target": "base_agent_baseagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/classifier_agent.py",
+      "source_location": "L2",
+      "weight": 0.8
+    },
+    {
+      "source": "vuln_agent_vulnagent",
+      "target": "base_agent_baseagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/vuln_agent.py",
+      "source_location": "L2",
+      "weight": 0.8
+    },
+    {
+      "source": "vuln_agent_rationale_7",
+      "target": "base_agent_baseagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/vuln_agent.py",
+      "source_location": "L2",
+      "weight": 0.8
+    },
+    {
+      "source": "impact_agent_impactagent",
+      "target": "base_agent_baseagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/impact_agent.py",
+      "source_location": "L2",
+      "weight": 0.8
+    },
+    {
+      "source": "impact_agent_rationale_7",
+      "target": "base_agent_baseagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/impact_agent.py",
+      "source_location": "L2",
+      "weight": 0.8
+    },
+    {
+      "source": "richness_evaluator_rationale_1",
+      "target": "orchestrator_cybercouncil",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L22",
+      "weight": 0.8
+    },
+    {
+      "source": "richness_evaluator_rationale_34",
+      "target": "orchestrator_cybercouncil",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L22",
+      "weight": 0.8
+    },
+    {
+      "source": "richness_evaluator_rationale_40",
+      "target": "orchestrator_cybercouncil",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L22",
+      "weight": 0.8
+    },
+    {
+      "source": "richness_evaluator_rationale_45",
+      "target": "orchestrator_cybercouncil",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L22",
+      "weight": 0.8
+    },
+    {
+      "source": "richness_evaluator_rationale_57",
+      "target": "orchestrator_cybercouncil",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L22",
+      "weight": 0.8
+    },
+    {
+      "source": "richness_evaluator_rationale_71",
+      "target": "orchestrator_cybercouncil",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L22",
+      "weight": 0.8
+    },
+    {
+      "source": "richness_evaluator_rationale_83",
+      "target": "orchestrator_cybercouncil",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L22",
+      "weight": 0.8
+    },
+    {
+      "source": "richness_evaluator_rationale_101",
+      "target": "orchestrator_cybercouncil",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L22",
+      "weight": 0.8
+    },
+    {
+      "source": "richness_evaluator_rationale_149",
+      "target": "orchestrator_cybercouncil",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L22",
+      "weight": 0.8
+    },
+    {
+      "source": "richness_evaluator_rationale_1",
+      "target": "base_provider_basellmprovider",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L23",
+      "weight": 0.8
+    },
+    {
+      "source": "richness_evaluator_rationale_34",
+      "target": "base_provider_basellmprovider",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L23",
+      "weight": 0.8
+    },
+    {
+      "source": "richness_evaluator_rationale_40",
+      "target": "base_provider_basellmprovider",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L23",
+      "weight": 0.8
+    },
+    {
+      "source": "richness_evaluator_rationale_45",
+      "target": "base_provider_basellmprovider",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L23",
+      "weight": 0.8
+    },
+    {
+      "source": "richness_evaluator_rationale_57",
+      "target": "base_provider_basellmprovider",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L23",
+      "weight": 0.8
+    },
+    {
+      "source": "richness_evaluator_rationale_71",
+      "target": "base_provider_basellmprovider",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L23",
+      "weight": 0.8
+    },
+    {
+      "source": "richness_evaluator_rationale_83",
+      "target": "base_provider_basellmprovider",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L23",
+      "weight": 0.8
+    },
+    {
+      "source": "richness_evaluator_rationale_101",
+      "target": "base_provider_basellmprovider",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L23",
+      "weight": 0.8
+    },
+    {
+      "source": "richness_evaluator_rationale_149",
+      "target": "base_provider_basellmprovider",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/richness_evaluator.py",
+      "source_location": "L23",
+      "weight": 0.8
+    },
+    {
+      "source": "baselines_rationale_1",
+      "target": "classifier_agent_classifieragent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L22",
+      "weight": 0.8
+    },
+    {
+      "source": "baselines_rationale_40",
+      "target": "classifier_agent_classifieragent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L22",
+      "weight": 0.8
+    },
+    {
+      "source": "baselines_rationale_70",
+      "target": "classifier_agent_classifieragent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L22",
+      "weight": 0.8
+    },
+    {
+      "source": "baselines_rationale_1",
+      "target": "vuln_agent_vulnagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L23",
+      "weight": 0.8
+    },
+    {
+      "source": "baselines_rationale_40",
+      "target": "vuln_agent_vulnagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L23",
+      "weight": 0.8
+    },
+    {
+      "source": "baselines_rationale_70",
+      "target": "vuln_agent_vulnagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L23",
+      "weight": 0.8
+    },
+    {
+      "source": "baselines_rationale_1",
+      "target": "impact_agent_impactagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L24",
+      "weight": 0.8
+    },
+    {
+      "source": "baselines_rationale_40",
+      "target": "impact_agent_impactagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L24",
+      "weight": 0.8
+    },
+    {
+      "source": "baselines_rationale_70",
+      "target": "impact_agent_impactagent",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/baselines.py",
+      "source_location": "L24",
+      "weight": 0.8
+    },
+    {
+      "source": "evaluator_rationale_16",
+      "target": "orchestrator_cybercouncil",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/evaluator.py",
+      "source_location": "L3",
+      "weight": 0.8
+    },
+    {
+      "source": "evaluator_rationale_31",
+      "target": "orchestrator_cybercouncil",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "evaluation/evaluator.py",
+      "source_location": "L3",
+      "weight": 0.8
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

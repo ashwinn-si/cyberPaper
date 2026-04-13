@@ -1,0 +1,1313 @@
+{
+  "nodes": [
+    {
+      "id": "next_phase_cybercouncil_system",
+      "label": "CyberCouncil Multi-Agent Threat Analysis System",
+      "file_type": "document",
+      "source_file": "next_phase.md",
+      "source_location": "Context section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "next_phase_judge_label_drift_problem",
+      "label": "Judge Label Drift Problem",
+      "file_type": "document",
+      "source_file": "next_phase.md",
+      "source_location": "Problem table row 1",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "next_phase_unfair_f1_problem",
+      "label": "Unfair F1 Comparison Problem",
+      "file_type": "document",
+      "source_file": "next_phase.md",
+      "source_location": "Problem table row 2",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "next_phase_baseline2_noise_problem",
+      "label": "Baseline 2 Label Extraction Noise Problem",
+      "file_type": "document",
+      "source_file": "next_phase.md",
+      "source_location": "Problem table row 3",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "next_phase_output_richness_evaluator",
+      "label": "OutputRichnessEvaluator",
+      "file_type": "document",
+      "source_file": "next_phase.md",
+      "source_location": "Task 3",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "next_phase_critical_classification_rule",
+      "label": "CRITICAL CLASSIFICATION RULE (Judge Label Constraint)",
+      "file_type": "document",
+      "source_file": "next_phase.md",
+      "source_location": "Task 1",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "next_phase_majority_vote_fix",
+      "label": "Majority Vote Fix (Agent A Only)",
+      "file_type": "document",
+      "source_file": "next_phase.md",
+      "source_location": "Task 2",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "next_phase_run_eval_update",
+      "label": "run_eval.py Update with Richness Metrics",
+      "file_type": "document",
+      "source_file": "next_phase.md",
+      "source_location": "Task 4",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "next_phase_sample_threats_expansion",
+      "label": "Sample Threats Dataset Expansion (10 samples)",
+      "file_type": "document",
+      "source_file": "next_phase.md",
+      "source_location": "Task 5",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "next_phase_results_readme_update",
+      "label": "Results README Narrative Update",
+      "file_type": "document",
+      "source_file": "next_phase.md",
+      "source_location": "Task 6",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "next_phase_f1_baseline1",
+      "label": "Baseline 1 F1 = 0.960 (Single Agent)",
+      "file_type": "document",
+      "source_file": "next_phase.md",
+      "source_location": "Current results block",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "next_phase_f1_full_council",
+      "label": "Full Council + Judge F1 = 0.785",
+      "file_type": "document",
+      "source_file": "next_phase.md",
+      "source_location": "Current results block",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "next_phase_f1_baseline2",
+      "label": "Baseline 2 F1 = 0.513 (Majority Vote Broken)",
+      "file_type": "document",
+      "source_file": "next_phase.md",
+      "source_location": "Current results block",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "requirements_anthropic",
+      "label": "anthropic Python Package (>=0.25.0)",
+      "file_type": "document",
+      "source_file": "requirements.txt",
+      "source_location": "line 1",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "requirements_openai",
+      "label": "openai Python Package (>=1.0.0)",
+      "file_type": "document",
+      "source_file": "requirements.txt",
+      "source_location": "line 2",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "requirements_sklearn",
+      "label": "scikit-learn Package (>=1.3.0)",
+      "file_type": "document",
+      "source_file": "requirements.txt",
+      "source_location": "line 5",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "requirements_flask",
+      "label": "Flask Package (>=3.0.0)",
+      "file_type": "document",
+      "source_file": "requirements.txt",
+      "source_location": "line 8",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "requirements_matplotlib",
+      "label": "matplotlib Package (>=3.7.0)",
+      "file_type": "document",
+      "source_file": "requirements.txt",
+      "source_location": "line 11",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "todo_providers_layer",
+      "label": "Providers Layer (BaseLLMProvider, ClaudeProvider, OpenAIProvider)",
+      "file_type": "document",
+      "source_file": "todo.md",
+      "source_location": "Providers Layer section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "todo_agents_layer",
+      "label": "Agents Layer (BaseAgent, ClassifierAgent, VulnAgent, ImpactAgent, JudgeAgent)",
+      "file_type": "document",
+      "source_file": "todo.md",
+      "source_location": "Agents Layer section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "todo_council_layer",
+      "label": "Council Layer (orchestrator.py)",
+      "file_type": "document",
+      "source_file": "todo.md",
+      "source_location": "Council Layer section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "todo_evaluation_layer",
+      "label": "Evaluation Layer (metrics.py, evaluator.py, baselines.py)",
+      "file_type": "document",
+      "source_file": "todo.md",
+      "source_location": "Evaluation Layer section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "projectidea_cybercouncil_concept",
+      "label": "CyberCouncil Multi-Agent LLM Council Concept",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "What This Project Does section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "projectidea_base_llm_provider",
+      "label": "BaseLLMProvider Abstract Interface",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "providers/base_provider.py section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "projectidea_claude_provider",
+      "label": "ClaudeProvider (Anthropic Claude Implementation)",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "providers/claude_provider.py section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "projectidea_openai_provider",
+      "label": "OpenAIProvider (OpenAI GPT Implementation)",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "providers/openai_provider.py section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "projectidea_agent_config",
+      "label": "agent_config.py (Single Provider Control File)",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "config/agent_config.py section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "projectidea_base_agent",
+      "label": "BaseAgent Abstract Class",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "agents/base_agent.py section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "projectidea_classifier_agent",
+      "label": "ClassifierAgent (Agent A — Threat Classifier)",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "agents/classifier_agent.py section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "projectidea_vuln_agent",
+      "label": "VulnAgent (Agent B — Vulnerability Analyst)",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "agents/vuln_agent.py section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "projectidea_impact_agent",
+      "label": "ImpactAgent (Agent C — Impact Assessor)",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "agents/impact_agent.py section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "projectidea_judge_agent",
+      "label": "JudgeAgent (CISO Synthesizer)",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "agents/judge_agent.py section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "projectidea_cyber_council_orchestrator",
+      "label": "CyberCouncil Orchestrator",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "council/orchestrator.py section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "projectidea_provider_pattern_rationale",
+      "label": "Rationale: Provider Pattern / Open-Closed Principle",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "Extensible Design section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "projectidea_prompts_as_files_rationale",
+      "label": "Rationale: Prompts as .txt Files for Version Control",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "Design Principles section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "projectidea_ieee_paper_contribution",
+      "label": "IEEE Paper Contribution (Novel Architecture, Ablation Study)",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "Paper Contribution Summary section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "projectidea_gemini_provider",
+      "label": "GeminiProvider (Future Extension Example)",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "Adding a New Provider section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "projectidea_sample_threats_dataset",
+      "label": "sample_threats.json Labeled Threat Dataset",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "Dataset Format section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "projectidea_compute_metrics",
+      "label": "compute_metrics (sklearn-based F1/Accuracy/Precision/Recall)",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "evaluation/metrics.py section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "projectidea_ablation_study",
+      "label": "Ablation Study (Agent Contribution Isolation)",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "Ablation Study section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "run_server",
+      "label": "Flask API Server (server.py at port 5050)",
+      "file_type": "document",
+      "source_file": "run.md",
+      "source_location": "Web Frontend section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "run_build_dataset",
+      "label": "build_dataset.py (50-sample Dataset Generator)",
+      "file_type": "document",
+      "source_file": "run.md",
+      "source_location": "Build the Evaluation Dataset section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "run_baselines_script",
+      "label": "run_baselines.py (Baseline Comparison Runner)",
+      "file_type": "document",
+      "source_file": "run.md",
+      "source_location": "Run Baselines section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "results_readme_overview",
+      "label": "Evaluation Results Overview (Two-Metric Evaluation Framework)",
+      "file_type": "document",
+      "source_file": "results/README.md",
+      "source_location": "Overview section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "results_readme_why_single_agent_wins_f1",
+      "label": "Rationale: Why Single Agent Wins on F1 (Architectural Constraint)",
+      "file_type": "document",
+      "source_file": "results/README.md",
+      "source_location": "Why Single Agent scores highest section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "results_readme_richness_over_f1_rationale",
+      "label": "Rationale: Richness > F1 for Operational Value",
+      "file_type": "document",
+      "source_file": "results/README.md",
+      "source_location": "Interpretation section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prompt_a_threat_classifier_prompt",
+      "label": "prompt_a.txt — Threat Classifier System Prompt",
+      "file_type": "document",
+      "source_file": "prompts/prompt_a.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prompt_b_vuln_analyst_prompt",
+      "label": "prompt_b.txt — Vulnerability Analyst System Prompt",
+      "file_type": "document",
+      "source_file": "prompts/prompt_b.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prompt_c_impact_assessor_prompt",
+      "label": "prompt_c.txt — Impact Assessor System Prompt",
+      "file_type": "document",
+      "source_file": "prompts/prompt_c.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prompt_judge_ciso_prompt",
+      "label": "prompt_judge.txt — Judge CISO System Prompt",
+      "file_type": "document",
+      "source_file": "prompts/prompt_judge.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prompt_a_specialization_rationale",
+      "label": "Rationale: Agent A Strict Output Format Keeps Council Lanes Separate",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "prompt_a.txt rationale",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prompt_b_mitre_structured_rationale",
+      "label": "Rationale: Agent B MITRE Technique ID for Structured Standardized Data",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "prompt_b.txt rationale",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prompt_c_severity_anchors_rationale",
+      "label": "Rationale: Agent C Severity Anchors for Consistent Scoring Across Threats",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "prompt_c.txt rationale",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prompt_judge_no_hedge_rationale",
+      "label": "Rationale: Judge No-Hedging Rule for Actionable CISO Report",
+      "file_type": "document",
+      "source_file": "projectIdea.md",
+      "source_location": "prompt_judge.txt rationale",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prompt_judge_contradiction_report",
+      "label": "Contradiction Report Feature (Novel Architecture Differentiator)",
+      "file_type": "document",
+      "source_file": "prompts/prompt_judge.txt",
+      "source_location": "section 4",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prompt_b_mitre_attack_framework",
+      "label": "MITRE ATT&CK Framework Mapping",
+      "file_type": "document",
+      "source_file": "prompts/prompt_b.txt",
+      "source_location": "MITRE ATT&CK sections",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prompt_b_no_classify_rule",
+      "label": "Agent B Rule: Do NOT Classify Threat Type",
+      "file_type": "document",
+      "source_file": "prompts/prompt_b.txt",
+      "source_location": "Rules section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prompt_c_no_classify_rule",
+      "label": "Agent C Rule: Do NOT Classify Threat Type",
+      "file_type": "document",
+      "source_file": "prompts/prompt_c.txt",
+      "source_location": "Rules section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "next_phase_richness_dimensions",
+      "label": "5 Output Richness Dimensions (threat_classified, mitre_mapped, severity_scored, response_plan, contradiction_noted)",
+      "file_type": "document",
+      "source_file": "next_phase.md",
+      "source_location": "Task 3 — richness_evaluator.py docstring",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "next_phase_judge_label_drift_problem",
+      "target": "next_phase_critical_classification_rule",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "next_phase.md",
+      "source_location": "Task 1",
+      "weight": 1.0
+    },
+    {
+      "source": "next_phase_critical_classification_rule",
+      "target": "prompt_judge_ciso_prompt",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "next_phase.md",
+      "source_location": "Task 1 — Fix prompts/prompt_judge.txt",
+      "weight": 1.0
+    },
+    {
+      "source": "next_phase_unfair_f1_problem",
+      "target": "next_phase_output_richness_evaluator",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "next_phase.md",
+      "source_location": "Problem table row 2 fix",
+      "weight": 1.0
+    },
+    {
+      "source": "next_phase_baseline2_noise_problem",
+      "target": "next_phase_majority_vote_fix",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "next_phase.md",
+      "source_location": "Task 2",
+      "weight": 1.0
+    },
+    {
+      "source": "next_phase_majority_vote_fix",
+      "target": "prompt_b_no_classify_rule",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "next_phase.md",
+      "source_location": "Task 2 — Agent B and C do not output threat categories by design",
+      "weight": 1.0
+    },
+    {
+      "source": "next_phase_majority_vote_fix",
+      "target": "prompt_c_no_classify_rule",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "next_phase.md",
+      "source_location": "Task 2 — Agent B and C do not output threat categories by design",
+      "weight": 1.0
+    },
+    {
+      "source": "next_phase_run_eval_update",
+      "target": "next_phase_output_richness_evaluator",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "next_phase.md",
+      "source_location": "Task 4",
+      "weight": 1.0
+    },
+    {
+      "source": "next_phase_output_richness_evaluator",
+      "target": "next_phase_richness_dimensions",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "next_phase.md",
+      "source_location": "Task 3 — richness_evaluator.py",
+      "weight": 1.0
+    },
+    {
+      "source": "next_phase_output_richness_evaluator",
+      "target": "projectidea_cyber_council_orchestrator",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "next_phase.md",
+      "source_location": "Task 3 — from council.orchestrator import CyberCouncil",
+      "weight": 1.0
+    },
+    {
+      "source": "next_phase_output_richness_evaluator",
+      "target": "projectidea_base_llm_provider",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "next_phase.md",
+      "source_location": "Task 3 — from providers.base_provider import BaseLLMProvider",
+      "weight": 1.0
+    },
+    {
+      "source": "next_phase_richness_dimensions",
+      "target": "prompt_b_mitre_attack_framework",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.88,
+      "source_file": "next_phase.md",
+      "source_location": "mitre_mapped dimension",
+      "weight": 0.88
+    },
+    {
+      "source": "next_phase_richness_dimensions",
+      "target": "prompt_judge_contradiction_report",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "next_phase.md",
+      "source_location": "contradiction_noted dimension",
+      "weight": 0.9
+    },
+    {
+      "source": "next_phase_sample_threats_expansion",
+      "target": "projectidea_sample_threats_dataset",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "next_phase.md",
+      "source_location": "Task 5",
+      "weight": 1.0
+    },
+    {
+      "source": "next_phase_results_readme_update",
+      "target": "results_readme_overview",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "next_phase.md",
+      "source_location": "Task 6",
+      "weight": 1.0
+    },
+    {
+      "source": "next_phase_cybercouncil_system",
+      "target": "next_phase_f1_baseline1",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "next_phase.md",
+      "source_location": "Current results block",
+      "weight": 1.0
+    },
+    {
+      "source": "next_phase_cybercouncil_system",
+      "target": "next_phase_f1_full_council",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "next_phase.md",
+      "source_location": "Current results block",
+      "weight": 1.0
+    },
+    {
+      "source": "next_phase_cybercouncil_system",
+      "target": "next_phase_f1_baseline2",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "next_phase.md",
+      "source_location": "Current results block",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_claude_provider",
+      "target": "projectidea_base_llm_provider",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "providers/claude_provider.py section",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_openai_provider",
+      "target": "projectidea_base_llm_provider",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "providers/openai_provider.py section",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_gemini_provider",
+      "target": "projectidea_base_llm_provider",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "Adding a New Provider section",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_base_agent",
+      "target": "projectidea_base_llm_provider",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "agents/base_agent.py section",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_classifier_agent",
+      "target": "projectidea_base_agent",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "agents/classifier_agent.py section",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_vuln_agent",
+      "target": "projectidea_base_agent",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "agents/vuln_agent.py section",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_impact_agent",
+      "target": "projectidea_base_agent",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "agents/impact_agent.py section",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_judge_agent",
+      "target": "projectidea_base_agent",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "agents/judge_agent.py section",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_classifier_agent",
+      "target": "projectidea_agent_config",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "agents/classifier_agent.py — from config.agent_config import AGENT_A_PROVIDER",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_vuln_agent",
+      "target": "projectidea_agent_config",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "agents/vuln_agent.py — from config.agent_config import AGENT_B_PROVIDER",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_impact_agent",
+      "target": "projectidea_agent_config",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "agents/impact_agent.py — from config.agent_config import AGENT_C_PROVIDER",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_judge_agent",
+      "target": "projectidea_agent_config",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "agents/judge_agent.py — from config.agent_config import JUDGE_PROVIDER",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_cyber_council_orchestrator",
+      "target": "projectidea_classifier_agent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "council/orchestrator.py",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_cyber_council_orchestrator",
+      "target": "projectidea_vuln_agent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "council/orchestrator.py",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_cyber_council_orchestrator",
+      "target": "projectidea_impact_agent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "council/orchestrator.py",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_cyber_council_orchestrator",
+      "target": "projectidea_judge_agent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "council/orchestrator.py",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_agent_config",
+      "target": "projectidea_claude_provider",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "config/agent_config.py — from providers.claude_provider import ClaudeProvider",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_agent_config",
+      "target": "projectidea_openai_provider",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "config/agent_config.py — from providers.openai_provider import OpenAIProvider",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_classifier_agent",
+      "target": "prompt_a_threat_classifier_prompt",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "agents/classifier_agent.py — load_prompt prompts/prompt_a.txt",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_vuln_agent",
+      "target": "prompt_b_vuln_analyst_prompt",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "agents/vuln_agent.py — load_prompt prompts/prompt_b.txt",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_impact_agent",
+      "target": "prompt_c_impact_assessor_prompt",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "agents/impact_agent.py — load_prompt prompts/prompt_c.txt",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_judge_agent",
+      "target": "prompt_judge_ciso_prompt",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "agents/judge_agent.py — load_prompt prompts/prompt_judge.txt",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_compute_metrics",
+      "target": "requirements_sklearn",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "evaluation/metrics.py — from sklearn.metrics import",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_claude_provider",
+      "target": "requirements_anthropic",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "providers/claude_provider.py — import anthropic",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_openai_provider",
+      "target": "requirements_openai",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "providers/openai_provider.py — from openai import OpenAI",
+      "weight": 1.0
+    },
+    {
+      "source": "run_server",
+      "target": "requirements_flask",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "run.md",
+      "source_location": "Web Frontend section",
+      "weight": 0.9
+    },
+    {
+      "source": "projectidea_provider_pattern_rationale",
+      "target": "projectidea_base_llm_provider",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "Extensible Design section",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_prompts_as_files_rationale",
+      "target": "prompt_a_threat_classifier_prompt",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "Design Principles section",
+      "weight": 1.0
+    },
+    {
+      "source": "prompt_a_specialization_rationale",
+      "target": "prompt_a_threat_classifier_prompt",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "prompt_a.txt rationale block",
+      "weight": 1.0
+    },
+    {
+      "source": "prompt_b_mitre_structured_rationale",
+      "target": "prompt_b_vuln_analyst_prompt",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "prompt_b.txt rationale block",
+      "weight": 1.0
+    },
+    {
+      "source": "prompt_c_severity_anchors_rationale",
+      "target": "prompt_c_impact_assessor_prompt",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "prompt_c.txt rationale block",
+      "weight": 1.0
+    },
+    {
+      "source": "prompt_judge_no_hedge_rationale",
+      "target": "prompt_judge_ciso_prompt",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "prompt_judge.txt rationale block",
+      "weight": 1.0
+    },
+    {
+      "source": "results_readme_why_single_agent_wins_f1",
+      "target": "next_phase_f1_baseline1",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "results/README.md",
+      "source_location": "Why Single Agent scores highest section",
+      "weight": 1.0
+    },
+    {
+      "source": "results_readme_richness_over_f1_rationale",
+      "target": "next_phase_output_richness_evaluator",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "results/README.md",
+      "source_location": "Interpretation section",
+      "weight": 1.0
+    },
+    {
+      "source": "projectidea_cybercouncil_concept",
+      "target": "next_phase_cybercouncil_system",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "projectIdea.md",
+      "source_location": null,
+      "weight": 0.95
+    },
+    {
+      "source": "prompt_judge_contradiction_report",
+      "target": "projectidea_ieee_paper_contribution",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.82,
+      "source_file": "projectIdea.md",
+      "source_location": "prompt_judge.txt rationale — strongest claim in IEEE paper",
+      "weight": 0.82
+    },
+    {
+      "source": "next_phase_output_richness_evaluator",
+      "target": "projectidea_ieee_paper_contribution",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "next_phase.md",
+      "source_location": "Task 3 — primary evidence council adds value",
+      "weight": 0.8
+    },
+    {
+      "source": "projectidea_ablation_study",
+      "target": "projectidea_ieee_paper_contribution",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md",
+      "source_location": "Paper Contribution Summary — Ablation study",
+      "weight": 1.0
+    },
+    {
+      "source": "prompt_b_no_classify_rule",
+      "target": "prompt_c_no_classify_rule",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.92,
+      "source_file": "prompts/prompt_b.txt",
+      "source_location": "Rules sections of both prompt_b.txt and prompt_c.txt",
+      "weight": 0.92
+    },
+    {
+      "source": "todo_providers_layer",
+      "target": "projectidea_base_llm_provider",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "todo.md",
+      "source_location": "Providers Layer section",
+      "weight": 1.0
+    },
+    {
+      "source": "todo_evaluation_layer",
+      "target": "projectidea_compute_metrics",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "todo.md",
+      "source_location": "Evaluation Layer — metrics.py",
+      "weight": 0.85
+    },
+    {
+      "source": "run_build_dataset",
+      "target": "projectidea_sample_threats_dataset",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "run.md",
+      "source_location": "Build the Evaluation Dataset section",
+      "weight": 1.0
+    },
+    {
+      "source": "run_baselines_script",
+      "target": "results_readme_overview",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.78,
+      "source_file": "run.md",
+      "source_location": "Run Baselines section",
+      "weight": 0.78
+    },
+    {
+      "source": "next_phase_richness_dimensions",
+      "target": "prompt_c_impact_assessor_prompt",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.83,
+      "source_file": "next_phase.md",
+      "source_location": "severity_scored and response_plan dimensions",
+      "weight": 0.83
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "three_specialist_agents_council_pipeline",
+      "label": "Three Specialist Agents + Judge Council Pipeline",
+      "nodes": [
+        "projectidea_classifier_agent",
+        "projectidea_vuln_agent",
+        "projectidea_impact_agent",
+        "projectidea_judge_agent",
+        "projectidea_cyber_council_orchestrator"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "projectIdea.md"
+    },
+    {
+      "id": "output_richness_five_dimensions_evaluation",
+      "label": "5-Dimension Output Richness Evaluation (MITRE + Severity + Response + Contradiction + Classification)",
+      "nodes": [
+        "next_phase_richness_dimensions",
+        "prompt_b_mitre_attack_framework",
+        "prompt_c_impact_assessor_prompt",
+        "prompt_judge_contradiction_report",
+        "next_phase_output_richness_evaluator"
+      ],
+      "relation": "implement",
+      "confidence": "INFERRED",
+      "confidence_score": 0.87,
+      "source_file": "next_phase.md"
+    },
+    {
+      "id": "ieee_paper_evidence_chain",
+      "label": "IEEE Paper Evidence Chain (Richness + F1 + Ablation)",
+      "nodes": [
+        "projectidea_ieee_paper_contribution",
+        "next_phase_output_richness_evaluator",
+        "projectidea_ablation_study",
+        "results_readme_richness_over_f1_rationale"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "projectIdea.md"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
