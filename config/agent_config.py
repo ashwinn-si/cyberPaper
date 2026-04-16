@@ -1,49 +1,51 @@
-from providers.claude_provider import ClaudeProvider
-from providers.openai_provider import OpenAIProvider
-from providers.llama_provider import LlamaProvider
-
 # ─────────────────────────────────────────────────────────────────
 #  AGENT PROVIDER CONFIGURATION
 #
-#  This is the ONLY file you edit to swap LLM providers per agent.
+#  Security-specialized models via Ollama (local execution)
+#  All models optimized for threat analysis, no API costs.
 #
-#  Available options:
-#    ClaudeProvider()                          Claude Sonnet (default)
-#    ClaudeProvider("claude-opus-4-5")         Claude Opus
-#    OpenAIProvider()                          GPT-4o (default)
-#    OpenAIProvider("gpt-4-turbo")             GPT-4 Turbo
-#    LlamaProvider()                           Llama 3 (local, default endpoint)
-#    LlamaProvider(model_name="llama-3", api_base="http://localhost:8000/v1")
-#
-#  Change one line here. Zero other code changes required.
+#  Edit this file to swap providers per agent.
+#  Zero code changes required — just update the provider assignment.
 # ─────────────────────────────────────────────────────────────────
 
-# AGENT_A_PROVIDER = OpenAIProvider("gpt-4o")       # Threat Classifier
-# AGENT_B_PROVIDER = OpenAIProvider()       # Vulnerability Analyst
-# AGENT_C_PROVIDER = OpenAIProvider()       # Impact Assessor
-# JUDGE_PROVIDER   = OpenAIProvider()       # Judge / Synthesizer
+from providers.foundation_sec_reasoning_provider import FoundationSecReasoningProvider
+from providers.llama_foundation_ai_provider import LlamaFoundationAIProvider
+from providers.gemma2_security_provider import Gemma2SecurityProvider
+from providers.deepseek_r1_provider import DeepSeekR1Provider
+from providers.mistral_nemo_provider import MistralNemoProvider
+from providers.qwen2_5_provider import Qwen25Provider
 
-# To use a local Llama 3 endpoint for all agents, set:
-AGENT_A_PROVIDER = LlamaProvider()
-AGENT_B_PROVIDER = LlamaProvider()
-AGENT_C_PROVIDER = LlamaProvider()
-JUDGE_PROVIDER   = LlamaProvider()
-AGENT_VALIDATOR_PROVIDER = LlamaProvider()   # Agent 0 — Validator
-AGENT_D_PROVIDER         = LlamaProvider()   # Agent D — Remediation Engineer
+# ── Default Configuration: Security-specialized models via Ollama ──
 #
-# You can override the endpoint and model via environment variables:
-#   LLAMA_API_BASE (default: http://localhost:8000/v1)
-#   LLAMA_MODEL    (default: llama-3)
-# Or pass them as arguments to LlamaProvider(...)
+# Agent 0 (Validator):    Foundation-Sec-8B-Reasoning
+# Agent A (Classifier):   Llama-3.1-FoundationAI-SecurityLLM-8B
+# Agent B (Vuln Analyst): Gemma-2-27B-Security
+# Agent C (Impact):       DeepSeek-R1-Reasoning
+# Agent D (Remediation):  Mistral-Nemo-Instruct
+# Judge (CISO):           Qwen2.5-72B-Instruct
 
-# ── Example: GPT for all agents, Claude only as judge ─────────────
-# AGENT_A_PROVIDER = OpenAIProvider()
-# AGENT_B_PROVIDER = OpenAIProvider()
-# AGENT_C_PROVIDER = OpenAIProvider()
-# JUDGE_PROVIDER   = ClaudeProvider()
+AGENT_VALIDATOR_PROVIDER = FoundationSecReasoningProvider()
+AGENT_A_PROVIDER         = LlamaFoundationAIProvider()      # Threat Classifier
+AGENT_B_PROVIDER         = Gemma2SecurityProvider()         # Vulnerability Analyst
+AGENT_C_PROVIDER         = DeepSeekR1Provider()             # Impact Assessor
+AGENT_D_PROVIDER         = MistralNemoProvider()            # Remediation Engineer
+JUDGE_PROVIDER           = Qwen25Provider()                 # Judge / CISO
 
-# ── Example: Mixed models per agent ───────────────────────────────
-# AGENT_A_PROVIDER = ClaudeProvider("claude-opus-4-5")   # Best reasoning for classification
-# AGENT_B_PROVIDER = OpenAIProvider("gpt-4o")            # GPT-4o for CVE mapping
-# AGENT_C_PROVIDER = OpenAIProvider("gpt-4-turbo")       # GPT Turbo for impact scoring
-# JUDGE_PROVIDER   = ClaudeProvider()                    # Claude Sonnet as judge
+# ── Alternative: Use local Llama fallback (if Ollama models unavailable) ────
+# from providers.llama_provider import LlamaProvider
+# AGENT_VALIDATOR_PROVIDER = LlamaProvider(model_name="llama3")
+# AGENT_A_PROVIDER         = LlamaProvider(model_name="llama3")
+# AGENT_B_PROVIDER         = LlamaProvider(model_name="llama3")
+# AGENT_C_PROVIDER         = LlamaProvider(model_name="llama3")
+# AGENT_D_PROVIDER         = LlamaProvider(model_name="llama3")
+# JUDGE_PROVIDER           = LlamaProvider(model_name="llama3")
+
+# ── Alternative: Mix with Claude/OpenAI (cloud-based) ────────────────
+# from providers.claude_provider import ClaudeProvider
+# from providers.openai_provider import OpenAIProvider
+# AGENT_A_PROVIDER = ClaudeProvider("claude-opus-4-6")
+# JUDGE_PROVIDER   = ClaudeProvider("claude-sonnet-4-6")
+
+# ── Environment Override ───────────────────────────────────────────
+# Set OLLAMA_API_BASE to override default (http://localhost:11434):
+#   export OLLAMA_API_BASE=http://192.168.1.100:11434

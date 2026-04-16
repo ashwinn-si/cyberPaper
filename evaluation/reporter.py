@@ -27,30 +27,34 @@ from sklearn.metrics import confusion_matrix, classification_report
 
 RESULTS_DIR = "results"
 
-# ─── Palette ────────────────────────────────────────────────────
+# ─── Palette (Paper-friendly: minimal, professional) ──────────────
 
-DARK_BG    = "#0d1526"
-CARD_BG    = "#111d33"
-ACCENT     = "#00d4ff"
-GREEN      = "#00ff88"
-ORANGE     = "#ff9500"
-RED        = "#ff3d5a"
-TEXT       = "#e8f0fe"
-MUTED      = "#4a6280"
+WHITE      = "#ffffff"
+LIGHT_GRAY = "#f5f5f5"
+DARK_GRAY  = "#333333"
+GRAY       = "#666666"
+LIGHT_BORDER = "#cccccc"
+BLACK      = "#000000"
+
+# Grayscale bars with subtle differentiation
+BAR_1      = "#4a4a4a"  # Dark gray
+BAR_2      = "#6b6b6b"  # Medium gray
+BAR_3      = "#8a8a8a"  # Light gray
+BAR_4      = "#a0a0a0"  # Lighter gray
 
 plt.rcParams.update({
-    "figure.facecolor":  DARK_BG,
-    "axes.facecolor":    CARD_BG,
-    "axes.edgecolor":    MUTED,
-    "axes.labelcolor":   TEXT,
-    "axes.titlecolor":   TEXT,
-    "xtick.color":       MUTED,
-    "ytick.color":       MUTED,
-    "text.color":        TEXT,
-    "grid.color":        "#1e2f4a",
-    "grid.linewidth":    0.6,
-    "font.family":       "monospace",
-    "font.size":         9,
+    "figure.facecolor":  WHITE,
+    "axes.facecolor":    WHITE,
+    "axes.edgecolor":    LIGHT_BORDER,
+    "axes.labelcolor":   DARK_GRAY,
+    "axes.titlecolor":   BLACK,
+    "xtick.color":       DARK_GRAY,
+    "ytick.color":       DARK_GRAY,
+    "text.color":        DARK_GRAY,
+    "grid.color":        LIGHT_BORDER,
+    "grid.linewidth":    0.8,
+    "font.family":       "sans-serif",
+    "font.size":         10,
 })
 
 
@@ -144,34 +148,32 @@ def _save_confusion_matrix(prefix, system_label, true_labels, pred_labels, label
     cm = confusion_matrix(true_labels, pred_labels, labels=labels)
 
     fig, ax = plt.subplots(figsize=(10, 8))
-    fig.patch.set_facecolor(DARK_BG)
+    fig.patch.set_facecolor(WHITE)
 
     # Normalise for colour intensity but annotate with raw counts
     cm_norm = cm.astype(float) / (cm.sum(axis=1, keepdims=True) + 1e-9)
 
+    # Use grayscale colormap for academic paper
     sns.heatmap(
         cm_norm, annot=cm, fmt="d",
         xticklabels=labels, yticklabels=labels,
-        cmap=sns.light_palette(ACCENT, as_cmap=True),
-        linewidths=0.5, linecolor="#1e2f4a",
+        cmap="Greys",
+        linewidths=1.0, linecolor=WHITE,
         ax=ax,
-        annot_kws={"size": 9, "color": TEXT},
+        annot_kws={"size": 10, "color": BLACK},
         cbar_kws={"label": "Row-normalised proportion"},
     )
 
-    ax.set_title(f"Confusion Matrix — {system_label}", pad=14, fontsize=11, fontweight="bold")
-    ax.set_xlabel("Predicted Label", labelpad=10)
-    ax.set_ylabel("True Label",      labelpad=10)
+    ax.set_title(f"Confusion Matrix — {system_label}", pad=14, fontsize=12, fontweight="bold")
+    ax.set_xlabel("Predicted Label", labelpad=10, fontsize=11)
+    ax.set_ylabel("True Label",      labelpad=10, fontsize=11)
     ax.tick_params(axis="x", rotation=35)
     ax.tick_params(axis="y", rotation=0)
 
-    # Timestamp watermark
-    fig.text(0.99, 0.01, datetime.now().strftime("%Y-%m-%d %H:%M"),
-             ha="right", va="bottom", fontsize=7, color=MUTED)
-
+    # No watermark for paper
     plt.tight_layout()
     path = os.path.join(RESULTS_DIR, f"{prefix}_confusion.png")
-    plt.savefig(path, dpi=150, bbox_inches="tight", facecolor=DARK_BG)
+    plt.savefig(path, dpi=300, bbox_inches="tight", facecolor=WHITE)
     plt.close(fig)
     return path
 
@@ -186,13 +188,14 @@ def _save_metrics_bar(prefix, system_label, metrics):
         metrics["recall"],
         metrics["f1_score"],
     ]
-    colours = [ACCENT, GREEN, ORANGE, "#a78bfa"]
+    # Grayscale colors for paper
+    colours = [BAR_1, BAR_2, BAR_3, BAR_4]
 
     fig, ax = plt.subplots(figsize=(7, 4.5))
-    fig.patch.set_facecolor(DARK_BG)
+    fig.patch.set_facecolor(WHITE)
 
     bars = ax.bar(names, values, color=colours, width=0.5,
-                  edgecolor="none", zorder=3)
+                  edgecolor=DARK_GRAY, linewidth=1.0, zorder=3)
 
     # Value labels on bars
     for bar, val in zip(bars, values):
@@ -201,23 +204,20 @@ def _save_metrics_bar(prefix, system_label, metrics):
             bar.get_height() + 0.015,
             f"{val:.4f}",
             ha="center", va="bottom",
-            fontsize=9, color=TEXT, fontweight="bold"
+            fontsize=10, color=BLACK, fontweight="bold"
         )
 
     ax.set_ylim(0, 1.12)
     ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
     ax.yaxis.set_major_formatter(mticker.FormatStrFormatter("%.1f"))
-    ax.set_title(f"Evaluation Metrics — {system_label}", pad=12, fontsize=11, fontweight="bold")
-    ax.set_ylabel("Score")
-    ax.grid(axis="y", zorder=0)
+    ax.set_title(f"Evaluation Metrics — {system_label}", pad=12, fontsize=12, fontweight="bold")
+    ax.set_ylabel("Score", fontsize=11)
+    ax.grid(axis="y", zorder=0, linestyle="--", alpha=0.5)
     ax.set_axisbelow(True)
-
-    fig.text(0.99, 0.01, datetime.now().strftime("%Y-%m-%d %H:%M"),
-             ha="right", va="bottom", fontsize=7, color=MUTED)
 
     plt.tight_layout()
     path = os.path.join(RESULTS_DIR, f"{prefix}_metrics_bar.png")
-    plt.savefig(path, dpi=150, bbox_inches="tight", facecolor=DARK_BG)
+    plt.savefig(path, dpi=300, bbox_inches="tight", facecolor=WHITE)
     plt.close(fig)
     return path
 
@@ -234,7 +234,8 @@ def save_comparison_chart(systems: dict) -> str:
     """
     metric_names = ["Accuracy", "Precision", "Recall", "F1 Score"]
     metric_keys  = ["accuracy", "precision", "recall", "f1_score"]
-    colours      = [ACCENT, GREEN, ORANGE, "#a78bfa"]
+    # Grayscale colors for paper
+    colours      = [BAR_1, BAR_2, BAR_3, BAR_4]
 
     labels = list(systems.keys())
     x      = np.arange(len(labels))
@@ -242,36 +243,33 @@ def save_comparison_chart(systems: dict) -> str:
     n_met  = len(metric_names)
 
     fig, ax = plt.subplots(figsize=(max(8, len(labels) * 2.5), 5))
-    fig.patch.set_facecolor(DARK_BG)
+    fig.patch.set_facecolor(WHITE)
 
     for i, (key, colour, name) in enumerate(zip(metric_keys, colours, metric_names)):
         vals   = [systems[lbl][key] for lbl in labels]
         offset = (i - n_met / 2 + 0.5) * bar_w
         rects  = ax.bar(x + offset, vals, bar_w, label=name, color=colour,
-                        edgecolor="none", zorder=3)
+                        edgecolor=DARK_GRAY, linewidth=0.8, zorder=3)
         for rect, val in zip(rects, vals):
             ax.text(
                 rect.get_x() + rect.get_width() / 2,
                 rect.get_height() + 0.012,
                 f"{val:.3f}",
-                ha="center", va="bottom", fontsize=7, color=TEXT,
+                ha="center", va="bottom", fontsize=9, color=BLACK,
             )
 
     ax.set_xticks(x)
-    ax.set_xticklabels(labels, fontsize=9)
+    ax.set_xticklabels(labels, fontsize=10)
     ax.set_ylim(0, 1.18)
-    ax.set_ylabel("Score")
+    ax.set_ylabel("Score", fontsize=11)
     ax.set_title("System Comparison — Baseline vs CyberCouncil", pad=12,
-                 fontsize=11, fontweight="bold")
-    ax.legend(fontsize=8, facecolor=CARD_BG, edgecolor=MUTED, labelcolor=TEXT)
-    ax.grid(axis="y", zorder=0)
+                 fontsize=12, fontweight="bold")
+    ax.legend(fontsize=9, facecolor=WHITE, edgecolor=LIGHT_BORDER, labelcolor=BLACK)
+    ax.grid(axis="y", zorder=0, linestyle="--", alpha=0.5)
     ax.set_axisbelow(True)
-
-    fig.text(0.99, 0.01, datetime.now().strftime("%Y-%m-%d %H:%M"),
-             ha="right", va="bottom", fontsize=7, color=MUTED)
 
     plt.tight_layout()
     path = os.path.join(RESULTS_DIR, "comparison_chart.png")
-    plt.savefig(path, dpi=150, bbox_inches="tight", facecolor=DARK_BG)
+    plt.savefig(path, dpi=300, bbox_inches="tight", facecolor=WHITE)
     plt.close(fig)
     return path
