@@ -79,7 +79,7 @@ def _save_sample_report(item: dict, result: dict, predicted: str, out_dir: str) 
     lines.append(sep)
     lines.append("")
 
-    with open(path, "w", encoding="utf-8") as f:
+    with open(path, "w", encoding="utf-8", errors="replace") as f:
         f.write("\n".join(lines))
 
 
@@ -91,7 +91,7 @@ def run_evaluation(dataset_path: str, output_dir: str = "results/samples") -> tu
     Returns:
         (metrics_dict, true_labels, pred_labels)
     """
-    with open(dataset_path) as f:
+    with open(dataset_path, encoding="utf-8") as f:
         dataset = json.load(f)
 
     council = CyberCouncil()
@@ -100,6 +100,9 @@ def run_evaluation(dataset_path: str, output_dir: str = "results/samples") -> tu
 
     for item in tqdm(dataset, desc="CyberCouncil Evaluation"):
         result = council.analyze_sync(item["threat_description"])
+        if result["status"] == "rejected":
+            print(f"  [{item['id']}] SKIPPED — validator rejected input")
+            continue
         predicted = extract_label(result["final_report"])
         true_labels.append(item["true_label"])
         pred_labels.append(predicted)
@@ -110,7 +113,7 @@ def run_evaluation(dataset_path: str, output_dir: str = "results/samples") -> tu
 
 
 def run_baseline2_majority_vote(dataset_path: str):
-    with open(dataset_path) as f:
+    with open(dataset_path, encoding="utf-8") as f:
         dataset = json.load(f)
 
     council = CyberCouncil()

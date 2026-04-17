@@ -16,6 +16,7 @@ For lower GPU memory (16GB), switch _run_agents_parallel to _run_agents_sequenti
 """
 
 import asyncio
+import concurrent.futures
 from concurrent.futures import ThreadPoolExecutor
 
 from agents.classifier_agent  import ClassifierAgent
@@ -54,7 +55,15 @@ class CyberCouncil:
             user_answers : answers to validator's clarifying questions (if any).
                            Pass empty string "" if not applicable.
         """
-        return asyncio.run(self.analyze(threat, user_answers))
+        try:
+            loop = asyncio.get_running_loop()
+            # Already inside a running loop (e.g. Flask, Jupyter, nested async on Windows)
+            with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+                future = pool.submit(asyncio.run, self.analyze(threat, user_answers))
+                return future.result()
+        except RuntimeError:
+            # No running loop — safe to call asyncio.run() directly
+            return asyncio.run(self.analyze(threat, user_answers))
 
     async def analyze(self, threat: str, user_answers: str = "") -> dict:
         """
@@ -70,7 +79,7 @@ class CyberCouncil:
           round2_outputs   : list of agent dicts from Round 2
           final_report     : Judge's final synthesis
         """
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
 
         # ── Step 0: Validation ─────────────────────────────────────────────
         validation = await loop.run_in_executor(

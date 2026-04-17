@@ -13,6 +13,10 @@ Usage:
 
 import sys
 import os
+import asyncio
+
+if sys.platform == "win32":
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 import time
 import argparse
 import requests as _requests
@@ -148,9 +152,11 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     print(f"\n  CyberCouncil API server")
-    print(f"  → http://{args.host}:{args.port}/")
-    print(f"  → POST  /api/analyze   — run full council analysis")
-    print(f"  → GET   /api/health    — check Ollama status")
-    print(f"  → GET   /api/config    — view active provider config\n")
+    print(f"  -> http://{args.host}:{args.port}/")
+    print(f"  -> POST  /api/analyze   - run full council analysis")
+    print(f"  -> GET   /api/health    - check Ollama status")
+    print(f"  -> GET   /api/config    - view active provider config\n")
 
-    app.run(host=args.host, port=args.port, debug=True)
+    # use_reloader=False prevents Windows from spawning a child process that
+    # loses the WindowsSelectorEventLoopPolicy set above.
+    app.run(host=args.host, port=args.port, debug=True, use_reloader=False)

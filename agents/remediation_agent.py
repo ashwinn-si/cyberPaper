@@ -1,3 +1,4 @@
+import os
 from agents.base_agent import BaseAgent
 from config.agent_config import AGENT_D_PROVIDER
 
@@ -10,8 +11,9 @@ class RemediationAgent(BaseAgent):
     """
 
     def __init__(self):
+        prompt_path = os.path.join(os.path.dirname(__file__), "..", "prompts", "prompt_d.txt")
         super().__init__(
             name="Remediation Engineer",
-            system_prompt=self.load_prompt("prompts/prompt_d.txt"),
+            system_prompt=self.load_prompt(prompt_path),
             provider=AGENT_D_PROVIDER
         )

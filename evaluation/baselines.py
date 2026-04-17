@@ -43,7 +43,7 @@ def run_single_agent_baseline(dataset_path: str) -> tuple:
 
     Returns: (metrics_dict, true_labels, pred_labels)
     """
-    with open(dataset_path) as f:
+    with open(dataset_path, encoding="utf-8") as f:
         dataset = json.load(f)
 
     true_labels: list = []
@@ -73,10 +73,13 @@ def run_majority_vote_baseline(dataset_path: str) -> tuple:
 
     Returns: (metrics_dict, true_labels, pred_labels)
     """
-    with open(dataset_path) as f:
+    with open(dataset_path, encoding="utf-8") as f:
         dataset = json.load(f)
 
-    agents = [ClassifierAgent(), VulnAgent(), ImpactAgent()]
+    # Only agents whose output contains a threat label (A=Classifier).
+    # VulnAgent and ImpactAgent output CVEs/severity — not threat categories.
+    # Baseline 2 uses 3 independent ClassifierAgent runs to simulate majority vote.
+    agents = [ClassifierAgent(), ClassifierAgent(), ClassifierAgent()]
 
     true_labels: list = []
     pred_labels: list = []

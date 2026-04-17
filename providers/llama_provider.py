@@ -55,7 +55,7 @@ class LlamaProvider(BaseLLMProvider):
             # Default: requests
             import requests
             try:
-                response = requests.post(url, json=payload, timeout=300)
+                response = requests.post(url, json=payload, timeout=600)
                 response.raise_for_status()
                 data = response.json()
             except requests.RequestException as e:

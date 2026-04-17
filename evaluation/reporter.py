@@ -66,7 +66,7 @@ def save_report(
     metrics: dict,
     true_labels: list,
     pred_labels: list,
-    label_order: list | None = None,
+    label_order = None,
 ) -> dict:
     """
     Generate and save all report artefacts for one evaluation run.
@@ -90,7 +90,7 @@ def save_report(
     paths["confusion_png"]   = _save_confusion_matrix(prefix, system_label, true_labels, pred_labels, label_order)
     paths["metrics_bar_png"] = _save_metrics_bar(prefix, system_label, metrics)
 
-    print(f"\n  📁 Reports saved:")
+    print(f"\n  Reports saved:")
     for kind, path in paths.items():
         print(f"     {path}")
 
@@ -106,7 +106,7 @@ def _save_metrics_csv(prefix, system_label, metrics, true_labels, pred_labels):
         output_dict=True, zero_division=0
     )
 
-    with open(path, "w", newline="") as f:
+    with open(path, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["system", "label", "precision", "recall", "f1_score", "support"])
         for label, vals in report.items():
@@ -133,7 +133,7 @@ def _save_metrics_csv(prefix, system_label, metrics, true_labels, pred_labels):
 
 def _save_predictions_csv(prefix, true_labels, pred_labels):
     path = os.path.join(RESULTS_DIR, f"{prefix}_predictions.csv")
-    with open(path, "w", newline="") as f:
+    with open(path, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["#", "true_label", "predicted_label", "correct"])
         for i, (t, p) in enumerate(zip(true_labels, pred_labels), 1):

@@ -109,7 +109,7 @@ def evaluate_richness(dataset_path: str, use_judge: bool = True) -> dict:
     Returns:
         dict with average richness scores per dimension and overall average.
     """
-    with open(dataset_path) as f:
+    with open(dataset_path, encoding="utf-8") as f:
         dataset = json.load(f)
 
     council = CyberCouncil()
@@ -125,20 +125,28 @@ def evaluate_richness(dataset_path: str, use_judge: bool = True) -> dict:
 
     n = len(dataset)
 
+    skipped = 0
     for item in dataset:
-        result = council.analyze(item["threat_description"])
+        result = council.analyze_sync(item["threat_description"])
+
+        if result["status"] == "rejected":
+            skipped += 1
+            continue
 
         if use_judge:
             text_to_score = result["final_report"]
         else:
             # Single-agent baseline: score only Agent A output
-            text_to_score = result["agent_outputs"][0]["output"]
+            text_to_score = result["round1_outputs"][0]["output"]
 
         scores = score_output(text_to_score)
         for key in dimension_totals:
             dimension_totals[key] += scores[key]
 
-    averages = {k: round(v / n, 3) for k, v in dimension_totals.items()}
+    effective_n = n - skipped
+    if effective_n == 0:
+        return {k: 0.0 for k in dimension_totals} | {"n_samples": 0}
+    averages = {k: round(v / effective_n, 3) for k, v in dimension_totals.items()}
     averages["n_samples"] = n
     return averages
 

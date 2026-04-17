@@ -1,3 +1,4 @@
+import os
 import re
 from agents.base_agent import BaseAgent
 from config.agent_config import AGENT_VALIDATOR_PROVIDER
@@ -17,9 +18,10 @@ class ValidatorAgent(BaseAgent):
     """
 
     def __init__(self):
+        prompt_path = os.path.join(os.path.dirname(__file__), "..", "prompts", "prompt_validator.txt")
         super().__init__(
             name="Validator",
-            system_prompt=self.load_prompt("prompts/prompt_validator.txt"),
+            system_prompt=self.load_prompt(prompt_path),
             provider=AGENT_VALIDATOR_PROVIDER
         )
 

@@ -7,6 +7,12 @@ Usage:
 Edit the `threat` variable below to test any custom threat description.
 """
 
+import sys
+import asyncio
+
+if sys.platform == "win32":
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
 from council.orchestrator import CyberCouncil
 
 

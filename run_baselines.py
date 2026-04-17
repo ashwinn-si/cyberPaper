@@ -17,12 +17,20 @@ Outputs (all in results/):
     comparison_chart.png           — grouped bar chart comparing both baselines
 """
 
+import sys
+import asyncio
 import json
+import os
+
+if sys.platform == "win32":
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
 from evaluation.baselines import run_single_agent_baseline, run_majority_vote_baseline
 from evaluation.reporter  import save_report, save_comparison_chart
 
 DATASET_PATH = "data/threats.json"
 OUTPUT_JSON  = "results/baseline_results.json"
+os.makedirs("results", exist_ok=True)
 
 
 def print_metrics(label: str, metrics: dict):
@@ -50,10 +58,10 @@ def main():
     print_metrics("Baseline 1 — Single Agent",  b1_metrics)
     print_metrics("Baseline 2 — Majority Vote", b2_metrics)
     print()
-    print("  → Compare these against run_eval.py (Full Council + Judge)\n")
+    print("  -> Compare these against run_eval.py (Full Council + Judge)\n")
 
     # ── JSON (raw) ─────────────────────────────────────────────
-    with open(OUTPUT_JSON, "w") as f:
+    with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
         json.dump({
             "baseline_1_single_agent": {
                 "accuracy":    b1_metrics["accuracy"],
@@ -70,7 +78,7 @@ def main():
                 "predictions": [{"true": t, "pred": p} for t, p in zip(b2_true, b2_pred)],
             },
         }, f, indent=2)
-    print(f"  Saved JSON → {OUTPUT_JSON}")
+    print(f"  Saved JSON -> {OUTPUT_JSON}")
 
     # ── Per-baseline PNG charts + CSV ──────────────────────────
     save_report(
@@ -93,7 +101,7 @@ def main():
         "Single Agent\n(Baseline 1)":  b1_metrics,
         "Majority Vote\n(Baseline 2)": b2_metrics,
     })
-    print(f"\n  Comparison chart → {comparison_path}")
+    print(f"\n  Comparison chart -> {comparison_path}")
 
 
 if __name__ == "__main__":

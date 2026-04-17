@@ -1,8 +1,16 @@
+import sys
+import asyncio
 import json
+import os
+
+# Windows: use SelectorEventLoop to avoid ProactorEventLoop conflicts with ThreadPoolExecutor
+if sys.platform == "win32":
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
 from evaluation.evaluator import run_evaluation, run_baseline2_majority_vote
 from evaluation.richness_evaluator import run_richness_comparison
 
-DATASET     = "data/sample_threats.json"
+DATASET     = "data/threats.json"
 RESULTS_DIR = "results/"
 SAMPLES_DIR = "results/samples"
 
@@ -40,7 +48,7 @@ print("\n" + "="*60)
 print("PART 2 — OUTPUT RICHNESS METRICS")
 print("="*60)
 
-richness = run_richness_comparison(DATASET)
+richness = run_richness_comparison("data/sample_threats.json")
 
 dims = ["threat_classified", "mitre_mapped", "severity_scored", "response_plan", "contradiction_noted", "total"]
 dim_labels = {
@@ -62,7 +70,8 @@ for d in dims:
 
 
 # ── 3. Save all results ────────────────────────────────────────────────────
-with open(RESULTS_DIR + "eval_results.json", "w") as f:
+os.makedirs(RESULTS_DIR, exist_ok=True)
+with open(RESULTS_DIR + "eval_results.json", "w", encoding="utf-8") as f:
     json.dump({
         "full_council_metrics":   {k: v for k, v in council_metrics.items() if k != "report"},
         "baseline2_metrics":      {k: v for k, v in b2_metrics.items() if k != "report"},
