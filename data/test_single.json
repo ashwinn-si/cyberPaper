@@ -1,0 +1,7 @@
+[
+  {
+    "id": 1,
+    "threat_description": "Login form receives payload: admin' OR '1'='1'; DROP TABLE users; --",
+    "true_label": "SQL Injection"
+  }
+]
