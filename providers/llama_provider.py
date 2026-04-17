@@ -12,10 +12,11 @@ class LlamaProvider(BaseLLMProvider):
     - Clean error handling
     - Compatible with requests, fetch, or axios (Python default: requests)
     """
-    def __init__(self, model_name: str = None, api_base: str = None, max_tokens: int = 600, http_client=None):
+    def __init__(self, model_name: str = None, api_base: str = None, max_tokens: int = 600, num_ctx: int = 2048, http_client=None):
         self.model_name = model_name or os.getenv("LLAMA_MODEL", "llama3")
         self.api_base = api_base or os.getenv("LLAMA_API_BASE", "http://localhost:11434")
-        self.max_tokens = max_tokens
+        self.max_tokens = max_tokens   # max output tokens
+        self.num_ctx = num_ctx         # context window (input + output); must be > prompt length
         self.http_client = http_client  # Optionally inject a custom HTTP client (requests/fetch/axios)
 
     def complete(self, system_prompt: str, user_message: str) -> str:
@@ -26,7 +27,10 @@ class LlamaProvider(BaseLLMProvider):
                 {"role": "user",   "content": user_message}
             ],
             "stream": False,
-            "options": {"num_ctx": self.max_tokens}
+            "options": {
+                "num_ctx":    self.num_ctx,    # context window — must fit full prompt
+                "num_predict": self.max_tokens  # max tokens to generate in response
+            }
         }
         url = f"{self.api_base}/api/chat"
 
@@ -51,7 +55,7 @@ class LlamaProvider(BaseLLMProvider):
             # Default: requests
             import requests
             try:
-                response = requests.post(url, json=payload, timeout=60)
+                response = requests.post(url, json=payload, timeout=300)
                 response.raise_for_status()
                 data = response.json()
             except requests.RequestException as e:
