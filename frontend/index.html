@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CyberCouncil — Multi-Agent Threat Analysis</title>
-  <meta name="description" content="AI-powered cybersecurity threat analysis using a multi-agent council: Classifier, Vulnerability Analyst, Impact Assessor, and a Judge synthesizer." />
+  <meta name="description" content="AI-powered cybersecurity threat analysis using a multi-agent council." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
@@ -44,21 +44,20 @@
       <div class="input-card">
         <div class="examples-row">
           <span class="examples-label">Quick examples:</span>
-          <button class="example-chip" data-example="phishing" id="exPhishing">Phishing</button>
-          <button class="example-chip" data-example="ransomware" id="exRansomware">Ransomware</button>
-          <button class="example-chip" data-example="sqli" id="exSqli">SQL Injection</button>
-          <button class="example-chip" data-example="ddos" id="exDdos">DDoS</button>
-          <button class="example-chip" data-example="malware" id="exMalware">Malware</button>
+          <button class="example-chip" data-example="phishing">Phishing</button>
+          <button class="example-chip" data-example="ransomware">Ransomware</button>
+          <button class="example-chip" data-example="sqli">SQL Injection</button>
+          <button class="example-chip" data-example="ddos">DDoS</button>
+          <button class="example-chip" data-example="malware">Malware</button>
         </div>
 
         <textarea
           id="threatInput"
           class="threat-textarea"
-          placeholder="Describe the cybersecurity threat or incident in detail…&#10;&#10;Example: An employee received an email from ceo-financials.com claiming to be the CEO, requesting an urgent wire transfer of $150,000 to an external account. The link in the email points to http://docusign-secure.ceo-financials.com/sign. Email was sent at 2:47 AM. The real company domain is company.com."
+          placeholder="Describe the cybersecurity threat or incident in detail…&#10;&#10;Example: An employee received an email from ceo-financials.com claiming to be the CEO, requesting an urgent wire transfer of $150,000 to an external account."
           rows="6"
           maxlength="4000"
           spellcheck="false"
-          id="threatInput"
         ></textarea>
 
         <div class="input-footer">
@@ -70,6 +69,46 @@
         </div>
       </div>
     </section>
+
+    <!-- Clarification panel (shown when validator needs more info) -->
+    <section class="clarification-section" id="clarificationSection" hidden>
+      <div class="section-label">
+        <span class="label-tag warn-tag">CLARIFICATION NEEDED</span>
+        <span class="label-title">Validator needs more information</span>
+      </div>
+      <div class="clarification-card">
+        <div class="clarification-intro">
+          <span class="clarify-icon">❓</span>
+          <p>The validator agent has identified ambiguities in the threat description. Please answer the questions below so the council can perform an accurate analysis.</p>
+        </div>
+        <div class="clarification-questions" id="clarificationQuestions">
+          <!-- Populated by JS -->
+        </div>
+        <textarea
+          id="answersInput"
+          class="threat-textarea answers-textarea"
+          placeholder="Type your answers here, addressing each question above…"
+          rows="4"
+          spellcheck="false"
+        ></textarea>
+        <div class="clarification-footer">
+          <button class="analyze-btn" id="submitAnswersBtn">
+            <span class="btn-icon">▶</span>
+            <span class="btn-text">Submit Answers &amp; Analyze</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rejection banner -->
+    <div class="rejection-banner" id="rejectionBanner" hidden>
+      <span class="rejection-icon">✕</span>
+      <div>
+        <strong>Threat rejected by validator</strong>
+        <p id="rejectionReason"></p>
+      </div>
+      <button class="error-dismiss" id="rejectionDismiss">✕</button>
+    </div>
 
     <!-- Results area -->
     <section class="results-section" id="resultsSection" hidden>
@@ -85,30 +124,24 @@
           </div>
           <p class="loading-label" id="loadingLabel">Initialising council…</p>
           <div class="loading-steps">
-            <div class="loading-step" id="step1">
-              <span class="step-dot"></span>Agent A — Threat Classifier
-            </div>
-            <div class="loading-step" id="step2">
-              <span class="step-dot"></span>Agent B — Vulnerability Analyst
-            </div>
-            <div class="loading-step" id="step3">
-              <span class="step-dot"></span>Agent C — Impact Assessor
-            </div>
-            <div class="loading-step" id="step4">
-              <span class="step-dot"></span>Judge — Synthesising report
-            </div>
+            <div class="loading-step" id="lstep0"><span class="step-dot"></span>Validator — checking &amp; enriching input</div>
+            <div class="loading-step" id="lstep1"><span class="step-dot"></span>Round 1 — 4 agents analysing in parallel</div>
+            <div class="loading-step" id="lstep2"><span class="step-dot"></span>Judge — drafting Round 1 report</div>
+            <div class="loading-step" id="lstep3"><span class="step-dot"></span>Round 2 — agents refining with draft context</div>
+            <div class="loading-step" id="lstep4"><span class="step-dot"></span>Judge — synthesising final report</div>
           </div>
+          <p class="loading-note">This may take 2–5 minutes. Models are running locally.</p>
         </div>
       </div>
 
-      <!-- Agent cards row -->
-      <div class="section-label">
-        <span class="label-tag">COUNCIL</span>
-        <span class="label-title">Specialist Analyses</span>
+      <!-- ── Round 1 ──────────────────────────────────────────── -->
+      <div class="section-label" id="round1Label">
+        <span class="label-tag round-tag">ROUND 1</span>
+        <span class="label-title">Initial Specialist Analyses</span>
         <span class="elapsed-badge" id="elapsedBadge" hidden></span>
       </div>
 
-      <div class="agents-grid" id="agentsGrid">
+      <div class="agents-grid" id="agentsGrid1">
         <!-- Agent A -->
         <div class="agent-card" id="cardA">
           <div class="agent-header">
@@ -119,7 +152,7 @@
             </div>
             <div class="agent-status" id="statusA"></div>
           </div>
-          <pre class="agent-output" id="outputA">Waiting for analysis…</pre>
+          <pre class="agent-output" id="outputA">Waiting…</pre>
         </div>
 
         <!-- Agent B -->
@@ -132,7 +165,7 @@
             </div>
             <div class="agent-status" id="statusB"></div>
           </div>
-          <pre class="agent-output" id="outputB">Waiting for analysis…</pre>
+          <pre class="agent-output" id="outputB">Waiting…</pre>
         </div>
 
         <!-- Agent C -->
@@ -145,26 +178,101 @@
             </div>
             <div class="agent-status" id="statusC"></div>
           </div>
-          <pre class="agent-output" id="outputC">Waiting for analysis…</pre>
+          <pre class="agent-output" id="outputC">Waiting…</pre>
         </div>
-      </div>
 
-      <!-- Judge report -->
-      <div class="section-label" style="margin-top:2rem;">
-        <span class="label-tag judge-tag">JUDGE</span>
-        <span class="label-title">Final CISO Report</span>
-      </div>
-
-      <div class="judge-card" id="judgeCard">
-        <div class="judge-header">
-          <div class="judge-icon">⚖</div>
-          <div>
-            <div class="agent-name">Judge Agent (CISO)</div>
-            <div class="agent-provider" id="providerJudge">—</div>
+        <!-- Agent D -->
+        <div class="agent-card" id="cardD">
+          <div class="agent-header">
+            <div class="agent-badge badge-d">D</div>
+            <div>
+              <div class="agent-name">Remediation Engineer</div>
+              <div class="agent-provider" id="providerD">—</div>
+            </div>
+            <div class="agent-status" id="statusD"></div>
           </div>
-          <button class="copy-btn" id="judgeCardCopy" title="Copy to clipboard">⧉ Copy</button>
+          <pre class="agent-output" id="outputD">Waiting…</pre>
         </div>
-        <pre class="judge-output" id="judgeOutput">Judge synthesis will appear here after all agents complete.</pre>
+      </div>
+
+      <!-- Draft report (Judge Round 1) -->
+      <div class="section-label" style="margin-top:2rem;">
+        <span class="label-tag judge-tag">JUDGE — ROUND 1</span>
+        <span class="label-title">Draft Report</span>
+        <button class="collapse-btn" id="draftToggle" data-target="draftCard">▼ Collapse</button>
+      </div>
+      <div class="judge-card draft-card" id="draftCard">
+        <pre class="judge-output" id="draftOutput">Draft report will appear here after Round 1 completes.</pre>
+      </div>
+
+      <!-- ── Round 2 ──────────────────────────────────────────── -->
+      <div class="section-label" style="margin-top:2.5rem;">
+        <span class="label-tag round-tag round2-tag">ROUND 2</span>
+        <span class="label-title">Refined Analyses (with Draft Context)</span>
+      </div>
+
+      <div class="agents-grid" id="agentsGrid2">
+        <!-- Agent A Round 2 -->
+        <div class="agent-card" id="cardA2">
+          <div class="agent-header">
+            <div class="agent-badge badge-a">A</div>
+            <div>
+              <div class="agent-name">Threat Classifier</div>
+              <div class="agent-provider" id="providerA2">—</div>
+            </div>
+            <div class="agent-status" id="statusA2"></div>
+          </div>
+          <pre class="agent-output" id="outputA2">Waiting…</pre>
+        </div>
+
+        <!-- Agent B Round 2 -->
+        <div class="agent-card" id="cardB2">
+          <div class="agent-header">
+            <div class="agent-badge badge-b">B</div>
+            <div>
+              <div class="agent-name">Vulnerability Analyst</div>
+              <div class="agent-provider" id="providerB2">—</div>
+            </div>
+            <div class="agent-status" id="statusB2"></div>
+          </div>
+          <pre class="agent-output" id="outputB2">Waiting…</pre>
+        </div>
+
+        <!-- Agent C Round 2 -->
+        <div class="agent-card" id="cardC2">
+          <div class="agent-header">
+            <div class="agent-badge badge-c">C</div>
+            <div>
+              <div class="agent-name">Impact Assessor</div>
+              <div class="agent-provider" id="providerC2">—</div>
+            </div>
+            <div class="agent-status" id="statusC2"></div>
+          </div>
+          <pre class="agent-output" id="outputC2">Waiting…</pre>
+        </div>
+
+        <!-- Agent D Round 2 -->
+        <div class="agent-card" id="cardD2">
+          <div class="agent-header">
+            <div class="agent-badge badge-d">D</div>
+            <div>
+              <div class="agent-name">Remediation Engineer</div>
+              <div class="agent-provider" id="providerD2">—</div>
+            </div>
+            <div class="agent-status" id="statusD2"></div>
+          </div>
+          <pre class="agent-output" id="outputD2">Waiting…</pre>
+        </div>
+      </div>
+
+      <!-- Final report (Judge Round 2) -->
+      <div class="section-label" style="margin-top:2rem;">
+        <span class="label-tag judge-tag">JUDGE — FINAL</span>
+        <span class="label-title">CISO Report</span>
+        <button class="copy-btn" id="judgeCardCopy">⧉ Copy</button>
+      </div>
+      <div class="judge-card" id="judgeCard">
+        <pre class="judge-output" id="judgeOutput">Final report will appear here after Round 2 completes.</pre>
       </div>
 
     </section>

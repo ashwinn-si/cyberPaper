@@ -2,8 +2,9 @@ import json
 from evaluation.evaluator import run_evaluation, run_baseline2_majority_vote
 from evaluation.richness_evaluator import run_richness_comparison
 
-DATASET = "data/sample_threats.json"
+DATASET     = "data/sample_threats.json"
 RESULTS_DIR = "results/"
+SAMPLES_DIR = "results/samples"
 
 
 # ── 1. Label Classification Metrics ───────────────────────────────────────
@@ -12,7 +13,8 @@ print("PART 1 — LABEL CLASSIFICATION METRICS")
 print("="*60)
 
 print("\n[Running] Full Council + Judge...")
-council_metrics, council_true, council_pred = run_evaluation(DATASET)
+print(f"  Per-sample reports will be saved to: {SAMPLES_DIR}/")
+council_metrics, council_true, council_pred = run_evaluation(DATASET, output_dir=SAMPLES_DIR)
 
 print("[Running] Baseline 2 — Council, No Judge...")
 b2_metrics, b2_true, b2_pred = run_baseline2_majority_vote(DATASET)
@@ -69,5 +71,6 @@ with open(RESULTS_DIR + "eval_results.json", "w") as f:
         "baseline2_predictions":  list(zip(b2_true, b2_pred)),
     }, f, indent=2)
 
-print("\n\nAll results saved to results/eval_results.json")
+print(f"\n\nPer-sample reports saved to: {SAMPLES_DIR}/")
+print("All results saved to results/eval_results.json")
 print("="*60)
