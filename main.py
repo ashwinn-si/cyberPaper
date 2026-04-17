@@ -20,18 +20,46 @@ Email was sent at 2:47 AM. The real company domain is company.com.
 
 def main():
     council = CyberCouncil()
-    result  = council.analyze(threat)
+    result  = council.analyze_sync(threat)
 
-    # Print each specialist agent's output
-    for output in result["agent_outputs"]:
-        print(f"\n{'=' * 60}")
-        print(f"[{output['agent']}]  via {output['provider']}")
+    print(f"\nStatus: {result['status']}")
+
+    if result["status"] == "rejected":
+        print("Threat rejected by validator:")
+        print(result["validation"])
+        return
+
+    if result["status"] == "needs_clarification":
+        print("Validator needs clarification:")
+        for q in result.get("questions", []):
+            print(f"  - {q}")
+        return
+
+    # Round 1 agent outputs
+    print(f"\n{'=' * 60}")
+    print("ROUND 1 — Agent Outputs")
+    for output in result["round1_outputs"]:
+        print(f"\n[{output['agent']}]  via {output['provider']}")
         print("-" * 60)
         print(output["output"])
 
-    # Print the judge's final synthesized report
+    # Draft report
     print(f"\n{'=' * 60}")
-    print("[FINAL JUDGE REPORT]")
+    print("JUDGE DRAFT REPORT (Round 1)")
+    print("=" * 60)
+    print(result["draft_report"])
+
+    # Round 2 agent outputs
+    print(f"\n{'=' * 60}")
+    print("ROUND 2 — Agent Outputs (with draft context)")
+    for output in result["round2_outputs"]:
+        print(f"\n[{output['agent']}]  via {output['provider']}")
+        print("-" * 60)
+        print(output["output"])
+
+    # Final report
+    print(f"\n{'=' * 60}")
+    print("FINAL JUDGE REPORT")
     print("=" * 60)
     print(result["final_report"])
     print()
