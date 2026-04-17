@@ -16,36 +16,36 @@
 # ─────────────────────────────────────────────────────────────────
 
 from providers.llama_provider import LlamaProvider
+from providers.deepseek_r1_provider import DeepSeekR1Provider
+from providers.mistral_nemo_provider import MistralNemoProvider
 from providers.qwen2_5_provider import Qwen25Provider
 
-# ── DEFAULT (34GB GPU, Parallel, Available Ollama Models) ────────
+# ── DEFAULT (34GB GPU, Parallel, Mixed Available Models) ─────────
 #
-# Agent 0 (Validator):    Llama-3 8B (generic, reliable)
-# Agent A (Classifier):   Llama-3 8B (threat classification)
-# Agent B (Vuln Analyst): Llama-3 8B (vulnerability analysis)
-# Agent C (Impact):       Llama-3 8B (impact assessment)
-# Agent D (Remediation):  Llama-3 8B (remediation planning)
-# Judge (CISO):           Qwen2.5-72B (synthesis & arbitration)
+# Agent 0 (Validator):    Llama-3 8B      — reliable general-purpose validation
+# Agent A (Classifier):   DeepSeek-R1     — strong reasoning for threat classification
+# Agent B (Vuln Analyst): Mistral-Nemo    — technical analysis, CVE/ATT&CK mapping
+# Agent C (Impact):       Llama-3 8B      — impact scoring + immediate actions
+# Agent D (Remediation):  Llama-3 8B      — remediation planning
+# Judge (CISO):           Qwen2.5-72B     — synthesis & arbitration (runs after agents)
 #
 # Execution: Parallel (all 4 agents run concurrently)
-# Peak memory: ~32GB total
-#   - Agents parallel: 4×8B = 32GB with KV cache
-#   - Judge: 37GB (runs after agents unload, uses sequential flow)
+# Peak memory: ~30–34GB total
+#   - Agents parallel: mixed 7–8B models ≈ 30GB with KV cache
+#   - Judge: ~4.7GB quantized (runs after agents unload)
 # Performance: ~5–10 sec per threat (parallel execution)
-# Accuracy: Good (generic models, but still effective for threat analysis)
+# Models installed: llama3, deepseek-r1, mistral-nemo, qwen2.5
 
 AGENT_VALIDATOR_PROVIDER = LlamaProvider(model_name="llama3", max_tokens=400)
-AGENT_A_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)      # Threat Classifier
-AGENT_B_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)      # Vulnerability Analyst
+AGENT_A_PROVIDER         = DeepSeekR1Provider()                                    # Threat Classifier  — reasoning
+AGENT_B_PROVIDER         = MistralNemoProvider()                                   # Vulnerability Analyst — technical
 AGENT_C_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)      # Impact Assessor
 AGENT_D_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)      # Remediation Engineer
 JUDGE_PROVIDER           = Qwen25Provider()                                        # Judge / CISO runs after agents unload
 
 # ── Alternative: All Generic Llama-3 (Fallback) ────────────────────
-# REQUIRES: Only Llama-3 model pulled
-# Use if specialized models cause OOM
-# Performance: ~5–10 sec per threat (parallel), but lower accuracy
-# from providers.llama_provider import LlamaProvider
+# Use if DeepSeek-R1 or Mistral-Nemo cause OOM or errors
+# Performance: same speed, slightly lower accuracy
 #
 # AGENT_VALIDATOR_PROVIDER = LlamaProvider(model_name="llama3", max_tokens=400)
 # AGENT_A_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)
@@ -53,26 +53,20 @@ JUDGE_PROVIDER           = Qwen25Provider()                                     
 # AGENT_C_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)
 # AGENT_D_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)
 # JUDGE_PROVIDER           = Qwen25Provider()
-# Peak memory: ~32GB (4×8B agents parallel + 72B judge)
 
 # ── Alternative: Sequential Execution (If Parallel Causes OOM) ───────
 # REQUIRES: Edit orchestrator.py to use _run_agents_sequential()
-# Use if parallel + specialized models exceed memory
+# Use if parallel execution exceeds memory (unlikely with 34GB)
 # Performance: ~20–30 sec per threat (slower but memory-safe)
 # Agents run one-at-a-time, each unloads before next starts
-# from providers.foundation_sec_reasoning_provider import FoundationSecReasoningProvider
-# from providers.llama_foundation_ai_provider import LlamaFoundationAIProvider
-# from providers.gemma2_security_provider import Gemma2SecurityProvider
-# from providers.deepseek_r1_provider import DeepSeekR1Provider
-# from providers.mistral_nemo_provider import MistralNemoProvider
 #
-# AGENT_VALIDATOR_PROVIDER = FoundationSecReasoningProvider()
-# AGENT_A_PROVIDER         = LlamaFoundationAIProvider()
-# AGENT_B_PROVIDER         = Gemma2SecurityProvider()
-# AGENT_C_PROVIDER         = DeepSeekR1Provider()
-# AGENT_D_PROVIDER         = MistralNemoProvider()
+# AGENT_VALIDATOR_PROVIDER = LlamaProvider(model_name="llama3", max_tokens=400)
+# AGENT_A_PROVIDER         = DeepSeekR1Provider()
+# AGENT_B_PROVIDER         = MistralNemoProvider()
+# AGENT_C_PROVIDER         = LlamaProvider(model_name="neural-chat", max_tokens=400)
+# AGENT_D_PROVIDER         = LlamaProvider(model_name="openchat", max_tokens=400)
 # JUDGE_PROVIDER           = Qwen25Provider()
-# Peak memory: ~37GB max (largest model = Qwen 72B or DeepSeek 33B)
+# Peak memory: ~7GB max per step (one model at a time)
 
 # ── Alternative: Mix with Claude/OpenAI (cloud-based) ────────────────
 # from providers.claude_provider import ClaudeProvider
