@@ -3,14 +3,17 @@ CyberCouncil Orchestrator
 ─────────────────────────
 Flow:
   1. ValidatorAgent (Agent 0) — validates and enriches raw input (1–2 passes)
-  2. Agents A, B, C, D       — run IN PARALLEL on the enriched threat (Round 1)
+  2. Agents A, B, C, D       — run SEQUENTIALLY on the enriched threat (Round 1)
+     (Sequential execution for GPU memory safety on 16GB VRAM)
   3. JudgeAgent              — synthesizes Round 1 outputs → draft report
-  4. Agents A, B, C, D       — run IN PARALLEL with draft report as context (Round 2)
+  4. Agents A, B, C, D       — run SEQUENTIALLY with draft report as context (Round 2)
   5. JudgeAgent              — synthesizes Round 2 outputs → final report
 
-Parallel execution uses asyncio + ThreadPoolExecutor so each agent's blocking
-API call runs in its own thread. On a 4-agent council this cuts wall-clock time
-by ~3–4x compared to sequential execution.
+Sequential execution (one agent at a time) ensures GPU memory stays under 16GB.
+Each agent unloads before the next runs. Wall-clock time ~20–30 sec per threat
+vs ~5–10 sec with parallel execution (not feasible with 16GB GPU).
+
+For production with 24GB+ GPU, switch _run_agents_sequential to _run_agents_parallel.
 """
 
 import asyncio
@@ -110,8 +113,8 @@ class CyberCouncil:
 
         clean_threat = validation.get("enriched") or threat
 
-        # ── Step 1: Round 1 — all agents in parallel ───────────────────────
-        round1_outputs = await self._run_agents_parallel(clean_threat, loop)
+        # ── Step 1: Round 1 — all agents sequentially ──────────────────────
+        round1_outputs = await self._run_agents_sequential(clean_threat, loop)
 
         # ── Step 2: Judge synthesizes Round 1 ─────────────────────────────
         draft_report = await loop.run_in_executor(
@@ -124,7 +127,7 @@ class CyberCouncil:
             f"{clean_threat}\n\n"
             f"--- JUDGE DRAFT REPORT (Round 1) ---\n{draft_report['output']}"
         )
-        round2_outputs = await self._run_agents_parallel(round2_input, loop)
+        round2_outputs = await self._run_agents_sequential(round2_input, loop)
 
         # ── Step 4: Judge synthesizes Round 2 → final report ──────────────
         final_report = await loop.run_in_executor(
@@ -145,9 +148,23 @@ class CyberCouncil:
 
     # ── Internal helpers ───────────────────────────────────────────────────
 
+    async def _run_agents_sequential(self, threat_input: str, loop) -> list:
+        """
+        Run all 4 specialist agents sequentially (one at a time).
+        Each agent unloads from GPU before the next one loads.
+        Ensures GPU memory stays under 16GB VRAM.
+        Returns list of agent output dicts in agent order (A, B, C, D).
+        """
+        outputs = []
+        for agent in self.agents:
+            output = await loop.run_in_executor(_EXECUTOR, agent.analyze, threat_input)
+            outputs.append(output)
+        return outputs
+
     async def _run_agents_parallel(self, threat_input: str, loop) -> list:
         """
-        Run all 4 specialist agents concurrently.
+        LEGACY: Run all 4 specialist agents concurrently.
+        Only use if GPU has 24GB+ VRAM.
         Each agent's blocking .analyze() call runs in its own thread.
         Returns list of agent output dicts in agent order (A, B, C, D).
         """
