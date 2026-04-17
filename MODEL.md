@@ -10,14 +10,18 @@ This guide covers complete setup for running **CyberCouncil with security-specia
 
 All agents use local models running via **Ollama** (no API costs, full privacy):
 
-| Agent | Model | Size | Role |
-|-------|-------|------|------|
-| **Agent 0 (Validator)** | Llama-3 | 8B | Input validation & enrichment |
-| **Agent A (Classifier)** | Llama-3 | 8B | Threat classification |
-| **Agent B (Vuln Analyst)** | Llama-3 | 8B | CVE & MITRE ATT&CK mapping |
-| **Agent C (Impact)** | Llama-3 | 8B | Risk quantification & impact scoring |
-| **Agent D (Remediation)** | Llama-3 | 8B | Remediation planning & containment |
-| **Judge (CISO)** | Qwen2.5-72B-Instruct | 72B | Final synthesis & orchestration |
+**Available Models on Ollama Registry:**
+
+| Agent | Model | Size | Role | Availability |
+|-------|-------|------|------|--------------|
+| **Agent 0 (Validator)** | Llama-3 | 8B | Input validation & enrichment | ✓ Available |
+| **Agent A (Classifier)** | Llama-3 | 8B | Threat classification | ✓ Available |
+| **Agent B (Vuln Analyst)** | Llama-3 | 8B | CVE & MITRE ATT&CK mapping | ✓ Available |
+| **Agent C (Impact)** | Llama-3 | 8B | Risk quantification & impact scoring | ✓ Available |
+| **Agent D (Remediation)** | Llama-3 | 8B | Remediation planning & containment | ✓ Available |
+| **Judge (CISO)** | Qwen2.5-72B-Instruct | 72B | Final synthesis & orchestration | ✓ Available |
+
+**Note:** Specialized security models (Foundation-Sec, FoundationAI-SecurityLLM, Gemma-2-Security, DeepSeek-R1, Mistral-Nemo) are **NOT available** on Ollama's public registry. Using generic Llama-3 instead for all agents.
 
 **Why this config:** Parallel execution. All 4 agents (8B each = 32B) run simultaneously, then Judge (72B) runs alone. Total peak memory: ~32GB (stays under 34GB).
 
@@ -29,9 +33,9 @@ Validator → [Agent A(8B), Agent B(8B), Agent C(8B), Agent D(8B)] → Judge(72B
 
 **Performance:** ~5–10 sec per threat (3–4x faster than sequential)
 
-### Optional: Upgrade to Security-Specialized Models (24GB+ Only)
+### Optional: Try Alternative Models
 
-If you want to swap to security-specialized models, you have two options:
+You can experiment with other available Ollama models:
 
 | Agent | Model | Size | Role |
 |-------|-------|------|------|
@@ -128,41 +132,41 @@ Ollama runs as a service automatically.
 
 ---
 
-### Pull Models for 16GB GPU (In Another Terminal, with venv Activated):
+### Pull Required Models (In Another Terminal, with venv Activated):
 
 ```bash
-# Llama-3 (8B) — for agents (required)
+# Llama-3 (8B) — for all agents (required)
 ollama pull llama3
 
 # Qwen (72B) — for Judge (required)
 ollama pull qwen2.5
 ```
 
-**Note:** First pull takes ~5 min for Llama-3, ~10 min for Qwen (downloads from Ollama registry).
+**Note:** First pull takes ~5 min for Llama-3, ~20 min for Qwen (downloads from Ollama registry).
 
 ---
 
-### (Optional) Pull Security-Specialized Models for 24GB+ GPU:
+### (Optional) Pull Alternative Models for Experimentation:
 
-Only pull these if upgrading to 24GB+ GPU later. Skip for now.
+Try different models to compare accuracy:
 
 ```bash
-# Foundation-Sec models (8B each)
-ollama pull foundation-sec-8b-instruct
-ollama pull foundation-sec-8b-reasoning
+# Alternative small models (8B)
+ollama pull mistral           # Alternative classifier
+ollama pull neural-chat       # Alternative analyst
+ollama pull openchat          # Alternative impact assessor
 
-# Llama Security model (8B)
-ollama pull llama-3.1-foundationai-securityllm-8b
+# Alternative medium model (27B)
+ollama pull gemma2            # Alternative for larger capacity
 
-# Gemma Security (27B)
-ollama pull gemma-2-27b-security
+# Alternative code model
+ollama pull deepseek-coder    # For code-based threats
 
-# DeepSeek reasoning (33B)
-ollama pull deepseek-r1
-
-# Mistral Nemo (12B)
-ollama pull mistral-nemo
+# Embedding model (for future use)
+ollama pull nomic-embed-text  # Text embeddings
 ```
+
+**Note:** Specialized security models (Foundation-Sec, FoundationAI-SecurityLLM, Gemma-2-Security, DeepSeek-R1, Mistral-Nemo) are NOT available on Ollama public registry.
 
 ---
 

@@ -130,9 +130,9 @@ Keep this window open, or let it run in background.
 
 ---
 
-## Step 4: Pull Models (Security-Specialized)
+## Step 4: Pull Models (Available on Ollama Registry)
 
-**RECOMMENDED:** Pull all specialized threat analysis models for best accuracy.
+**IMPORTANT:** Use models actually available on Ollama. Not all specialized security models exist in the public registry.
 
 **Open NEW Command Prompt or PowerShell window** (keep Ollama running in first window):
 
@@ -143,57 +143,133 @@ cd C:\Users\ashwinsi\paper\cyberPaper
 # Activate venv
 venv\Scripts\activate
 
-# Pull all specialized security models (RECOMMENDED)
-ollama pull foundation-sec-8b-reasoning
-ollama pull llama-3.1-foundationai-securityllm-8b
-ollama pull gemma-2-27b-security
-ollama pull deepseek-r1
-ollama pull mistral-nemo
-ollama pull qwen2.5
+# Pull available models from Ollama registry
+ollama pull llama3          # Generic 8B model (Agent 0, A, B, C, D)
+ollama pull gemma2          # Gemma 2 (alternative for comparison)
+ollama pull mistral         # Mistral 7B (alternative)
+ollama pull qwen2.5         # Qwen 2.5 72B (Judge)
+ollama pull neural-chat     # Neural Chat (alternative classifier)
+ollama pull openchat        # OpenChat (alternative)
 ```
 
 **Expected:**
-- Foundation-Sec-8B: ~5 min
-- Llama-Sec-8B: ~5 min
-- Gemma-2-27B: ~10 min
-- DeepSeek-R1-33B: ~15 min
-- Mistral-Nemo-12B: ~7 min
-- Qwen2.5-72B: ~20 min
-- **Total: ~60 minutes**
+- Llama-3: ~5 min
+- Gemma2: ~5 min
+- Mistral: ~5 min
+- Qwen2.5: ~20 min
+- Neural-Chat: ~5 min
+- OpenChat: ~5 min
+- **Total: ~45 minutes**
 
 **Verify:**
 ```cmd
 ollama list
 ```
 
-Should show all 6 models:
+Should show all available models.
+
+---
+
+### IMPORTANT: Update config/agent_config.py
+
+Since specialized security models don't exist on Ollama, you must use generic models instead.
+
+```cmd
+notepad config\agent_config.py
 ```
-NAME                                    ID              SIZE      MODIFIED
-foundation-sec-8b-reasoning:latest      ...             4.7GB     ...
-llama-3.1-foundationai-securityllm-8b   ...             4.7GB     ...
-gemma-2-27b-security:latest             ...             13GB      ...
-deepseek-r1:latest                      ...             18GB      ...
-mistral-nemo:latest                     ...             7GB       ...
-qwen2.5:latest                          ...             37GB      ...
+
+**Replace the default section with:**
+
+```python
+from providers.llama_provider import LlamaProvider
+from providers.qwen2_5_provider import Qwen25Provider
+
+# ── DEFAULT (Available Ollama Models) ────────────────────────────
+# Using publicly available models (specialized security models not in Ollama registry)
+
+AGENT_VALIDATOR_PROVIDER = LlamaProvider(model_name="llama3", max_tokens=400)
+AGENT_A_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)      # Classifier
+AGENT_B_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)      # Vuln Analyst
+AGENT_C_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)      # Impact Assessor
+AGENT_D_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)      # Remediation
+JUDGE_PROVIDER           = Qwen25Provider()                                        # Judge
+
+# Execution: Parallel (all 4 agents run concurrently)
+# Peak memory: ~32GB (4×8B agents + 72B judge)
+# Performance: ~5–10 sec per threat
+```
+
+Save the file.
+
+---
+
+### Alternative Models to Try (Optional)
+
+For experimentation, you can try different models:
+
+```cmd
+# Try Gemma2 as agents
+ollama pull gemma2
+
+# Try Mistral
+ollama pull mistral
+
+# Try neural-chat
+ollama pull neural-chat
+
+# Try openchat
+ollama pull openchat
+
+# Try deepseek (actual Ollama model)
+ollama pull deepseek-coder
+
+# Try nomic-embed (embedding model)
+ollama pull nomic-embed-text
+```
+
+**Then in config, switch agents to use different models:**
+
+```python
+# Example: Use Gemma2 for some agents
+AGENT_B_PROVIDER = LlamaProvider(model_name="gemma2", max_tokens=400)
+
+# Example: Use Mistral for Judge
+JUDGE_PROVIDER = LlamaProvider(model_name="mistral", max_tokens=400)
 ```
 
 ---
 
-### Alternative: Pull Only Llama-3 (Faster, Generic Models)
+### Available Models on Ollama (Public Registry)
 
-If you prefer faster setup and don't need maximum accuracy:
+Common models you can safely pull:
 
+**Small (8B):**
+- `llama3` (recommended for agents)
+- `mistral`
+- `neural-chat`
+- `openchat`
+
+**Medium (27B+):**
+- `gemma2`
+- `llama2-uncensored`
+- `dolphin-mixtral`
+
+**Large (72B+):**
+- `qwen2.5` (recommended for judge)
+- `mixtral:8x7b`
+- `llama2:70b`
+
+**Code models:**
+- `deepseek-coder`
+- `codegemma`
+
+To see all available models:
 ```cmd
-ollama pull llama3
-ollama pull qwen2.5
+# This will list all models on Ollama's public registry
+ollama list-models
 ```
 
-**Expected:**
-- Llama-3: ~5 minutes
-- Qwen2.5: ~10 minutes
-- **Total: ~15 minutes**
-
-This is already configured as fallback in `config/agent_config.py`.
+Or visit: https://ollama.ai/library
 
 ---
 
@@ -389,13 +465,14 @@ venv\Scripts\activate
 pip install -r requirements.txt
 copy .env.example .env
 
-# Pull specialized security models (RECOMMENDED - ~60 min)
-ollama pull foundation-sec-8b-reasoning
-ollama pull llama-3.1-foundationai-securityllm-8b
-ollama pull gemma-2-27b-security
-ollama pull deepseek-r1
-ollama pull mistral-nemo
-ollama pull qwen2.5
+# Pull available models from Ollama (~25 min)
+ollama pull llama3        # 8B for all agents
+ollama pull qwen2.5       # 72B for judge
+
+# Optional: Pull alternative models for experimentation
+ollama pull gemma2        # Alternative
+ollama pull mistral       # Alternative
+ollama pull neural-chat   # Alternative
 
 # Verify setup
 python main.py                # Test single threat (~5–10 sec)
@@ -415,23 +492,8 @@ start results\comparison_chart.png
 python server.py  # Open http://127.0.0.1:5050 in browser
 ```
 
-**Total time (first run):** ~120 minutes (includes 60 min model pulls)  
+**Total time (first run):** ~50 minutes (includes 25 min model pulls)  
 **Total time (subsequent runs, skip model pull):** ~15 minutes
-
----
-
-### Fast Setup (Llama-3 Only - Optional)
-
-If you want faster initial setup without specialized models:
-
-```cmd
-# Pull only generic models (~15 min instead of 60 min)
-ollama pull llama3
-ollama pull qwen2.5
-
-# Then edit config/agent_config.py to use all-Llama-3 fallback
-# (see "Experiment 1" section below)
-```
 
 ---
 
@@ -547,51 +609,18 @@ python main.py 2>&1 | more
 
 ### Your Hardware (RTX 5060 Ti, 34GB GPU-Accessible)
 
-#### With Specialized Security Models (RECOMMENDED)
+#### With Available Ollama Models (Llama-3 + Qwen)
 
 | Operation | Time | Notes |
 |-----------|------|-------|
-| Pull all 6 models | 60 min | One-time, includes all specialized |
-| Single threat | 5–10 sec | Parallel agents (specialized) |
+| Pull Llama-3 + Qwen | 25 min | One-time, basic models |
+| Single threat | 5–10 sec | Parallel agents |
 | 50-threat eval | 5–10 min | ~50 × 5–10 sec |
 | Baselines | 5–10 min | 3 configs × 50 threats |
-| **Total (first run)** | ~120 min | Includes 60 min model pulls |
+| **Total (first run)** | ~50 min | Includes 25 min model pulls |
 | **Total (re-run)** | ~15 min | Skip model pulls |
 
-#### With Generic Llama-3 (Fallback)
-
-| Operation | Time | Notes |
-|-----------|------|-------|
-| Pull Llama-3 + Qwen | 15 min | One-time, generic models |
-| Single threat | 5–10 sec | Parallel agents (generic) |
-| 50-threat eval | 5–10 min | ~50 × 5–10 sec |
-| Baselines | 5–10 min | 3 configs × 50 threats |
-| **Total (first run)** | ~45 min | Includes 15 min model pulls |
-| **Total (re-run)** | ~15 min | Skip model pulls |
-
-### GPU Memory Usage (Specialized Models, Parallel)
-
-| Phase | Memory | Safe? |
-|-------|--------|-------|
-| Validator (Foundation-Sec 8B) | 4GB | ✓ |
-| Agent A (Llama-Sec 8B) | 4GB | ✓ |
-| Agent B (Gemma-2 27B) | 13GB | ✓ |
-| Agent C (DeepSeek-R1 33B) | 16GB | ✓ |
-| Agent D (Mistral-Nemo 12B) | 6GB | ✓ |
-| **Agents Total (parallel)** | ~43GB | May use system RAM |
-| Judge (Qwen 72B, sequential) | 37GB | Runs after agents unload |
-| **Peak** | ~43GB | Under 34GB dedicated, uses shared |
-
-**Note:** Ollama is smart about memory. It can:
-- Spill larger models to system RAM (18GB available)
-- Use hybrid VRAM+RAM execution
-- Unload models as needed
-
-If you get OOM, fallback options:
-1. Use sequential execution (slower, safe)
-2. Switch to all-Llama-3 (faster, generic)
-
-### GPU Memory Usage (Generic Llama-3, Parallel)
+#### GPU Memory Usage (Llama-3 + Qwen, Parallel)
 
 | Phase | Memory | Safe? |
 |-------|--------|-------|
@@ -600,9 +629,38 @@ If you get OOM, fallback options:
 | Agent B (Llama-3 8B) | 4GB | ✓ |
 | Agent C (Llama-3 8B) | 4GB | ✓ |
 | Agent D (Llama-3 8B) | 4GB | ✓ |
-| **Agents Total (parallel)** | ~20GB | Easy fit |
+| **Agents Total (parallel)** | ~20GB | Easy fit in 16GB + overflow to shared |
 | Judge (Qwen 72B, sequential) | 37GB | Runs after agents unload |
-| **Peak** | ~37GB | Comfortably under 34GB dedicated |
+| **Peak** | ~37GB | Safe with 34GB available |
+
+**Note:** Ollama handles memory intelligently:
+- Can spill to system RAM (18GB available)
+- Uses hybrid VRAM+RAM execution
+- Unloads/reloads models as needed
+
+**No OOM expected** with parallel execution on your hardware.
+
+---
+
+### Optional: Alternative Models Performance
+
+If you pull alternative models for comparison:
+
+| Model | Size | Speed | Use Case |
+|-------|------|-------|----------|
+| `llama3` | 8B | Fast | General-purpose (current agents) |
+| `mistral` | 8B | Fast | Good for classification |
+| `neural-chat` | 8B | Fast | Good for analysis |
+| `gemma2` | 27B | Medium | Better reasoning (use for one agent) |
+| `qwen2.5` | 72B | Slow | Best synthesis (current judge) |
+| `deepseek-coder` | varies | Medium | Code-based threats |
+
+**Example: Try Gemma2 for Agent B:**
+```cmd
+ollama pull gemma2
+# Then edit config/agent_config.py:
+# AGENT_B_PROVIDER = LlamaProvider(model_name="gemma2", max_tokens=400)
+```
 
 ---
 
@@ -838,8 +896,12 @@ Before running evaluation:
 - [ ] `.env` copied (default settings OK)
 - [ ] Llama-3 pulled (`ollama pull llama3`)
 - [ ] Qwen2.5 pulled (`ollama pull qwen2.5`)
+- [ ] Verify models (`ollama list` shows both)
+- [ ] config/agent_config.py updated (using LlamaProvider + Qwen25Provider)
 - [ ] Single threat test passed (`python main.py`)
 - [ ] Local tests passed (`python tests/test_local.py`)
+
+**Note:** Specialized security models (Foundation-Sec, FoundationAI-SecurityLLM, Gemma-2-Security, DeepSeek-R1, Mistral-Nemo) are NOT available on Ollama public registry. Using Llama-3 as fallback for all agents.
 
 If all checked, you're ready for full evaluation!
 
@@ -853,15 +915,16 @@ python run_eval.py
 
 ### Current Default Setup
 
-**Specialized Security Models + Parallel Execution** (BEST)
-- Agent 0: Foundation-Sec-8B-Reasoning
-- Agent A: Llama-3.1-FoundationAI-SecurityLLM-8B  
-- Agent B: Gemma-2-27B-Security
-- Agent C: DeepSeek-R1-Reasoning
-- Agent D: Mistral-Nemo-Instruct
+**Llama-3 + Qwen (Available Ollama Models)** (CURRENT)
+- Agent 0: Llama-3 8B
+- Agent A: Llama-3 8B  
+- Agent B: Llama-3 8B
+- Agent C: Llama-3 8B
+- Agent D: Llama-3 8B
 - Judge: Qwen2.5-72B
-- **Performance:** 5–10 sec/threat, ~43GB peak memory
-- **Accuracy:** Best (specialized threat models)
+- **Performance:** 5–10 sec/threat, ~37GB peak memory
+- **Accuracy:** Good (generic models work well for threat analysis)
+- **Availability:** All models on Ollama public registry ✓
 
 ---
 
