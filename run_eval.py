@@ -105,32 +105,28 @@ print(council_metrics["report"])
 # ── PART 2: Output Richness Metrics ───────────────────────────────────────────
 richness = None
 if not args.skip_richness:
-    RICHNESS_DATASET = "data/sample_threats.json"
-    if not os.path.exists(RICHNESS_DATASET):
-        print(f"\n[WARN] Richness dataset not found ({RICHNESS_DATASET}) — skipping richness eval.")
-    else:
-        print("\n" + "=" * 60)
-        print("PART 2 — OUTPUT RICHNESS METRICS")
-        print("=" * 60)
+    print("\n" + "=" * 60)
+    print("PART 2 — OUTPUT RICHNESS METRICS")
+    print("=" * 60)
 
-        richness = run_richness_comparison(RICHNESS_DATASET)
+    richness = run_richness_comparison(DATASET)
 
-        dims = ["threat_classified", "mitre_mapped", "severity_scored", "response_plan", "contradiction_noted", "total"]
-        dim_labels = {
-            "threat_classified":   "Threat classified",
-            "mitre_mapped":        "MITRE ATT&CK mapped",
-            "severity_scored":     "Severity scored",
-            "response_plan":       "Response plan present",
-            "contradiction_noted": "Contradiction addressed",
-            "total":               "TOTAL RICHNESS SCORE",
-        }
-        print(f"\n{'Dimension':<30} {'Single Agent':>14} {'Full Council':>14}")
-        print("-" * 60)
-        for d in dims:
-            single_val  = richness["single_agent"][d]
-            council_val = richness["full_council"][d]
-            marker = " <--" if d == "total" else ""
-            print(f"{dim_labels[d]:<30} {single_val:>14.3f} {council_val:>14.3f}{marker}")
+    dims = ["threat_classified", "mitre_mapped", "severity_scored", "response_plan", "contradiction_noted", "total"]
+    dim_labels = {
+        "threat_classified":   "Threat classified",
+        "mitre_mapped":        "MITRE ATT&CK mapped",
+        "severity_scored":     "Severity scored",
+        "response_plan":       "Response plan present",
+        "contradiction_noted": "Contradiction addressed",
+        "total":               "TOTAL RICHNESS SCORE",
+    }
+    print(f"\n{'Dimension':<30} {'Single Agent':>14} {'Full Council':>14}")
+    print("-" * 60)
+    for d in dims:
+        single_val  = richness["single_agent"][d]
+        council_val = richness["full_council"][d]
+        marker = " <--" if d == "total" else ""
+        print(f"{dim_labels[d]:<30} {single_val:>14.3f} {council_val:>14.3f}{marker}")
 
 
 # ── PART 3: Save all results ───────────────────────────────────────────────────
@@ -170,6 +166,5 @@ print(f"All results saved to:        {results_file}")
 print(f"\nDisagreement stats:")
 print(f"  Classification conflicts : {classification_conflicts}")
 print(f"  Severity conflicts       : {severity_conflicts}")
-print(f"  Total agent revisions    : {revised_agents}")
 print(f"  Samples evaluated        : {len(_items)}")
 print("=" * 60)

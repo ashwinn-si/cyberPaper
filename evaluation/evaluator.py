@@ -1,5 +1,6 @@
 import json
 import os
+import time
 from tqdm import tqdm
 from council.orchestrator import CyberCouncil
 from evaluation.metrics import compute_metrics
@@ -117,32 +118,55 @@ def run_evaluation(dataset_path: str, output_dir: str = "results/samples", use_c
     true_labels: list = []
     pred_labels: list = []
 
-    # Process new items
-    for item in tqdm(new_items, desc="CyberCouncil Evaluation"):
+    total     = len(new_items)
+    done      = 0
+    correct   = 0
+    run_times = []
+
+    bar = tqdm(new_items, desc="Council Eval", unit="sample",
+               bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}]")
+
+    for item in bar:
+        t0 = time.time()
+        bar.set_postfix_str(f"sample {item['id']} — running…", refresh=True)
+
         result = council.analyze_sync(item["threat_description"])
 
         # Validator asked clarifying questions — force pass-two with a neutral answer
         if result["status"] == "needs_clarification":
-            print(f"  [{item['id']}] needs_clarification — re-running with neutral answer")
+            bar.write(f"  [{item['id']}] needs_clarification — re-running with neutral answer")
             result = council.analyze_sync(
                 item["threat_description"],
                 user_answers="No additional context available. Proceed with best available information."
             )
 
         if result["status"] == "rejected":
-            print(f"  [{item['id']}] SKIPPED — validator rejected input")
+            bar.write(f"  [{item['id']}] SKIPPED — validator rejected input")
             add_to_cache(cache, item["id"], {"status": "rejected"}, "eval_cache")
             continue
-        predicted = extract_label(result["final_report"])
+
+        predicted  = extract_label(result["final_report"])
+        elapsed    = time.time() - t0
+        run_times.append(elapsed)
+        done      += 1
+        hit        = predicted == item["true_label"]
+        correct   += int(hit)
+        running_acc = correct / done
 
         # Save cache immediately (so we can resume if it crashes)
         result["predicted_label"] = predicted
-        result["true_label"] = item["true_label"]
+        result["true_label"]      = item["true_label"]
         add_to_cache(cache, item["id"], result, "eval_cache")
 
         # Save detailed report
         _save_sample_report(item, result, predicted, output_dir)
-        print(f"  [{item['id']}] true={item['true_label']!r:20s}  pred={predicted!r}  → saved to {output_dir}/sample_{item['id']:03d}.txt")
+
+        bar.write(
+            f"  [{item['id']:>3}] true={item['true_label']!r:22s}  pred={predicted!r:22s}"
+            f"  {'✓' if hit else '✗'}  {elapsed:5.1f}s  acc={running_acc:.2%}  ({done}/{total} done)"
+        )
+        bar.set_postfix(acc=f"{running_acc:.2%}", last=f"{elapsed:.1f}s",
+                        avg=f"{sum(run_times)/len(run_times):.1f}s", refresh=True)
 
     # Collect all results (cached) for metrics computation
     for item in dataset:
