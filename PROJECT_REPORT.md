@@ -13,7 +13,7 @@ CyberCouncil is a multi-agent LLM system that routes cybersecurity threat descri
 **Core research claims:**
 1. Multi-agent consensus with cross-model pairs improves threat classification reliability
 2. Judge arbitration with explicit disagreement resolution outperforms majority voting
-3. Agents that revise their position after seeing a draft report (Round 2) carry stronger signal — weighted accordingly
+3. Cross-model consensus pairs (A+A₂, C+C₂) surface classification and severity conflicts before judge arbitration
 4. The provider pattern allows full LLM ablation studies with zero code changes
 
 ---
@@ -33,7 +33,7 @@ Raw Threat Input (user-submitted)
 └──────────────┬───────────────────────┘
                ↓ Enriched threat
 ┌──────────────────────────────────────────────────────────┐
-│                   ROUND 1 — Parallel                     │
+│                   COUNCIL — Parallel                     │
 │                                                          │
 │  Agent A   (DeepSeek-R1)  Threat Classifier ─────┐      │
 │  Agent A₂  (Qwen2.5-7B)   Classifier (consensus) ┤      │
@@ -50,32 +50,14 @@ Raw Threat Input (user-submitted)
        • C vs C₂ → severity_conflict flag (if gap > 2 points)
        → disagreement_log built
                        ↓
-     Judge (Qwen2.5-72B) — Round 1
+     Judge (Qwen2.5-72B)
        receives: 6 agent outputs + disagreement_log
-       produces: draft report
-                       ↓
-┌──────────────────────────────────────────────────────────┐
-│              ROUND 2 — Parallel (sees draft)             │
-│  All 6 agents re-analyze with judge's draft as context   │
-└──────────────────────┬───────────────────────────────────┘
-                       ↓
-     Round-change detection (in-process)
-       • agents that revised their core position → weight 1.5
-       • stable agents → weight 1.0
-       → round_weights built
-                       ↓
-     Judge (Qwen2.5-72B) — Round 2
-       receives: 6 Round 2 outputs + disagreement_log + round_weights
        produces: final SOC-ready report
 ```
 
-### 2.2 Why Two Rounds
+### 2.2 Disagreement Log (Novel Contribution)
 
-Round 1 gives the judge a diverse first-pass. The judge's draft report becomes context for Round 2 — agents that genuinely update their analysis (not just echo the draft) are flagged as "revised" and weighted 1.5×. This distinguishes active reasoning from anchoring bias and gives the judge a signal about which outputs are deliberate revisions vs. stable conclusions.
-
-### 2.3 Disagreement Log (Novel Contribution)
-
-After Round 1, the orchestrator computes:
+After all agents complete, the orchestrator computes:
 
 ```json
 {
@@ -89,12 +71,6 @@ After Round 1, the orchestrator computes:
     "agent_c_secondary": 4,
     "disagree":          true
   },
-  "round_changes": {
-    "Threat Classifier":   {"changed": false, "weight": 1.0},
-    "Threat Classifier-2": {"changed": true,  "weight": 1.5},
-    "Impact Assessor":     {"changed": true,  "weight": 1.5},
-    ...
-  }
 }
 ```
 
@@ -306,9 +282,7 @@ FINAL RESPONSE PLAN: <priority-ordered numbered actions>
     "original_input":   str,
     "clean_threat":     str,          # validator-enriched
     "validation":       dict,
-    "round1_outputs":   list[dict],   # 6 agent outputs
-    "draft_report":     str,
-    "round2_outputs":   list[dict],   # 6 agent outputs (with draft context)
+    "agent_outputs":    list[dict],   # 6 agent outputs
     "final_report":     str,
     "disagreement_log": {
         "classification": {
@@ -321,9 +295,6 @@ FINAL RESPONSE PLAN: <priority-ordered numbered actions>
             "agent_c_secondary": int | None,
             "disagree":          bool,
         },
-        "round_changes": {
-            "<agent_name>": {"changed": bool, "weight": float}
-        }
     }
 }
 ```
@@ -483,9 +454,7 @@ python3 run_eval.py --clear-cache  # full fresh run
 {
     "status":           "analyzed",
     "clean_threat":     "...",
-    "round1_outputs":   [...],
-    "draft_report":     "...",
-    "round2_outputs":   [...],
+    "agent_outputs":    [...],
     "final_report":     "...",
     "disagreement_log": {...},
     "elapsed_sec":      7.4
@@ -554,8 +523,7 @@ ollama pull qwen2.5       # Agent A₂, C₂, Judge — 7B + 72B variants
 |----------|-----|
 | Judge vs. no judge | Replace judge with majority vote (edit `run_eval.py`) |
 | Consensus pairs vs. single | Remove A₂, C₂ from `CyberCouncil.agents` in orchestrator |
-| Round 2 vs. single pass | Skip Round 2, use Round 1 final report as judge input |
-| Round-change weighting vs. flat | Pass `round_weights=None` to judge `synthesize()` |
+| Provider swap | Edit `config/agent_config.py` — zero code changes |
 | Provider swap | Edit `config/agent_config.py` — zero code changes |
 
 ### Paper Comparison Table Template
@@ -566,7 +534,7 @@ ollama pull qwen2.5       # Agent A₂, C₂, Judge — 7B + 72B variants
 | Council, No Judge (Baseline 2) | — | — | — | — |
 | Full Council + Judge | — | — | — | — |
 | Council, No Consensus Pairs | — | — | — | — |
-| Council, No Round 2 | — | — | — | — |
+| Council, No Consensus Pairs (no A₂/C₂) | — | — | — | — |
 
 Run each configuration, copy from `eval_results.json`.
 
@@ -602,7 +570,7 @@ python3 run_baselines.py
 3. **Provider Transparency** — Every agent output includes provider name. Judge knows model provenance.
 4. **Strict Agent Boundaries** — Each agent has a defined scope. Judge resolves scope conflicts.
 5. **Disagreement as Signal** — Cross-model conflicts are not failures — they are logged and used to strengthen judge arbitration.
-6. **Revision as Signal** — Round 2 position changes indicate active reasoning. Weighted 1.5× vs. stable outputs.
+6. **Disagreement as Audit Trail** — Every logged conflict maps to an explicit resolution in the judge's final report.
 7. **Open/Closed Principle** — Add providers with one new file + one config line. No orchestrator changes.
 
 ---

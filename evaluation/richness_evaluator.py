@@ -137,7 +137,7 @@ def evaluate_richness(dataset_path: str, use_judge: bool = True) -> dict:
             text_to_score = result["final_report"]
         else:
             # Single-agent baseline: score only Agent A output
-            text_to_score = result["round1_outputs"][0]["output"]
+            text_to_score = result["agent_outputs"][0]["output"]
 
         scores = score_output(text_to_score)
         for key in dimension_totals:

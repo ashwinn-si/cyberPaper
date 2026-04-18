@@ -283,18 +283,13 @@ python main.py
 1. Validator checks threat (2–3 sec)
 2. Agents A, A₂, B, C, C₂, D run in parallel (3–5 sec)
 3. Disagreement detection (A vs A₂, C vs C₂) — instant
-4. Judge synthesizes Round 1 → draft report (3–5 sec)
-5. All 6 agents re-analyze with draft context (3–5 sec)
-6. Round-change weighting applied
-7. Judge synthesizes Round 2 → final report (3–5 sec)
-8. **Total: 5–10 sec**
+4. Judge synthesizes all outputs → final report (3–5 sec)
+5. **Total: 5–10 sec**
 
 **Expected output:**
 ```
 Status: analyzed
-Round 1 — Agent Outputs (6 agents)
-Judge Draft Report
-Round 2 — Agent Outputs (6 agents, with draft context)
+Agent Outputs (6 agents)
 Final Judge Report
 Disagreement / Consensus Log
 ```
@@ -726,12 +721,12 @@ notepad council\orchestrator.py
 
 Change:
 ```python
-round1_outputs = await self._run_agents_parallel(clean_threat, loop)
+agent_outputs = await self._run_agents_parallel(clean_threat, loop)
 ```
 
 To:
 ```python
-round1_outputs = await self._run_agents_sequential(clean_threat, loop)
+agent_outputs = await self._run_agents_sequential(clean_threat, loop)
 ```
 
 Then compare timing & memory with parallel version.
@@ -951,13 +946,9 @@ If parallel still causes OOM, use sequential mode:
 notepad council\orchestrator.py
 ```
 
-**Find line ~113** (contains `round1_outputs = await self._run_agents_parallel`).
+**Find the line** containing `agent_outputs = await self._run_agents_parallel`.
 
-**Replace `_run_agents_parallel` with `_run_agents_sequential`** on this line.
-
-**Find line ~127** (contains `round2_outputs = await self._run_agents_parallel`).
-
-**Replace `_run_agents_parallel` with `_run_agents_sequential`** on this line too.
+**Replace `_run_agents_parallel` with `_run_agents_sequential`**.
 
 Save and re-run:
 ```cmd

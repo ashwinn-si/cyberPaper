@@ -54,11 +54,9 @@ def _save_sample_report(item: dict, result: dict, predicted: str, out_dir: str) 
         lines.append(result["clean_threat"].strip())
         lines.append("")
 
-    for rnd, key in [(1, "round1_outputs"), (2, "round2_outputs")]:
-        outputs = result.get(key, [])
-        if not outputs:
-            continue
-        lines.append(f"ROUND {rnd} — Agent Outputs")
+    outputs = result.get("agent_outputs", [])
+    if outputs:
+        lines.append("AGENT OUTPUTS")
         lines.append(dash)
         for agent_out in outputs:
             lines.append(f"  [{agent_out['agent']}]  ({agent_out['provider']})")
@@ -67,15 +65,13 @@ def _save_sample_report(item: dict, result: dict, predicted: str, out_dir: str) 
                 lines.append(f"    {ln}")
             lines.append("")
 
-        judge_key = "draft_report" if rnd == 1 else "final_report"
-        judge_label = "JUDGE — Draft Report" if rnd == 1 else "JUDGE — Final Report (CISO)"
-        report_text = result.get(judge_key, "").strip()
-        if report_text:
-            lines.append(judge_label)
-            lines.append(dash)
-            for ln in report_text.splitlines():
-                lines.append(f"  {ln}")
-            lines.append("")
+    report_text = result.get("final_report", "").strip()
+    if report_text:
+        lines.append("JUDGE — Final Report (CISO)")
+        lines.append(dash)
+        for ln in report_text.splitlines():
+            lines.append(f"  {ln}")
+        lines.append("")
 
     # Disagreement log section
     log = result.get("disagreement_log", {})
@@ -86,10 +82,6 @@ def _save_sample_report(item: dict, result: dict, predicted: str, out_dir: str) 
         sv = log.get("severity", {})
         lines.append(f"  Classification: A1={cl.get('agent_a_primary')}  A2={cl.get('agent_a_secondary')}  conflict={cl.get('disagree')}")
         lines.append(f"  Severity:       C1={sv.get('agent_c_primary')}  C2={sv.get('agent_c_secondary')}  conflict={sv.get('disagree')}")
-        rc = log.get("round_changes", {})
-        for agent_name, info in rc.items():
-            marker = "REVISED" if info["changed"] else "stable"
-            lines.append(f"  {agent_name}: {marker} (weight={info['weight']})")
         lines.append("")
 
     lines.append(sep)

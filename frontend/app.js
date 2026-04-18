@@ -43,15 +43,12 @@ const submitAnswersBtn       = $("submitAnswersBtn");
 const rejectionBanner        = $("rejectionBanner");
 const rejectionReason        = $("rejectionReason");
 const rejectionDismiss       = $("rejectionDismiss");
-const draftToggle            = $("draftToggle");
-const draftCard              = $("draftCard");
 const consensusToggle        = $("consensusToggle");
 const consensusPanel         = $("consensusPanel");
 const disagreementLabel      = $("disagreementLabel");
 
 // ── Agent name → card key mapping ────────────────────────────
-// Round 1 card IDs:  card{KEY}
-// Round 2 card IDs:  card{KEY}2
+// Card IDs: card{KEY}
 
 const AGENT_MAP = {
   "Threat Classifier":    "A",
@@ -173,13 +170,6 @@ function bindEvents() {
   // Copy judge report
   judgeCardCopy.addEventListener("click", copyFinalReport);
 
-  // Draft report collapse toggle
-  draftToggle.addEventListener("click", () => {
-    const collapsed = draftCard.hidden;
-    draftCard.hidden = !collapsed;
-    draftToggle.textContent = collapsed ? "▼ Collapse" : "▶ Expand";
-  });
-
   // Consensus panel collapse toggle
   consensusToggle.addEventListener("click", () => {
     const collapsed = consensusPanel.hidden;
@@ -190,15 +180,13 @@ function bindEvents() {
 
 // ── Loading step animation ────────────────────────────────────
 
-const STEP_IDS = ["lstep0", "lstep1", "lstep2", "lstep3", "lstep4"];
+const STEP_IDS = ["lstep0", "lstep1", "lstep2"];
 const STEP_LABELS = [
   "Validator — checking & enriching input…",
-  "Round 1 — 6 agents analysing in parallel…",
-  "Judge — drafting Round 1 report…",
-  "Round 2 — agents refining with draft context…",
+  "6 agents analysing in parallel…",
   "Judge — synthesising final report…",
 ];
-const STEP_DURATIONS = [8000, 60000, 40000, 60000, 40000];
+const STEP_DURATIONS = [8000, 60000, 40000];
 
 let stepTimer = null;
 
@@ -302,37 +290,14 @@ function renderResults(data) {
   loadingOverlay.hidden       = true;
   clarificationSection.hidden = true;
 
-  // Round 1 outputs — fill all 6 agent cards
-  (data.round1_outputs || []).forEach(agent => {
+  // Agent outputs — fill all 6 agent cards
+  (data.agent_outputs || []).forEach(agent => {
     const key = AGENT_MAP[agent.agent];
     if (!key) return;
-    const suffix = "";   // Round 1 = no suffix
     $(`output${key}`).textContent   = agent.output   || "(no output)";
     $(`provider${key}`).textContent = agent.provider || "";
     $(`status${key}`).textContent   = "✓";
     $(`card${key}`).classList.add("ready");
-  });
-
-  // Draft report
-  $("draftOutput").textContent = data.draft_report || "(no draft report)";
-
-  // Round 2 outputs
-  (data.round2_outputs || []).forEach(agent => {
-    const key = AGENT_MAP[agent.agent];
-    if (!key) return;
-    $(`output${key}2`).textContent   = agent.output   || "(no output)";
-    $(`provider${key}2`).textContent = agent.provider || "";
-    $(`status${key}2`).textContent   = "✓";
-
-    // Mark revised agents with a highlight
-    const log       = data.disagreement_log || {};
-    const changes   = log.round_changes     || {};
-    const changed   = changes[agent.agent]?.changed;
-    const card      = $(`card${key}2`);
-    if (card) {
-      card.classList.add("ready");
-      if (changed) card.classList.add("revised");
-    }
   });
 
   // Final report
@@ -358,8 +323,6 @@ function renderDisagreementLog(log) {
 
   const cl = log.classification || {};
   const sv = log.severity       || {};
-  const rc = log.round_changes  || {};
-
   // Classification row
   $("clA1").textContent = cl.agent_a_primary   || "—";
   $("clA2").textContent = cl.agent_a_secondary || "—";
@@ -379,18 +342,6 @@ function renderDisagreementLog(log) {
   } else {
     svVerdict.innerHTML = `<span class="verdict agree">✓ AGREEMENT — high confidence</span>`;
   }
-
-  // Round changes table
-  const rcContainer = $("roundChanges");
-  const rows = Object.entries(rc).map(([name, info]) => {
-    const tag = info.changed
-      ? `<span class="change-tag revised-tag">REVISED ×${info.weight}</span>`
-      : `<span class="change-tag stable-tag">stable</span>`;
-    return `<div class="change-row"><span class="change-agent">${name}</span>${tag}</div>`;
-  });
-  rcContainer.innerHTML = rows.length
-    ? `<div class="changes-header">Round 2 position changes</div>${rows.join("")}`
-    : "";
 
   // Show panel
   disagreementLabel.hidden = false;
@@ -421,20 +372,14 @@ function showRejection(reason) {
 
 function resetCards() {
   ["A", "As", "B", "C", "Cs", "D"].forEach(k => {
-    [$(`card${k}`), $(`card${k}2`)].forEach(card => {
-      if (card) { card.classList.remove("ready", "revised"); }
-    });
-    [$(`status${k}`), $(`status${k}2`)].forEach(el => {
-      if (el) el.textContent = "";
-    });
-    [$(`output${k}`), $(`output${k}2`)].forEach(el => {
-      if (el) el.textContent = "Waiting…";
-    });
+    const card = $(`card${k}`);
+    if (card) card.classList.remove("ready", "revised");
+    const status = $(`status${k}`);
+    if (status) status.textContent = "";
+    const output = $(`output${k}`);
+    if (output) output.textContent = "Waiting…";
   });
-  $("draftOutput").textContent = "Draft report will appear here after Round 1 completes.";
-  $("judgeOutput").textContent = "Final report will appear here after Round 2 completes.";
-  draftCard.hidden = false;
-  draftToggle.textContent = "▼ Collapse";
+  $("judgeOutput").textContent = "Final report will appear here after analysis completes.";
 }
 
 // ── Error display ─────────────────────────────────────────────

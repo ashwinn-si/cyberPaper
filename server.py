@@ -91,9 +91,7 @@ def analyze():
         return jsonify({
             "status":           "analyzed",
             "clean_threat":     result["clean_threat"],
-            "round1_outputs":   result["round1_outputs"],
-            "draft_report":     result["draft_report"],
-            "round2_outputs":   result["round2_outputs"],
+            "agent_outputs":    result["agent_outputs"],
             "final_report":     result["final_report"],
             "disagreement_log": result.get("disagreement_log", {}),
             "elapsed_sec":      elapsed,

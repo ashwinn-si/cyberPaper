@@ -63,8 +63,8 @@ else:
     eval_cache     = load_cache("eval_cache")
     baseline_cache = load_cache("baseline2_cache")
 
-    # Evict old items missing disagreement_log (schema added in latest version)
-    n = invalidate_stale_items(eval_cache, required_keys=["disagreement_log"], cache_name="eval_cache")
+    # Evict old items missing agent_outputs (schema updated to single-round)
+    n = invalidate_stale_items(eval_cache, required_keys=["agent_outputs", "disagreement_log"], cache_name="eval_cache")
     if n:
         print(f"[Cache] Evicted {n} stale item(s) missing 'disagreement_log' — will re-run those.")
 
@@ -146,19 +146,12 @@ severity_conflicts = sum(
     if isinstance(v.get("disagreement_log"), dict)
     and v["disagreement_log"].get("severity", {}).get("disagree")
 )
-revised_agents = sum(
-    sum(1 for info in v["disagreement_log"].get("round_changes", {}).values() if info.get("changed"))
-    for v in _items.values()
-    if isinstance(v.get("disagreement_log"), dict)
-)
-
 output_payload = {
     "full_council_metrics":  {k: v for k, v in council_metrics.items() if k != "report"},
     "council_predictions":   list(zip(council_true, council_pred)),
     "disagreement_stats": {
         "classification_conflicts": classification_conflicts,
         "severity_conflicts":       severity_conflicts,
-        "total_agent_revisions":    revised_agents,
         "samples_evaluated":        len(_items),
     },
 }

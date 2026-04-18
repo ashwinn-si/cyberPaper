@@ -123,19 +123,17 @@
           <p class="loading-label" id="loadingLabel">Initialising council…</p>
           <div class="loading-steps">
             <div class="loading-step" id="lstep0"><span class="step-dot"></span>Validator — checking &amp; enriching input</div>
-            <div class="loading-step" id="lstep1"><span class="step-dot"></span>Round 1 — 6 agents analysing in parallel</div>
-            <div class="loading-step" id="lstep2"><span class="step-dot"></span>Judge — drafting Round 1 report</div>
-            <div class="loading-step" id="lstep3"><span class="step-dot"></span>Round 2 — agents refining with draft context</div>
-            <div class="loading-step" id="lstep4"><span class="step-dot"></span>Judge — synthesising final report</div>
+            <div class="loading-step" id="lstep1"><span class="step-dot"></span>6 agents analysing in parallel</div>
+            <div class="loading-step" id="lstep2"><span class="step-dot"></span>Judge — synthesising final report</div>
           </div>
           <p class="loading-note">This may take 2–5 minutes. Models are running locally.</p>
         </div>
       </div>
 
-      <!-- ── Round 1 ──────────────────────────────────────────── -->
-      <div class="section-label" id="round1Label">
-        <span class="label-tag round-tag">ROUND 1</span>
-        <span class="label-title">Initial Specialist Analyses</span>
+      <!-- ── Agent Outputs ─────────────────────────────────────── -->
+      <div class="section-label" id="councilLabel">
+        <span class="label-tag round-tag">COUNCIL</span>
+        <span class="label-title">Specialist Analyses</span>
         <span class="elapsed-badge" id="elapsedBadge" hidden></span>
       </div>
 
@@ -221,112 +219,14 @@
 
       </div>
 
-      <!-- Draft report (Judge Round 1) -->
-      <div class="section-label" style="margin-top:2rem;">
-        <span class="label-tag judge-tag">JUDGE — ROUND 1</span>
-        <span class="label-title">Draft Report</span>
-        <button class="collapse-btn" id="draftToggle" data-target="draftCard">▼ Collapse</button>
-      </div>
-      <div class="judge-card draft-card" id="draftCard">
-        <pre class="judge-output" id="draftOutput">Draft report will appear here after Round 1 completes.</pre>
-      </div>
-
-      <!-- ── Round 2 ──────────────────────────────────────────── -->
-      <div class="section-label" style="margin-top:2.5rem;">
-        <span class="label-tag round-tag round2-tag">ROUND 2</span>
-        <span class="label-title">Refined Analyses (with Draft Context)</span>
-      </div>
-
-      <div class="agents-grid" id="agentsGrid2">
-
-        <!-- Agent A Round 2 -->
-        <div class="agent-card" id="cardA2">
-          <div class="agent-header">
-            <div class="agent-badge badge-a">A</div>
-            <div>
-              <div class="agent-name">Threat Classifier</div>
-              <div class="agent-provider" id="providerA2">—</div>
-            </div>
-            <div class="agent-status" id="statusA2"></div>
-          </div>
-          <pre class="agent-output" id="outputA2">Waiting…</pre>
-        </div>
-
-        <!-- Agent As Round 2 -->
-        <div class="agent-card" id="cardAs2">
-          <div class="agent-header">
-            <div class="agent-badge badge-as">A₂</div>
-            <div>
-              <div class="agent-name">Classifier <span class="consensus-tag">consensus</span></div>
-              <div class="agent-provider" id="providerAs2">—</div>
-            </div>
-            <div class="agent-status" id="statusAs2"></div>
-          </div>
-          <pre class="agent-output" id="outputAs2">Waiting…</pre>
-        </div>
-
-        <!-- Agent B Round 2 -->
-        <div class="agent-card" id="cardB2">
-          <div class="agent-header">
-            <div class="agent-badge badge-b">B</div>
-            <div>
-              <div class="agent-name">Vulnerability Analyst</div>
-              <div class="agent-provider" id="providerB2">—</div>
-            </div>
-            <div class="agent-status" id="statusB2"></div>
-          </div>
-          <pre class="agent-output" id="outputB2">Waiting…</pre>
-        </div>
-
-        <!-- Agent C Round 2 -->
-        <div class="agent-card" id="cardC2">
-          <div class="agent-header">
-            <div class="agent-badge badge-c">C</div>
-            <div>
-              <div class="agent-name">Impact Assessor</div>
-              <div class="agent-provider" id="providerC2">—</div>
-            </div>
-            <div class="agent-status" id="statusC2"></div>
-          </div>
-          <pre class="agent-output" id="outputC2">Waiting…</pre>
-        </div>
-
-        <!-- Agent Cs Round 2 -->
-        <div class="agent-card" id="cardCs2">
-          <div class="agent-header">
-            <div class="agent-badge badge-cs">C₂</div>
-            <div>
-              <div class="agent-name">Impact Assessor <span class="consensus-tag">consensus</span></div>
-              <div class="agent-provider" id="providerCs2">—</div>
-            </div>
-            <div class="agent-status" id="statusCs2"></div>
-          </div>
-          <pre class="agent-output" id="outputCs2">Waiting…</pre>
-        </div>
-
-        <!-- Agent D Round 2 -->
-        <div class="agent-card" id="cardD2">
-          <div class="agent-header">
-            <div class="agent-badge badge-d">D</div>
-            <div>
-              <div class="agent-name">Remediation Engineer</div>
-              <div class="agent-provider" id="providerD2">—</div>
-            </div>
-            <div class="agent-status" id="statusD2"></div>
-          </div>
-          <pre class="agent-output" id="outputD2">Waiting…</pre>
-        </div>
-
-      </div>
-
-      <!-- Final report (Judge Round 2) -->
+      <!-- Final report (Judge) -->
       <div class="section-label" style="margin-top:2rem;">
         <span class="label-tag judge-tag">JUDGE — FINAL</span>
         <span class="label-title">CISO Report</span>
         <button class="copy-btn" id="judgeCardCopy">⧉ Copy</button>
       </div>
       <div class="judge-card" id="judgeCard">
-        <pre class="judge-output" id="judgeOutput">Final report will appear here after Round 2 completes.</pre>
+        <pre class="judge-output" id="judgeOutput">Final report will appear here after analysis completes.</pre>
       </div>
 
       <!-- ── Disagreement / Consensus Log ────────────────────── -->

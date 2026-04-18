@@ -85,18 +85,13 @@ def run_test(council: CyberCouncil, test: dict):
     # Analyzed — print summary
     print(f"\nCLEAN THREAT:\n{result['clean_threat']}\n")
 
-    print("── ROUND 1 AGENT OUTPUTS ──")
-    for out in result["round1_outputs"]:
+    print("── AGENT OUTPUTS ──")
+    for out in result["agent_outputs"]:
         print(f"\n[{out['agent']}] via {out['provider']}")
-        # Print first 300 chars to keep terminal readable
         preview = out["output"][:300].replace("\n", " ")
         print(f"  {preview}{'...' if len(out['output']) > 300 else ''}")
 
-    print(f"\n── DRAFT REPORT (Round 1 Judge) ──")
-    draft_preview = result["draft_report"][:400].replace("\n", " ")
-    print(f"  {draft_preview}{'...' if len(result['draft_report']) > 400 else ''}")
-
-    print(f"\n── FINAL REPORT (Round 2 Judge) ──")
+    print(f"\n── FINAL REPORT (Judge) ──")
     print(result["final_report"])
 
 

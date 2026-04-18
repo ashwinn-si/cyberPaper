@@ -3,15 +3,12 @@ CyberCouncil Orchestrator
 ─────────────────────────
 Flow:
   1. ValidatorAgent (Agent 0) — validates and enriches raw input (1–2 passes)
-  2. Agents A, A₂, B, C, C₂, D — run IN PARALLEL on the enriched threat (Round 1)
+  2. Agents A, A₂, B, C, C₂, D — run IN PARALLEL on the enriched threat
   3. Disagreement detection — A vs A₂ (classification), C vs C₂ (severity)
-  4. JudgeAgent              — synthesizes Round 1 outputs + disagreement log → draft report
-  5. Agents A, A₂, B, C, C₂, D — run IN PARALLEL with draft report as context (Round 2)
-  6. Round-change detection  — agents that revised their position get higher weight
-  7. JudgeAgent              — synthesizes Round 2 outputs + weights + disagreements → final report
+  4. JudgeAgent              — synthesizes outputs + disagreement log → final report
 
 Parallel execution uses asyncio + ThreadPoolExecutor. All agents run concurrently.
-Each agent's blocking API call runs in its own thread. GPU memory stays under 34GB.
+Each agent's blocking API call runs in its own thread.
 Wall-clock time: ~5–10 sec per threat.
 
 For lower GPU memory (16GB), switch _run_agents_parallel to _run_agents_sequential.
@@ -73,23 +70,6 @@ def _agents_disagree_severity(out_c: dict, out_c2: dict, threshold: int = 2) -> 
     return abs(sev_c - sev_c2) > threshold
 
 
-def _agent_changed_position(r1: dict, r2: dict) -> bool:
-    """
-    True if an agent revised its core position between Round 1 and Round 2.
-    Checks category change (classifiers) or severity shift >1 (impact agents).
-    """
-    # Try category first (classifier agents)
-    c1 = _extract_category(r1["output"])
-    c2 = _extract_category(r2["output"])
-    if c1 is not None and c2 is not None:
-        return c1 != c2
-    # Fall back to severity (impact agents)
-    s1 = _extract_severity(r1["output"])
-    s2 = _extract_severity(r2["output"])
-    if s1 is not None and s2 is not None:
-        return abs(s1 - s2) > 1
-    return False
-
 
 class CyberCouncil:
 
@@ -144,11 +124,9 @@ class CyberCouncil:
           original_input      : raw user input
           clean_threat        : enriched threat used for analysis (empty if rejected)
           validation          : full validator output dict
-          round1_outputs      : list of agent dicts from Round 1 (6 agents)
-          draft_report        : Judge's Round 1 synthesis
-          round2_outputs      : list of agent dicts from Round 2 (6 agents)
+          agent_outputs       : list of agent dicts from all 6 agents
           final_report        : Judge's final synthesis
-          disagreement_log    : dict with consensus comparison and round-change flags
+          disagreement_log    : dict with consensus comparison flags
         """
         loop = asyncio.get_running_loop()
 
@@ -163,9 +141,7 @@ class CyberCouncil:
                 "original_input":   threat,
                 "clean_threat":     "",
                 "validation":       validation,
-                "round1_outputs":   [],
-                "draft_report":     "",
-                "round2_outputs":   [],
+                "agent_outputs":    [],
                 "final_report":     "",
                 "disagreement_log": {},
             }
@@ -183,70 +159,40 @@ class CyberCouncil:
                     "clean_threat":     "",
                     "validation":       validation,
                     "questions":        validation["questions"],
-                    "round1_outputs":   [],
-                    "draft_report":     "",
-                    "round2_outputs":   [],
+                    "agent_outputs":    [],
                     "final_report":     "",
                     "disagreement_log": {},
                 }
 
         clean_threat = validation.get("enriched") or threat
 
-        # ── Step 1: Round 1 — all agents in parallel ───────────────────────
-        round1_outputs = await self._run_agents_parallel(clean_threat, loop)
+        # ── Step 1: All 6 agents in parallel ──────────────────────────────
+        agent_outputs = await self._run_agents_parallel(clean_threat, loop)
 
-        # ── Step 2: Disagreement detection (Round 1) ──────────────────────
-        r1_a, r1_a2, r1_b, r1_c, r1_c2, r1_d = round1_outputs
+        # ── Step 2: Disagreement detection ────────────────────────────────
+        out_a, out_a2, out_b, out_c, out_c2, out_d = agent_outputs
 
-        classification_disagree = _agents_disagree_category(r1_a, r1_a2)
-        severity_disagree       = _agents_disagree_severity(r1_c, r1_c2)
+        classification_disagree = _agents_disagree_category(out_a, out_a2)
+        severity_disagree       = _agents_disagree_severity(out_c, out_c2)
 
         disagreement_log: dict = {
             "classification": {
-                "agent_a_primary":   _extract_category(r1_a["output"]),
-                "agent_a_secondary": _extract_category(r1_a2["output"]),
+                "agent_a_primary":   _extract_category(out_a["output"]),
+                "agent_a_secondary": _extract_category(out_a2["output"]),
                 "disagree":          classification_disagree,
             },
             "severity": {
-                "agent_c_primary":   _extract_severity(r1_c["output"]),
-                "agent_c_secondary": _extract_severity(r1_c2["output"]),
+                "agent_c_primary":   _extract_severity(out_c["output"]),
+                "agent_c_secondary": _extract_severity(out_c2["output"]),
                 "disagree":          severity_disagree,
             },
-            "round_changes": {},   # filled after Round 2
         }
 
-        # ── Step 3: Judge synthesizes Round 1 ─────────────────────────────
-        draft_report = await loop.run_in_executor(
-            _EXECUTOR,
-            lambda: self.judge.synthesize(
-                clean_threat, round1_outputs, disagreement_log=disagreement_log
-            )
-        )
-
-        # ── Step 4: Round 2 — agents re-analyze with draft context ────────
-        round2_input = (
-            f"{clean_threat}\n\n"
-            f"--- JUDGE DRAFT REPORT (Round 1) ---\n{draft_report['output']}"
-        )
-        round2_outputs = await self._run_agents_parallel(round2_input, loop)
-
-        # ── Step 5: Round-change detection (position revision weighting) ──
-        round_changes = {}
-        for r1, r2 in zip(round1_outputs, round2_outputs):
-            changed = _agent_changed_position(r1, r2)
-            round_changes[r2["agent"]] = {
-                "changed":  changed,
-                "weight":   1.5 if changed else 1.0,
-            }
-        disagreement_log["round_changes"] = round_changes
-
-        # ── Step 6: Judge synthesizes Round 2 → final report ──────────────
+        # ── Step 3: Judge synthesizes all outputs → final report ──────────
         final_report = await loop.run_in_executor(
             _EXECUTOR,
             lambda: self.judge.synthesize(
-                clean_threat, round2_outputs,
-                disagreement_log=disagreement_log,
-                round_weights=round_changes,
+                clean_threat, agent_outputs, disagreement_log=disagreement_log
             )
         )
 
@@ -255,9 +201,7 @@ class CyberCouncil:
             "original_input":   threat,
             "clean_threat":     clean_threat,
             "validation":       validation,
-            "round1_outputs":   round1_outputs,
-            "draft_report":     draft_report["output"],
-            "round2_outputs":   round2_outputs,
+            "agent_outputs":    agent_outputs,
             "final_report":     final_report["output"],
             "disagreement_log": disagreement_log,
         }

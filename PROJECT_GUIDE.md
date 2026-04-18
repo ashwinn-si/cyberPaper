@@ -20,7 +20,7 @@ Raw Threat Input
              │ Enriched threat
              ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│                   ROUND 1 (parallel)                             │
+│                   COUNCIL (parallel, 6 agents)                   │
 │   Agent A:  Threat Classifier (primary)    ──┐                  │
 │   Agent A₂: Threat Classifier (consensus)  ──┤                  │
 │   Agent B:  Vulnerability Analyst          ──┼─→ asyncio.gather │
@@ -34,21 +34,8 @@ Raw Threat Input
     → disagreement_log built
                   │
                   ▼
-         Judge: Round 1 synthesis + disagreement_log
-             (draft report)
-                  │
-                  ▼
-┌──────────────────────────────────────────────────────────────────┐
-│              ROUND 2 (parallel, sees draft)                      │
-│   All 6 agents re-analyze with draft context                     │
-└─────────────────┬────────────────────────────────────────────────┘
-                  │ 6 agent outputs (refined)
-                  ▼
-    Round-change weighting (revised agents → weight 1.5)
-                  │
-                  ▼
-     Judge: Round 2 synthesis + weights + disagreement_log
-         (final SOC-ready report)
+         Judge: synthesis + disagreement_log
+             (final SOC-ready report)
 ```
 
 ---
@@ -223,12 +210,12 @@ User answers: "After email attachment. Popups + loud fan. Just my laptop."
 
 ---
 
-### 4. Parallel Execution (Round 1 & 2)
+### 4. Parallel Execution
 
-**Old:** Sequential agents → 4 × latency  
-**New:** `asyncio.gather()` → 1 × latency per round
+**Old:** Sequential agents → 6 × latency  
+**New:** `asyncio.gather()` → 1 × latency
 
-Each agent's blocking API call runs in its own thread via `ThreadPoolExecutor(max_workers=8)`.
+Each agent's blocking API call runs in its own thread via `ThreadPoolExecutor(max_workers=10)`.
 
 ```python
 # In council/orchestrator.py
@@ -242,23 +229,20 @@ async def _run_agents_parallel(self, threat_input: str, loop) -> list:
 
 **Wall-clock time savings:**
 
-- Round 1: 4 agents in parallel + Judge = `agent_latency + judge_latency`
-- Round 2: 4 agents in parallel + Judge = `agent_latency + judge_latency`
-- **Total:** ~2 × latency (vs. sequential: ~10 × latency)
+- 6 agents in parallel + Judge = `agent_latency + judge_latency`
+- **Total:** ~2 × latency (vs. sequential: ~7 × latency)
 
 ---
 
-### 5. Two-Round Judge Synthesis
+### 5. Judge Synthesis
 
-**Round 1:** Judge reads all 4 agent outputs → drafts report with contradictions noted
+Judge reads all 6 agent outputs + disagreement_log → final SOC-ready report
 
-**Round 2:** Agents see the draft and re-analyze with that context. Judge synthesizes refined outputs → final report
+**Why consensus pairs?**
 
-**Why two rounds?**
-
-- Round 1 flags conflicts
-- Round 2 allows agents to reconsider with peer feedback
-- Final report is more nuanced, less contradictory
+- A vs A₂ flags classification conflicts
+- C vs C₂ flags severity conflicts
+- Judge explicitly resolves logged conflicts in final report
 
 ---
 

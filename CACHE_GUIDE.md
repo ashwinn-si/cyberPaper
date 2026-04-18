@@ -63,9 +63,8 @@ rm results/eval_cache.json results/baseline2_cache.json
 ### Full Council Evaluation
 - Input threat description
 - Agent A, A₂, B, C, C₂, D outputs + provider info (6 agents)
-- Judge draft report (Round 1)
-- Judge final report (Round 2)
-- `disagreement_log` — classification conflict (A vs A₂), severity conflict (C vs C₂), round-change weights per agent
+- Judge final report
+- `disagreement_log` — classification conflict (A vs A₂), severity conflict (C vs C₂)
 - Predicted threat label
 
 ### Baseline 2

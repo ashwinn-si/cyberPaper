@@ -320,9 +320,9 @@ If you need to downgrade to a smaller GPU:
 1. **Edit `council/orchestrator.py`:**
    ```python
    # Change these lines:
-   round1_outputs = await self._run_agents_parallel(clean_threat, loop)
+   agent_outputs = await self._run_agents_parallel(clean_threat, loop)
    # To:
-   round1_outputs = await self._run_agents_sequential(clean_threat, loop)
+   agent_outputs = await self._run_agents_sequential(clean_threat, loop)
    ```
 
 2. **Edit `config/agent_config.py`:**
@@ -609,9 +609,9 @@ If you downgrade to smaller GPU (RTX 4060, 8GB):
 1. **Edit `council/orchestrator.py`:**
    ```python
    # Change these:
-   round1_outputs = await self._run_agents_parallel(clean_threat, loop)
+   agent_outputs = await self._run_agents_parallel(clean_threat, loop)
    # To:
-   round1_outputs = await self._run_agents_sequential(clean_threat, loop)
+   agent_outputs = await self._run_agents_sequential(clean_threat, loop)
    ```
 2. **Use Llama-3 agents** (already in config)
 3. **Performance:** 20–30 sec per threat (but safe)

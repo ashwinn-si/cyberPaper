@@ -24,7 +24,7 @@ Threat Input
 Agent 0: Validator (2-pass enrichment)
     ↓ Enriched threat
 ┌──────────────────────────────────────────────┐
-│  ROUND 1 (parallel, 6 agents)                │
+│  COUNCIL (parallel, 6 agents)                │
 │  Agent A:  Threat Classifier (primary)        │
 │  Agent A₂: Threat Classifier (consensus)     │
 │  Agent B:  Vulnerability Analyst              │
@@ -35,15 +35,7 @@ Agent 0: Validator (2-pass enrichment)
     ↓
 Disagreement detection (A vs A₂, C vs C₂) → disagreement_log
     ↓
-    Judge Agent — Round 1 synthesis + disagreement_log → draft report
-    ↓
-┌──────────────────────────────────────────────┐
-│  ROUND 2 (parallel, 6 agents see draft)      │
-└──────────────────────────────────────────────┘
-    ↓
-Round-change weighting (revised agents → weight 1.5)
-    ↓
-    Judge Agent — Round 2 synthesis + weights → final report
+    Judge Agent — synthesis + disagreement_log → final report
 ```
 
 ### Layer Structure

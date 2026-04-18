@@ -166,28 +166,25 @@ Threat Input (raw, possibly vague)
     │                   │ ← Pass 2: enrich (if needed)
     └────────┬──────────┘
              ↓ (enriched threat)
-    ┌──────────────────────────────────┐
-    │   ROUND 1 (parallel)              │
-    │  A: Classifier                    │
-    │  B: Vuln Analyst                  │
-    │  C: Impact Assessor               │
-    │  D: Remediation Engineer          │ ← 4 agents in parallel
-    └──────────────┬───────────────────┘
+    ┌──────────────────────────────────────────┐
+    │   COUNCIL (parallel, 6 agents)           │
+    │  A:  Classifier (primary)                │
+    │  A₂: Classifier (consensus)              │
+    │  B:  Vuln Analyst                        │
+    │  C:  Impact Assessor (primary)           │
+    │  C₂: Impact Assessor (consensus)         │
+    │  D:  Remediation Engineer                │
+    └──────────────┬───────────────────────────┘
                    ↓
-           Judge → Draft Report
-                   ↓
-    ┌──────────────────────────────────┐
-    │   ROUND 2 (parallel + context)    │
-    │  A, B, C, D see draft report      │
-    └──────────────┬───────────────────┘
+    Disagreement detection (A vs A₂, C vs C₂)
                    ↓
            Judge → Final Report
 ```
 
 **Key Features:**
 - ✅ **Validator (Agent 0):** Gatekeeps invalid input, enriches vague threats with 2-pass system
-- ✅ **Parallel Execution:** All 4 agents run concurrently → ~4x speed vs sequential
-- ✅ **Two-Round Evaluation:** Agents refine analysis with Judge's draft as context
+- ✅ **Parallel Execution:** All 6 agents run concurrently → ~6x speed vs sequential
+- ✅ **Consensus Detection:** A vs A₂ (classification), C vs C₂ (severity) conflicts logged
 - ✅ **Provider Agnostic:** Swap Claude/GPT/Llama via `config/agent_config.py` only
 - ✅ **Extensible:** Add new providers or agents without touching orchestrator
 
