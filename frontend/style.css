@@ -404,14 +404,18 @@ body {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-#cardA  { animation-delay: 0.05s; }
-#cardB  { animation-delay: 0.10s; }
-#cardC  { animation-delay: 0.15s; }
-#cardD  { animation-delay: 0.20s; }
-#cardA2 { animation-delay: 0.05s; }
-#cardB2 { animation-delay: 0.10s; }
-#cardC2 { animation-delay: 0.15s; }
-#cardD2 { animation-delay: 0.20s; }
+#cardA   { animation-delay: 0.04s; }
+#cardAs  { animation-delay: 0.08s; }
+#cardB   { animation-delay: 0.12s; }
+#cardC   { animation-delay: 0.16s; }
+#cardCs  { animation-delay: 0.20s; }
+#cardD   { animation-delay: 0.24s; }
+#cardA2  { animation-delay: 0.04s; }
+#cardAs2 { animation-delay: 0.08s; }
+#cardB2  { animation-delay: 0.12s; }
+#cardC2  { animation-delay: 0.16s; }
+#cardCs2 { animation-delay: 0.20s; }
+#cardD2  { animation-delay: 0.24s; }
 
 .agent-header {
   display: flex; align-items: flex-start; gap: 0.75rem;
@@ -423,10 +427,30 @@ body {
   font-size: 0.85rem; font-weight: 700;
   flex-shrink: 0;
 }
-.badge-a { background: rgba(0, 212, 255,0.15); color: var(--accent-blue);   border: 1px solid rgba(0,212,255,0.3); }
-.badge-b { background: rgba(167,139,250,0.15); color: var(--accent-purple); border: 1px solid rgba(167,139,250,0.3); }
-.badge-c { background: rgba(255,149,  0,0.15); color: var(--accent-orange); border: 1px solid rgba(255,149,0,0.3); }
-.badge-d { background: rgba(0, 229,204,0.15);  color: var(--accent-teal);   border: 1px solid rgba(0,229,204,0.3); }
+.badge-a  { background: rgba(0, 212, 255,0.15); color: var(--accent-blue);   border: 1px solid rgba(0,212,255,0.3); }
+.badge-as { background: rgba(0, 212, 255,0.07); color: #7dd3e8;             border: 1px solid rgba(0,212,255,0.18); }
+.badge-b  { background: rgba(167,139,250,0.15); color: var(--accent-purple); border: 1px solid rgba(167,139,250,0.3); }
+.badge-c  { background: rgba(255,149,  0,0.15); color: var(--accent-orange); border: 1px solid rgba(255,149,0,0.3); }
+.badge-cs { background: rgba(255,149,  0,0.07); color: #e8b870;             border: 1px solid rgba(255,149,0,0.18); }
+.badge-d  { background: rgba(0, 229,204,0.15);  color: var(--accent-teal);   border: 1px solid rgba(0,229,204,0.3); }
+
+.consensus-tag {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+  vertical-align: middle;
+  margin-left: 3px;
+}
+
+/* Revised card highlight (agent changed position in Round 2) */
+.agent-card.revised {
+  border-color: rgba(240, 192, 64, 0.35);
+  box-shadow: var(--shadow-card), 0 0 16px rgba(240,192,64,0.12);
+}
 
 .agent-name     { font-size: 0.85rem; font-weight: 600; }
 .agent-provider {
@@ -493,6 +517,105 @@ body {
   border-radius: 8px;
   padding: 1.1rem;
   min-height: 120px;
+}
+
+/* ── Consensus / Disagreement panel ───────────────────────── */
+.consensus-label-tag {
+  background: rgba(167,139,250,0.12);
+  color: var(--accent-purple);
+  border: 1px solid rgba(167,139,250,0.3);
+  font-family: var(--font-mono);
+  font-size: 0.65rem; font-weight: 600;
+  letter-spacing: 0.12em;
+  padding: 0.2rem 0.6rem; border-radius: 4px;
+  white-space: nowrap;
+}
+
+.consensus-panel {
+  background: var(--bg-card);
+  border: 1px solid rgba(167,139,250,0.2);
+  border-radius: var(--radius-md);
+  padding: 1.2rem 1.4rem;
+  box-shadow: var(--shadow-card), 0 0 20px rgba(167,139,250,0.06);
+  display: flex; flex-direction: column; gap: 0.9rem;
+  animation: fadeSlideIn 0.4s ease both;
+}
+
+.consensus-row {
+  display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+}
+.consensus-field {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-mono); font-size: 0.78rem;
+}
+.consensus-key {
+  color: var(--text-muted);
+  font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.08em; min-width: 90px;
+}
+.consensus-val {
+  color: var(--text-primary);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 0.15rem 0.55rem; border-radius: 4px;
+  font-size: 0.76rem;
+}
+.consensus-vs {
+  color: var(--text-muted); font-size: 0.68rem;
+}
+
+.consensus-verdict { margin-left: auto; }
+.verdict {
+  font-family: var(--font-mono);
+  font-size: 0.72rem; font-weight: 600;
+  padding: 0.2rem 0.65rem; border-radius: 12px;
+  white-space: nowrap;
+}
+.verdict.agree {
+  color: var(--accent-green);
+  background: rgba(0,255,136,0.08);
+  border: 1px solid rgba(0,255,136,0.2);
+}
+.verdict.conflict {
+  color: var(--accent-orange);
+  background: rgba(255,149,0,0.08);
+  border: 1px solid rgba(255,149,0,0.25);
+}
+
+.changes-header {
+  font-size: 0.7rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+}
+.consensus-changes {
+  border-top: 1px solid var(--border);
+  padding-top: 0.8rem;
+}
+.change-row {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.3rem 0;
+  font-size: 0.78rem;
+}
+.change-agent {
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  flex: 1;
+}
+.change-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem; font-weight: 600;
+  padding: 0.15rem 0.55rem; border-radius: 10px;
+  white-space: nowrap;
+}
+.revised-tag {
+  color: var(--accent-judge);
+  background: rgba(240,192,64,0.1);
+  border: 1px solid rgba(240,192,64,0.25);
+}
+.stable-tag {
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
 }
 
 /* ── Error banner ──────────────────────────────────────────── */

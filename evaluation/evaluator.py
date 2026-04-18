@@ -128,6 +128,15 @@ def run_evaluation(dataset_path: str, output_dir: str = "results/samples", use_c
     # Process new items
     for item in tqdm(new_items, desc="CyberCouncil Evaluation"):
         result = council.analyze_sync(item["threat_description"])
+
+        # Validator asked clarifying questions — force pass-two with a neutral answer
+        if result["status"] == "needs_clarification":
+            print(f"  [{item['id']}] needs_clarification — re-running with neutral answer")
+            result = council.analyze_sync(
+                item["threat_description"],
+                user_answers="No additional context available. Proceed with best available information."
+            )
+
         if result["status"] == "rejected":
             print(f"  [{item['id']}] SKIPPED — validator rejected input")
             add_to_cache(cache, item["id"], {"status": "rejected"}, "eval_cache")

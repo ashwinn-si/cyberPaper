@@ -23,34 +23,42 @@ const EXAMPLES = {
 
 const $ = id => document.getElementById(id);
 
-const threatInput          = $("threatInput");
-const analyzeBtn           = $("analyzeBtn");
-const charCount            = $("charCount");
-const resultsSection       = $("resultsSection");
-const loadingOverlay       = $("loadingOverlay");
-const errorBanner          = $("errorBanner");
-const errorText            = $("errorText");
-const errorDismiss         = $("errorDismiss");
-const elapsedBadge         = $("elapsedBadge");
-const statusDot            = $("statusDot");
-const statusLabel          = $("statusLabel");
-const headerConfig         = $("headerConfig");
-const judgeCardCopy        = $("judgeCardCopy");
-const clarificationSection = $("clarificationSection");
+const threatInput            = $("threatInput");
+const analyzeBtn             = $("analyzeBtn");
+const charCount              = $("charCount");
+const resultsSection         = $("resultsSection");
+const loadingOverlay         = $("loadingOverlay");
+const errorBanner            = $("errorBanner");
+const errorText              = $("errorText");
+const errorDismiss           = $("errorDismiss");
+const elapsedBadge           = $("elapsedBadge");
+const statusDot              = $("statusDot");
+const statusLabel            = $("statusLabel");
+const headerConfig           = $("headerConfig");
+const judgeCardCopy          = $("judgeCardCopy");
+const clarificationSection   = $("clarificationSection");
 const clarificationQuestions = $("clarificationQuestions");
-const answersInput         = $("answersInput");
-const submitAnswersBtn     = $("submitAnswersBtn");
-const rejectionBanner      = $("rejectionBanner");
-const rejectionReason      = $("rejectionReason");
-const rejectionDismiss     = $("rejectionDismiss");
-const draftToggle          = $("draftToggle");
-const draftCard            = $("draftCard");
+const answersInput           = $("answersInput");
+const submitAnswersBtn       = $("submitAnswersBtn");
+const rejectionBanner        = $("rejectionBanner");
+const rejectionReason        = $("rejectionReason");
+const rejectionDismiss       = $("rejectionDismiss");
+const draftToggle            = $("draftToggle");
+const draftCard              = $("draftCard");
+const consensusToggle        = $("consensusToggle");
+const consensusPanel         = $("consensusPanel");
+const disagreementLabel      = $("disagreementLabel");
 
-// Mapping: agent name → card suffix
+// ── Agent name → card key mapping ────────────────────────────
+// Round 1 card IDs:  card{KEY}
+// Round 2 card IDs:  card{KEY}2
+
 const AGENT_MAP = {
   "Threat Classifier":    "A",
-  "Vulnerability Analyst": "B",
+  "Threat Classifier-2":  "As",   // consensus secondary
+  "Vulnerability Analyst":"B",
   "Impact Assessor":      "C",
+  "Impact Assessor-2":    "Cs",   // consensus secondary
   "Remediation Engineer": "D",
 };
 
@@ -82,7 +90,7 @@ async function checkHealth() {
   }
 }
 
-// ── Config chips ───────────────────────────────────────────────
+// ── Config chips ──────────────────────────────────────────────
 
 async function loadConfig() {
   try {
@@ -91,22 +99,27 @@ async function loadConfig() {
     if (!data.agents) return;
 
     const chips = {
-      "0": data.agents.validator,
-      "A": data.agents.classifier,
-      "B": data.agents.vuln_analyst,
-      "C": data.agents.impact,
-      "D": data.agents.remediation,
-      "J": data.agents.judge,
+      "0":  data.agents.validator,
+      "A":  data.agents.classifier,
+      "A₂": data.agents.classifier_2,
+      "B":  data.agents.vuln_analyst,
+      "C":  data.agents.impact,
+      "C₂": data.agents.impact_2,
+      "D":  data.agents.remediation,
+      "J":  data.agents.judge,
     };
     headerConfig.innerHTML = Object.entries(chips)
-      .map(([k, v]) => `<div class="config-chip"><span>[${k}]</span> ${v}</div>`)
+      .map(([k, v]) => `<div class="config-chip"><span>[${k}]</span> ${v || "—"}</div>`)
       .join("");
 
-    // Update agent provider labels in cards (both rounds)
-    $("providerA").textContent  = $("providerA2").textContent  = data.agents.classifier   || "";
-    $("providerB").textContent  = $("providerB2").textContent  = data.agents.vuln_analyst  || "";
-    $("providerC").textContent  = $("providerC2").textContent  = data.agents.impact        || "";
-    $("providerD").textContent  = $("providerD2").textContent  = data.agents.remediation   || "";
+    // Pre-fill provider labels on all agent cards (both rounds)
+    const fill = (ids, val) => ids.forEach(id => { const el = $(id); if (el) el.textContent = val || ""; });
+    fill(["providerA",  "providerA2"],  data.agents.classifier);
+    fill(["providerAs", "providerAs2"], data.agents.classifier_2);
+    fill(["providerB",  "providerB2"],  data.agents.vuln_analyst);
+    fill(["providerC",  "providerC2"],  data.agents.impact);
+    fill(["providerCs", "providerCs2"], data.agents.impact_2);
+    fill(["providerD",  "providerD2"],  data.agents.remediation);
   } catch { /* non-critical */ }
 }
 
@@ -166,6 +179,13 @@ function bindEvents() {
     draftCard.hidden = !collapsed;
     draftToggle.textContent = collapsed ? "▼ Collapse" : "▶ Expand";
   });
+
+  // Consensus panel collapse toggle
+  consensusToggle.addEventListener("click", () => {
+    const collapsed = consensusPanel.hidden;
+    consensusPanel.hidden = !collapsed;
+    consensusToggle.textContent = collapsed ? "▼ Collapse" : "▶ Expand";
+  });
 }
 
 // ── Loading step animation ────────────────────────────────────
@@ -173,12 +193,11 @@ function bindEvents() {
 const STEP_IDS = ["lstep0", "lstep1", "lstep2", "lstep3", "lstep4"];
 const STEP_LABELS = [
   "Validator — checking & enriching input…",
-  "Round 1 — 4 agents analysing in parallel…",
+  "Round 1 — 6 agents analysing in parallel…",
   "Judge — drafting Round 1 report…",
   "Round 2 — agents refining with draft context…",
   "Judge — synthesising final report…",
 ];
-// Rough timing per step (ms) — for visual progression
 const STEP_DURATIONS = [8000, 60000, 40000, 60000, 40000];
 
 let stepTimer = null;
@@ -216,16 +235,18 @@ async function runAnalysis(userAnswers = "") {
   if (threat.length < 10) return;
 
   // Reset all state
-  errorBanner.hidden       = true;
-  rejectionBanner.hidden   = true;
+  errorBanner.hidden          = true;
+  rejectionBanner.hidden      = true;
   clarificationSection.hidden = true;
-  elapsedBadge.hidden      = true;
+  elapsedBadge.hidden         = true;
+  disagreementLabel.hidden    = true;
+  consensusPanel.hidden       = true;
   resetCards();
 
   // Show loading
-  resultsSection.hidden  = false;
-  loadingOverlay.hidden  = false;
-  analyzeBtn.disabled    = true;
+  resultsSection.hidden = false;
+  loadingOverlay.hidden = false;
+  analyzeBtn.disabled   = true;
   analyzeBtn.querySelector(".btn-text").textContent = "Analysing…";
   resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
 
@@ -249,15 +270,15 @@ async function runAnalysis(userAnswers = "") {
     }
 
     if (data.status === "needs_clarification") {
-      loadingOverlay.hidden   = true;
-      resultsSection.hidden   = true;
+      loadingOverlay.hidden = true;
+      resultsSection.hidden = true;
       showClarification(data.questions);
       return;
     }
 
     if (data.status === "rejected") {
-      loadingOverlay.hidden   = true;
-      resultsSection.hidden   = true;
+      loadingOverlay.hidden = true;
+      resultsSection.hidden = true;
       showRejection(data.reason);
       return;
     }
@@ -278,13 +299,14 @@ async function runAnalysis(userAnswers = "") {
 // ── Render results ────────────────────────────────────────────
 
 function renderResults(data) {
-  loadingOverlay.hidden = true;
+  loadingOverlay.hidden       = true;
   clarificationSection.hidden = true;
 
-  // Round 1 outputs
+  // Round 1 outputs — fill all 6 agent cards
   (data.round1_outputs || []).forEach(agent => {
     const key = AGENT_MAP[agent.agent];
     if (!key) return;
+    const suffix = "";   // Round 1 = no suffix
     $(`output${key}`).textContent   = agent.output   || "(no output)";
     $(`provider${key}`).textContent = agent.provider || "";
     $(`status${key}`).textContent   = "✓";
@@ -301,7 +323,16 @@ function renderResults(data) {
     $(`output${key}2`).textContent   = agent.output   || "(no output)";
     $(`provider${key}2`).textContent = agent.provider || "";
     $(`status${key}2`).textContent   = "✓";
-    $(`card${key}2`).classList.add("ready");
+
+    // Mark revised agents with a highlight
+    const log       = data.disagreement_log || {};
+    const changes   = log.round_changes     || {};
+    const changed   = changes[agent.agent]?.changed;
+    const card      = $(`card${key}2`);
+    if (card) {
+      card.classList.add("ready");
+      if (changed) card.classList.add("revised");
+    }
   });
 
   // Final report
@@ -309,12 +340,62 @@ function renderResults(data) {
 
   // Elapsed badge
   if (data.elapsed_sec) {
-    elapsedBadge.hidden = false;
+    elapsedBadge.hidden      = false;
     elapsedBadge.textContent = `⏱ ${data.elapsed_sec}s`;
   }
 
+  // Disagreement log panel
+  renderDisagreementLog(data.disagreement_log || {});
+
   // Scroll to final report
   $("judgeCard").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// ── Disagreement log panel ────────────────────────────────────
+
+function renderDisagreementLog(log) {
+  if (!log || (!log.classification && !log.severity)) return;
+
+  const cl = log.classification || {};
+  const sv = log.severity       || {};
+  const rc = log.round_changes  || {};
+
+  // Classification row
+  $("clA1").textContent = cl.agent_a_primary   || "—";
+  $("clA2").textContent = cl.agent_a_secondary || "—";
+  const clVerdict = $("clVerdict");
+  if (cl.disagree) {
+    clVerdict.innerHTML = `<span class="verdict conflict">⚡ CONFLICT — judge resolved</span>`;
+  } else {
+    clVerdict.innerHTML = `<span class="verdict agree">✓ AGREEMENT — high confidence</span>`;
+  }
+
+  // Severity row
+  $("svC1").textContent = sv.agent_c_primary   != null ? sv.agent_c_primary   : "—";
+  $("svC2").textContent = sv.agent_c_secondary != null ? sv.agent_c_secondary : "—";
+  const svVerdict = $("svVerdict");
+  if (sv.disagree) {
+    svVerdict.innerHTML = `<span class="verdict conflict">⚡ CONFLICT — judge resolved</span>`;
+  } else {
+    svVerdict.innerHTML = `<span class="verdict agree">✓ AGREEMENT — high confidence</span>`;
+  }
+
+  // Round changes table
+  const rcContainer = $("roundChanges");
+  const rows = Object.entries(rc).map(([name, info]) => {
+    const tag = info.changed
+      ? `<span class="change-tag revised-tag">REVISED ×${info.weight}</span>`
+      : `<span class="change-tag stable-tag">stable</span>`;
+    return `<div class="change-row"><span class="change-agent">${name}</span>${tag}</div>`;
+  });
+  rcContainer.innerHTML = rows.length
+    ? `<div class="changes-header">Round 2 position changes</div>${rows.join("")}`
+    : "";
+
+  // Show panel
+  disagreementLabel.hidden = false;
+  consensusPanel.hidden    = false;
+  consensusToggle.textContent = "▼ Collapse";
 }
 
 // ── Clarification flow ────────────────────────────────────────
@@ -328,7 +409,7 @@ function showClarification(questions) {
   clarificationSection.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-// ── Rejection ────────────────────────────────────────────────
+// ── Rejection ─────────────────────────────────────────────────
 
 function showRejection(reason) {
   rejectionReason.textContent = reason || "The input does not describe a cybersecurity threat.";
@@ -339,9 +420,9 @@ function showRejection(reason) {
 // ── Reset card states ─────────────────────────────────────────
 
 function resetCards() {
-  ["A", "B", "C", "D"].forEach(k => {
+  ["A", "As", "B", "C", "Cs", "D"].forEach(k => {
     [$(`card${k}`), $(`card${k}2`)].forEach(card => {
-      if (card) card.classList.remove("ready");
+      if (card) { card.classList.remove("ready", "revised"); }
     });
     [$(`status${k}`), $(`status${k}2`)].forEach(el => {
       if (el) el.textContent = "";
@@ -350,8 +431,8 @@ function resetCards() {
       if (el) el.textContent = "Waiting…";
     });
   });
-  $("draftOutput").textContent  = "Draft report will appear here after Round 1 completes.";
-  $("judgeOutput").textContent  = "Final report will appear here after Round 2 completes.";
+  $("draftOutput").textContent = "Draft report will appear here after Round 1 completes.";
+  $("judgeOutput").textContent = "Final report will appear here after Round 2 completes.";
   draftCard.hidden = false;
   draftToggle.textContent = "▼ Collapse";
 }

@@ -70,7 +70,7 @@
       </div>
     </section>
 
-    <!-- Clarification panel (shown when validator needs more info) -->
+    <!-- Clarification panel -->
     <section class="clarification-section" id="clarificationSection" hidden>
       <div class="section-label">
         <span class="label-tag warn-tag">CLARIFICATION NEEDED</span>
@@ -81,9 +81,7 @@
           <span class="clarify-icon">❓</span>
           <p>The validator agent has identified ambiguities in the threat description. Please answer the questions below so the council can perform an accurate analysis.</p>
         </div>
-        <div class="clarification-questions" id="clarificationQuestions">
-          <!-- Populated by JS -->
-        </div>
+        <div class="clarification-questions" id="clarificationQuestions"></div>
         <textarea
           id="answersInput"
           class="threat-textarea answers-textarea"
@@ -125,7 +123,7 @@
           <p class="loading-label" id="loadingLabel">Initialising council…</p>
           <div class="loading-steps">
             <div class="loading-step" id="lstep0"><span class="step-dot"></span>Validator — checking &amp; enriching input</div>
-            <div class="loading-step" id="lstep1"><span class="step-dot"></span>Round 1 — 4 agents analysing in parallel</div>
+            <div class="loading-step" id="lstep1"><span class="step-dot"></span>Round 1 — 6 agents analysing in parallel</div>
             <div class="loading-step" id="lstep2"><span class="step-dot"></span>Judge — drafting Round 1 report</div>
             <div class="loading-step" id="lstep3"><span class="step-dot"></span>Round 2 — agents refining with draft context</div>
             <div class="loading-step" id="lstep4"><span class="step-dot"></span>Judge — synthesising final report</div>
@@ -142,7 +140,8 @@
       </div>
 
       <div class="agents-grid" id="agentsGrid1">
-        <!-- Agent A -->
+
+        <!-- Agent A — Classifier primary -->
         <div class="agent-card" id="cardA">
           <div class="agent-header">
             <div class="agent-badge badge-a">A</div>
@@ -153,6 +152,19 @@
             <div class="agent-status" id="statusA"></div>
           </div>
           <pre class="agent-output" id="outputA">Waiting…</pre>
+        </div>
+
+        <!-- Agent As — Classifier consensus -->
+        <div class="agent-card" id="cardAs">
+          <div class="agent-header">
+            <div class="agent-badge badge-as">A₂</div>
+            <div>
+              <div class="agent-name">Classifier <span class="consensus-tag">consensus</span></div>
+              <div class="agent-provider" id="providerAs">—</div>
+            </div>
+            <div class="agent-status" id="statusAs"></div>
+          </div>
+          <pre class="agent-output" id="outputAs">Waiting…</pre>
         </div>
 
         <!-- Agent B -->
@@ -168,7 +180,7 @@
           <pre class="agent-output" id="outputB">Waiting…</pre>
         </div>
 
-        <!-- Agent C -->
+        <!-- Agent C — Impact primary -->
         <div class="agent-card" id="cardC">
           <div class="agent-header">
             <div class="agent-badge badge-c">C</div>
@@ -179,6 +191,19 @@
             <div class="agent-status" id="statusC"></div>
           </div>
           <pre class="agent-output" id="outputC">Waiting…</pre>
+        </div>
+
+        <!-- Agent Cs — Impact consensus -->
+        <div class="agent-card" id="cardCs">
+          <div class="agent-header">
+            <div class="agent-badge badge-cs">C₂</div>
+            <div>
+              <div class="agent-name">Impact Assessor <span class="consensus-tag">consensus</span></div>
+              <div class="agent-provider" id="providerCs">—</div>
+            </div>
+            <div class="agent-status" id="statusCs"></div>
+          </div>
+          <pre class="agent-output" id="outputCs">Waiting…</pre>
         </div>
 
         <!-- Agent D -->
@@ -193,6 +218,7 @@
           </div>
           <pre class="agent-output" id="outputD">Waiting…</pre>
         </div>
+
       </div>
 
       <!-- Draft report (Judge Round 1) -->
@@ -212,6 +238,7 @@
       </div>
 
       <div class="agents-grid" id="agentsGrid2">
+
         <!-- Agent A Round 2 -->
         <div class="agent-card" id="cardA2">
           <div class="agent-header">
@@ -223,6 +250,19 @@
             <div class="agent-status" id="statusA2"></div>
           </div>
           <pre class="agent-output" id="outputA2">Waiting…</pre>
+        </div>
+
+        <!-- Agent As Round 2 -->
+        <div class="agent-card" id="cardAs2">
+          <div class="agent-header">
+            <div class="agent-badge badge-as">A₂</div>
+            <div>
+              <div class="agent-name">Classifier <span class="consensus-tag">consensus</span></div>
+              <div class="agent-provider" id="providerAs2">—</div>
+            </div>
+            <div class="agent-status" id="statusAs2"></div>
+          </div>
+          <pre class="agent-output" id="outputAs2">Waiting…</pre>
         </div>
 
         <!-- Agent B Round 2 -->
@@ -251,6 +291,19 @@
           <pre class="agent-output" id="outputC2">Waiting…</pre>
         </div>
 
+        <!-- Agent Cs Round 2 -->
+        <div class="agent-card" id="cardCs2">
+          <div class="agent-header">
+            <div class="agent-badge badge-cs">C₂</div>
+            <div>
+              <div class="agent-name">Impact Assessor <span class="consensus-tag">consensus</span></div>
+              <div class="agent-provider" id="providerCs2">—</div>
+            </div>
+            <div class="agent-status" id="statusCs2"></div>
+          </div>
+          <pre class="agent-output" id="outputCs2">Waiting…</pre>
+        </div>
+
         <!-- Agent D Round 2 -->
         <div class="agent-card" id="cardD2">
           <div class="agent-header">
@@ -263,6 +316,7 @@
           </div>
           <pre class="agent-output" id="outputD2">Waiting…</pre>
         </div>
+
       </div>
 
       <!-- Final report (Judge Round 2) -->
@@ -273,6 +327,40 @@
       </div>
       <div class="judge-card" id="judgeCard">
         <pre class="judge-output" id="judgeOutput">Final report will appear here after Round 2 completes.</pre>
+      </div>
+
+      <!-- ── Disagreement / Consensus Log ────────────────────── -->
+      <div class="section-label" style="margin-top:2rem;" id="disagreementLabel" hidden>
+        <span class="label-tag consensus-label-tag">CONSENSUS LOG</span>
+        <span class="label-title">Cross-Model Agreement Analysis</span>
+        <button class="collapse-btn" id="consensusToggle">▼ Collapse</button>
+      </div>
+      <div class="consensus-panel" id="consensusPanel" hidden>
+
+        <div class="consensus-row" id="classificationRow">
+          <div class="consensus-field">
+            <span class="consensus-key">Classification</span>
+            <span class="consensus-val" id="clA1">—</span>
+            <span class="consensus-vs">vs</span>
+            <span class="consensus-val" id="clA2">—</span>
+          </div>
+          <div class="consensus-verdict" id="clVerdict"></div>
+        </div>
+
+        <div class="consensus-row" id="severityRow">
+          <div class="consensus-field">
+            <span class="consensus-key">Severity</span>
+            <span class="consensus-val" id="svC1">—</span>
+            <span class="consensus-vs">vs</span>
+            <span class="consensus-val" id="svC2">—</span>
+          </div>
+          <div class="consensus-verdict" id="svVerdict"></div>
+        </div>
+
+        <div class="consensus-changes" id="roundChanges">
+          <!-- Round change rows filled by JS -->
+        </div>
+
       </div>
 
     </section>

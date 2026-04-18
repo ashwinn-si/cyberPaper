@@ -8,10 +8,10 @@ import json
 import os
 
 # Windows event loop fix
-if sys.platform == "win32":
-    import asyncio
-    asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
-
+# if sys.platform == "win32":
+#     import asyncio
+#     asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+import asyncio
 from evaluation.evaluator import run_evaluation, run_baseline2_majority_vote
 from evaluation.metrics import compute_metrics
 
