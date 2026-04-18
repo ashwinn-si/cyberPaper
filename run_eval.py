@@ -9,10 +9,37 @@ if sys.platform == "win32":
 
 from evaluation.evaluator import run_evaluation, run_baseline2_majority_vote
 from evaluation.richness_evaluator import run_richness_comparison
+from evaluation.cache import load_cache, validate_cache
 
 DATASET     = "data/threats.json"
 RESULTS_DIR = "results/"
 SAMPLES_DIR = "results/samples"
+
+# ── Cache Status ──────────────────────────────────────────────────────────
+# Caching enabled: completed results saved to results/eval_cache.json
+# If run fails midway, restarting will skip completed items and resume from crash point.
+# To force fresh run: python3 run_eval.py --clear-cache
+clear_cache = "--clear-cache" in sys.argv
+
+# Validate cache files (auto-delete if corrupted)
+validate_cache("eval_cache")
+validate_cache("baseline2_cache")
+
+if clear_cache:
+    for cache_file in ["results/eval_cache.json", "results/baseline2_cache.json"]:
+        if os.path.exists(cache_file):
+            os.remove(cache_file)
+            print(f"[Cache] Cleared {cache_file}")
+    eval_cache = {}
+    baseline_cache = {}
+else:
+    eval_cache = load_cache("eval_cache")
+    baseline_cache = load_cache("baseline2_cache")
+
+print(f"\n[Cache] eval_cache: {len(eval_cache.get('items', {}))} items cached")
+print(f"[Cache] baseline2_cache: {len(baseline_cache.get('items', {}))} items cached")
+if eval_cache.get("items") and not clear_cache:
+    print("To start fresh: python3 run_eval.py --clear-cache\n")
 
 
 # ── 1. Label Classification Metrics ───────────────────────────────────────

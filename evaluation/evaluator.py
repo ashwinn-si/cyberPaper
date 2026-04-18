@@ -3,6 +3,7 @@ import os
 from tqdm import tqdm
 from council.orchestrator import CyberCouncil
 from evaluation.metrics import compute_metrics
+from evaluation.cache import load_cache, add_to_cache, get_cached_ids
 
 
 # Canonical label set — must remain stable across all runs
@@ -83,10 +84,13 @@ def _save_sample_report(item: dict, result: dict, predicted: str, out_dir: str) 
         f.write("\n".join(lines))
 
 
-def run_evaluation(dataset_path: str, output_dir: str = "results/samples") -> tuple:
+def run_evaluation(dataset_path: str, output_dir: str = "results/samples", use_cache: bool = True) -> tuple:
     """
     Run the CyberCouncil pipeline on a labeled dataset and compute metrics.
     Saves a detailed per-sample report to output_dir/sample_<id>.txt.
+
+    Supports resumable checkpointing: completed items cached in results/eval_cache.json
+    Skip with use_cache=False to force full re-evaluation.
 
     Returns:
         (metrics_dict, true_labels, pred_labels)
@@ -94,40 +98,83 @@ def run_evaluation(dataset_path: str, output_dir: str = "results/samples") -> tu
     with open(dataset_path, encoding="utf-8") as f:
         dataset = json.load(f)
 
+    # Load cache
+    cache = load_cache("eval_cache") if use_cache else {}
+    cached_ids = get_cached_ids(cache)
+    new_items = [item for item in dataset if str(item["id"]) not in cached_ids]
+
+    if cached_ids:
+        print(f"[Cache] Loaded {len(cached_ids)} completed results. Processing {len(new_items)} new items.")
+
     council = CyberCouncil()
     true_labels: list = []
     pred_labels: list = []
 
-    for item in tqdm(dataset, desc="CyberCouncil Evaluation"):
+    # Process new items
+    for item in tqdm(new_items, desc="CyberCouncil Evaluation"):
         result = council.analyze_sync(item["threat_description"])
         if result["status"] == "rejected":
             print(f"  [{item['id']}] SKIPPED — validator rejected input")
+            add_to_cache(cache, item["id"], {"status": "rejected"}, "eval_cache")
             continue
         predicted = extract_label(result["final_report"])
-        true_labels.append(item["true_label"])
-        pred_labels.append(predicted)
+
+        # Save cache immediately (so we can resume if it crashes)
+        result["predicted_label"] = predicted
+        result["true_label"] = item["true_label"]
+        add_to_cache(cache, item["id"], result, "eval_cache")
+
+        # Save detailed report
         _save_sample_report(item, result, predicted, output_dir)
         print(f"  [{item['id']}] true={item['true_label']!r:20s}  pred={predicted!r}  → saved to {output_dir}/sample_{item['id']:03d}.txt")
+
+    # Collect all results (cached) for metrics computation
+    for item in dataset:
+        item_id = str(item["id"])
+        if item_id in cache.get("items", {}):
+            cached_result = cache["items"][item_id]
+            if cached_result.get("status") == "rejected":
+                continue  # Skip rejected items
+            true_labels.append(cached_result.get("true_label", item["true_label"]))
+            pred_labels.append(cached_result.get("predicted_label", "Other"))
 
     return compute_metrics(true_labels, pred_labels), true_labels, pred_labels
 
 
-def run_baseline2_majority_vote(dataset_path: str):
+def run_baseline2_majority_vote(dataset_path: str, use_cache: bool = True):
+    """
+    Baseline 2: Council without Judge (majority vote of agents).
+    Supports caching for resumable runs.
+    """
     with open(dataset_path, encoding="utf-8") as f:
         dataset = json.load(f)
+
+    cache = load_cache("baseline2_cache") if use_cache else {}
+    cached_ids = get_cached_ids(cache)
+    new_items = [item for item in dataset if str(item["id"]) not in cached_ids]
+
+    if cached_ids:
+        print(f"[Cache] Loaded {len(cached_ids)} baseline2 results. Processing {len(new_items)} new items.")
 
     council = CyberCouncil()
     true_labels, pred_labels = [], []
 
-    for item in tqdm(dataset, desc="Baseline 2 - Council No Judge"):
+    for item in tqdm(new_items, desc="Baseline 2 - Council No Judge"):
         threat = item["threat_description"]
         agent_outputs = [agent.analyze(threat) for agent in council.agents]
 
-        # Only Agent A (index 0) is a classifier — extract label from classifier only.
-        # Agent B and Agent C do not output threat categories by design.
+        # Only Agent A (index 0) is a classifier
         predicted = extract_label(agent_outputs[0]["output"])
 
-        true_labels.append(item["true_label"])
-        pred_labels.append(predicted)
+        result = {"predicted_label": predicted, "true_label": item["true_label"], "agent_outputs": [ao.get("output", "") for ao in agent_outputs]}
+        add_to_cache(cache, item["id"], result, "baseline2_cache")
+
+    # Collect all cached results for metrics computation
+    for item in dataset:
+        item_id = str(item["id"])
+        if item_id in cache.get("items", {}):
+            cached_result = cache["items"][item_id]
+            true_labels.append(cached_result.get("true_label", item["true_label"]))
+            pred_labels.append(cached_result.get("predicted_label", "Other"))
 
     return compute_metrics(true_labels, pred_labels), true_labels, pred_labels
