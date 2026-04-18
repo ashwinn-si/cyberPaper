@@ -18,6 +18,7 @@ import argparse
 from evaluation.evaluator import run_evaluation, run_baseline2_majority_vote
 from evaluation.richness_evaluator import run_richness_comparison
 from evaluation.cache import load_cache, validate_cache, invalidate_stale_items
+from evaluation.reporter import save_report
 
 # ── CLI args ───────────────────────────────────────────────────────────────────
 parser = argparse.ArgumentParser(description="CyberCouncil full evaluation runner")
@@ -156,6 +157,11 @@ if b2_metrics:
     output_payload["baseline2_predictions"] = list(zip(b2_true, b2_pred))
 if richness:
     output_payload["richness_comparison"] = richness
+
+print("\n[Generating charts and CSVs...]")
+save_report("council", "Full Council + Judge", council_metrics, council_true, council_pred)
+if b2_metrics:
+    save_report("baseline2", "Baseline 2 (Council No Judge)", b2_metrics, b2_true, b2_pred)
 
 results_file = os.path.join(RESULTS_DIR, "eval_results.json")
 with open(results_file, "w", encoding="utf-8") as f:
