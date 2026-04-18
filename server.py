@@ -16,7 +16,7 @@ import os
 import asyncio
 
 if sys.platform == "win32":
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
 import time
 import argparse
 import requests as _requests
@@ -163,5 +163,5 @@ if __name__ == "__main__":
     print(f"  -> GET   /api/config    - view active provider config\n")
 
     # use_reloader=False prevents Windows from spawning a child process that
-    # loses the WindowsSelectorEventLoopPolicy set above.
+    # resets the event loop policy set above.
     app.run(host=args.host, port=args.port, debug=True, use_reloader=False)

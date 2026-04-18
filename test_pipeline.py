@@ -10,7 +10,7 @@ import os
 # Windows event loop fix
 if sys.platform == "win32":
     import asyncio
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
 
 from evaluation.evaluator import run_evaluation, run_baseline2_majority_vote
 from evaluation.metrics import compute_metrics

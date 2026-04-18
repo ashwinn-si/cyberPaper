@@ -5,7 +5,7 @@ import os
 
 # Windows: use SelectorEventLoop to avoid ProactorEventLoop conflicts with ThreadPoolExecutor
 if sys.platform == "win32":
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
 
 from evaluation.evaluator import run_evaluation, run_baseline2_majority_vote
 from evaluation.richness_evaluator import run_richness_comparison

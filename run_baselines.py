@@ -23,7 +23,7 @@ import json
 import os
 
 if sys.platform == "win32":
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
 
 from evaluation.baselines import run_single_agent_baseline, run_majority_vote_baseline
 from evaluation.reporter  import save_report, save_comparison_chart
