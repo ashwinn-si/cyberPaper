@@ -117,6 +117,9 @@ def evaluate_richness(dataset_path: str, use_judge: bool = True) -> dict:
     cache_name = "richness_council_cache" if use_judge else "richness_single_cache"
     cache = load_cache(cache_name)
 
+    # Reuse already-computed outputs from eval_cache to avoid re-running council
+    eval_cache = load_cache("eval_cache")
+
     dimension_totals = {
         "threat_classified":   0,
         "mitre_mapped":        0,
@@ -137,11 +140,23 @@ def evaluate_richness(dataset_path: str, use_judge: bool = True) -> dict:
         if cached:
             scores = cached
         else:
-            result = council.analyze_sync(item["threat_description"])
-            if result["status"] == "rejected":
-                skipped += 1
-                continue
-            text_to_score = result["final_report"] if use_judge else result["agent_outputs"][0]["output"]
+            # Try to reuse output from eval_cache before calling council
+            eval_cached = get_cached_result(eval_cache, item_id)
+            if eval_cached and eval_cached.get("status") != "rejected":
+                if use_judge and eval_cached.get("final_report"):
+                    text_to_score = eval_cached["final_report"]
+                elif not use_judge and eval_cached.get("agent_outputs"):
+                    text_to_score = eval_cached["agent_outputs"][0]["output"]
+                else:
+                    eval_cached = None
+
+            if not eval_cached:
+                result = council.analyze_sync(item["threat_description"])
+                if result["status"] == "rejected":
+                    skipped += 1
+                    continue
+                text_to_score = result["final_report"] if use_judge else result["agent_outputs"][0]["output"]
+
             scores = score_output(text_to_score)
             cache = add_to_cache(cache, item_id, scores, cache_name)
 

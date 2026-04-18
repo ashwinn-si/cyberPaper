@@ -174,7 +174,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Phishing",
+      "predicted_label": "Zero-Day Exploit",
       "true_label": "Zero-Day Exploit"
     },
     "131": {
@@ -233,7 +233,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Phishing",
+      "predicted_label": "Ransomware",
       "true_label": "Ransomware"
     },
     "73": {
@@ -351,7 +351,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Malware",
+      "predicted_label": "Zero-Day Exploit",
       "true_label": "Zero-Day Exploit"
     },
     "128": {
@@ -587,7 +587,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Phishing",
+      "predicted_label": "Man-in-the-Middle",
       "true_label": "Man-in-the-Middle"
     },
     "9": {
@@ -705,7 +705,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Phishing",
+      "predicted_label": "Other",
       "true_label": "Other"
     },
     "101": {
@@ -823,7 +823,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Phishing",
+      "predicted_label": "Man-in-the-Middle",
       "true_label": "Malware"
     },
     "91": {
@@ -1059,7 +1059,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Phishing",
+      "predicted_label": "Malware",
       "true_label": "Malware"
     },
     "86": {
@@ -1413,7 +1413,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Phishing",
+      "predicted_label": "DDoS",
       "true_label": "DDoS"
     },
     "178": {
@@ -2180,7 +2180,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Phishing",
+      "predicted_label": "Other",
       "true_label": "Other"
     },
     "176": {
@@ -2298,7 +2298,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Phishing",
+      "predicted_label": "Zero-Day Exploit",
       "true_label": "Zero-Day Exploit"
     },
     "148": {
@@ -2357,7 +2357,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Phishing",
+      "predicted_label": "Zero-Day Exploit",
       "true_label": "Zero-Day Exploit"
     },
     "193": {
@@ -2416,7 +2416,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Malware",
+      "predicted_label": "Zero-Day Exploit",
       "true_label": "Other"
     },
     "42": {
@@ -2888,7 +2888,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "DDoS",
+      "predicted_label": "Ransomware",
       "true_label": "Ransomware"
     },
     "172": {
@@ -3301,7 +3301,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Phishing",
+      "predicted_label": "Insider Threat",
       "true_label": "Other"
     },
     "77": {
@@ -3537,7 +3537,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Phishing",
+      "predicted_label": "Man-in-the-Middle",
       "true_label": "Man-in-the-Middle"
     },
     "61": {
@@ -4304,7 +4304,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Ransomware",
+      "predicted_label": "Insider Threat",
       "true_label": "Insider Threat"
     },
     "37": {
@@ -4776,7 +4776,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Phishing",
+      "predicted_label": "Malware",
       "true_label": "Malware"
     },
     "18": {
@@ -4835,7 +4835,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Phishing",
+      "predicted_label": "Malware",
       "true_label": "Malware"
     },
     "5": {
@@ -4953,7 +4953,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Phishing",
+      "predicted_label": "Malware",
       "true_label": "Phishing"
     },
     "39": {
@@ -5071,7 +5071,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Phishing",
+      "predicted_label": "Malware",
       "true_label": "Zero-Day Exploit"
     },
     "190": {
@@ -5130,7 +5130,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Insider Threat",
+      "predicted_label": "Other",
       "true_label": "Other"
     },
     "88": {
@@ -5248,7 +5248,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Malware",
+      "predicted_label": "Ransomware",
       "true_label": "Ransomware"
     },
     "122": {
@@ -5366,7 +5366,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Phishing",
+      "predicted_label": "Other",
       "true_label": "Other"
     },
     "126": {
@@ -5425,7 +5425,7 @@
           "disagree": false
         }
       },
-      "predicted_label": "Phishing",
+      "predicted_label": "Ransomware",
       "true_label": "Ransomware"
     },
     "163": {
