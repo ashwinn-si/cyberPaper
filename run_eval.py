@@ -9,7 +9,7 @@ if sys.platform == "win32":
 
 from evaluation.evaluator import run_evaluation, run_baseline2_majority_vote
 from evaluation.richness_evaluator import run_richness_comparison
-from evaluation.cache import load_cache, validate_cache
+from evaluation.cache import load_cache, validate_cache, invalidate_stale_items
 
 DATASET     = "data/threats.json"
 RESULTS_DIR = "results/"
@@ -38,6 +38,13 @@ else:
 
 print(f"\n[Cache] eval_cache: {len(eval_cache.get('items', {}))} items cached")
 print(f"[Cache] baseline2_cache: {len(baseline_cache.get('items', {}))} items cached")
+
+# Invalidate cached items that predate the disagreement_log schema addition
+if not clear_cache:
+    n = invalidate_stale_items(eval_cache, required_keys=["disagreement_log"], cache_name="eval_cache")
+    if n:
+        print(f"[Cache] Evicted {n} stale item(s) missing 'disagreement_log' — will re-run those.")
+
 if eval_cache.get("items") and not clear_cache:
     print("To start fresh: python3 run_eval.py --clear-cache\n")
 
@@ -98,6 +105,25 @@ for d in dims:
 
 # ── 3. Save all results ────────────────────────────────────────────────────
 os.makedirs(RESULTS_DIR, exist_ok=True)
+
+# Aggregate disagreement stats from cached council results
+_items = load_cache("eval_cache").get("items", {})
+classification_conflicts = sum(
+    1 for v in _items.values()
+    if isinstance(v.get("disagreement_log"), dict)
+    and v["disagreement_log"].get("classification", {}).get("disagree")
+)
+severity_conflicts = sum(
+    1 for v in _items.values()
+    if isinstance(v.get("disagreement_log"), dict)
+    and v["disagreement_log"].get("severity", {}).get("disagree")
+)
+revised_agents = sum(
+    sum(1 for info in v["disagreement_log"].get("round_changes", {}).values() if info.get("changed"))
+    for v in _items.values()
+    if isinstance(v.get("disagreement_log"), dict)
+)
+
 with open(RESULTS_DIR + "eval_results.json", "w", encoding="utf-8") as f:
     json.dump({
         "full_council_metrics":   {k: v for k, v in council_metrics.items() if k != "report"},
@@ -105,6 +131,12 @@ with open(RESULTS_DIR + "eval_results.json", "w", encoding="utf-8") as f:
         "richness_comparison":    richness,
         "council_predictions":    list(zip(council_true, council_pred)),
         "baseline2_predictions":  list(zip(b2_true, b2_pred)),
+        "disagreement_stats": {
+            "classification_conflicts": classification_conflicts,
+            "severity_conflicts":       severity_conflicts,
+            "total_agent_revisions":    revised_agents,
+            "samples_evaluated":        len(_items),
+        },
     }, f, indent=2)
 
 print(f"\n\nPer-sample reports saved to: {SAMPLES_DIR}/")

@@ -36,11 +36,13 @@ from providers.qwen2_5_provider import Qwen25Provider
 # Performance: ~5–10 sec per threat (parallel execution)
 # Models installed: llama3, deepseek-r1, mistral-nemo, qwen2.5
 
-AGENT_VALIDATOR_PROVIDER = LlamaProvider(model_name="llama3", max_tokens=400)
-AGENT_A_PROVIDER         = DeepSeekR1Provider()                                    # Threat Classifier  — reasoning
+AGENT_VALIDATOR_PROVIDER = LlamaProvider(model_name="llama3", max_tokens=800)
+AGENT_A_PROVIDER         = DeepSeekR1Provider()                                    # Threat Classifier  — reasoning (primary)
+AGENT_A_2_PROVIDER       = Qwen25Provider()                                        # Threat Classifier  — consensus secondary
 AGENT_B_PROVIDER         = MistralNemoProvider()                                   # Vulnerability Analyst — technical
-AGENT_C_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)      # Impact Assessor
-AGENT_D_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)      # Remediation Engineer
+AGENT_C_PROVIDER         = DeepSeekR1Provider()                                    # Impact Assessor (primary)
+AGENT_C_2_PROVIDER       = Qwen25Provider()                                        # Impact Assessor — consensus secondary
+AGENT_D_PROVIDER         = MistralNemoProvider()                                   # Remediation Engineer
 JUDGE_PROVIDER           = Qwen25Provider()                                        # Judge / CISO runs after agents unload
 
 # ── Alternative: All Generic Llama-3 (Fallback) ────────────────────

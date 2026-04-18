@@ -15,23 +15,25 @@ All agents use local models running via **Ollama** (no API costs, full privacy):
 | Agent | Model | Size | Role | Availability |
 |-------|-------|------|------|--------------|
 | **Agent 0 (Validator)** | Llama-3 | 8B | Input validation & enrichment | ✓ Available |
-| **Agent A (Classifier)** | Llama-3 | 8B | Threat classification | ✓ Available |
-| **Agent B (Vuln Analyst)** | Llama-3 | 8B | CVE & MITRE ATT&CK mapping | ✓ Available |
-| **Agent C (Impact)** | Llama-3 | 8B | Risk quantification & impact scoring | ✓ Available |
-| **Agent D (Remediation)** | Llama-3 | 8B | Remediation planning & containment | ✓ Available |
-| **Judge (CISO)** | Qwen2.5-72B-Instruct | 72B | Final synthesis & orchestration | ✓ Available |
+| **Agent A (Classifier)** | DeepSeek-R1 | ~8B | Threat classification (primary) | ✓ Available |
+| **Agent A₂ (Classifier-2)** | Qwen2.5 | 7B | Threat classification (consensus) | ✓ Available |
+| **Agent B (Vuln Analyst)** | Mistral-Nemo | 12B | CVE & MITRE ATT&CK mapping | ✓ Available |
+| **Agent C (Impact)** | DeepSeek-R1 | ~8B | Risk quantification & impact scoring (primary) | ✓ Available |
+| **Agent C₂ (Impact-2)** | Qwen2.5 | 7B | Risk quantification (consensus) | ✓ Available |
+| **Agent D (Remediation)** | Mistral-Nemo | 12B | Remediation planning & containment | ✓ Available |
+| **Judge (CISO)** | Qwen2.5-72B-Instruct | 72B | Final synthesis & arbitration | ✓ Available |
 
-**Note:** Specialized security models (Foundation-Sec, FoundationAI-SecurityLLM, Gemma-2-Security, DeepSeek-R1, Mistral-Nemo) are **NOT available** on Ollama's public registry. Using generic Llama-3 instead for all agents.
+**Note:** A₂ and C₂ are consensus secondary agents — same prompts as A and C, different providers. Disagreements between primary/secondary pairs are logged and passed to the judge for explicit resolution.
 
-**Why this config:** Parallel execution. All 4 agents (8B each = 32B) run simultaneously, then Judge (72B) runs alone. Total peak memory: ~32GB (stays under 34GB).
+**Why this config:** Parallel execution. All 6 agents run simultaneously, then Judge runs alone. Total peak memory: ~34GB (stays within 34GB limit).
 
 **Execution Flow:**
 ```
-Validator → [Agent A(8B), Agent B(8B), Agent C(8B), Agent D(8B)] → Judge(72B)
-            (all 4 in parallel, takes 5-10 sec total)
+Validator → [A(DeepSeek), A₂(Qwen7B), B(Mistral), C(DeepSeek), C₂(Qwen7B), D(Mistral)] → Judge(Qwen72B)
+            (all 6 in parallel, takes 5-10 sec total)
 ```
 
-**Performance:** ~5–10 sec per threat (3–4x faster than sequential)
+**Performance:** ~5–10 sec per threat (parallel execution)
 
 ### Optional: Try Alternative Models
 
@@ -416,7 +418,8 @@ Check:
 
 **Expected times (parallel execution):**
 - Validator: 2–3 sec
-- Agents A,B,C,D (parallel): max(3–5 sec) = 3–5 sec
+- Agents A, A₂, B, C, C₂, D (parallel): max(3–5 sec) = 3–5 sec
+- Disagreement detection: <0.1 sec (in-process)
 - Judge: 3–5 sec
 - **Total:** ~5–10 sec per threat
 
@@ -461,7 +464,7 @@ Open-source, general-purpose instruction-tuned model.
 - Fast specialist agent analysis
 - No security specialization (trade-off: generic vs. specialized)
 
-**Paper claim:** "Multi-agent consensus with general-purpose models improves accuracy through debate and arbitration"
+**Paper claim:** "Multi-model consensus (primary + secondary agent pairs) with judge arbitration improves accuracy through explicit disagreement resolution"
 
 ---
 
@@ -548,14 +551,18 @@ Default config is optimized for your RTX 5060 Ti + parallel execution:
 ```python
 # In config/agent_config.py (already configured)
 from providers.llama_provider import LlamaProvider
+from providers.deepseek_r1_provider import DeepSeekR1Provider
+from providers.mistral_nemo_provider import MistralNemoProvider
 from providers.qwen2_5_provider import Qwen25Provider
 
-AGENT_VALIDATOR_PROVIDER = LlamaProvider(model_name="llama3", max_tokens=400)
-AGENT_A_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)
-AGENT_B_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)
-AGENT_C_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)
-AGENT_D_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)
-JUDGE_PROVIDER           = Qwen25Provider()  # 72B
+AGENT_VALIDATOR_PROVIDER = LlamaProvider(model_name="llama3", max_tokens=800)
+AGENT_A_PROVIDER         = DeepSeekR1Provider()    # Classifier (primary)
+AGENT_A_2_PROVIDER       = Qwen25Provider()         # Classifier (consensus)
+AGENT_B_PROVIDER         = MistralNemoProvider()    # Vuln Analyst
+AGENT_C_PROVIDER         = DeepSeekR1Provider()     # Impact (primary)
+AGENT_C_2_PROVIDER       = Qwen25Provider()         # Impact (consensus)
+AGENT_D_PROVIDER         = MistralNemoProvider()    # Remediation
+JUDGE_PROVIDER           = Qwen25Provider()         # Judge/CISO (72B)
 ```
 
 Parallel execution in `council/orchestrator.py` achieves 5–10 sec per threat.

@@ -62,14 +62,15 @@ rm results/eval_cache.json results/baseline2_cache.json
 
 ### Full Council Evaluation
 - Input threat description
-- Agent A, B, C outputs + provider info
-- Judge draft report (round 1)
-- Judge final report (round 1)
+- Agent A, A₂, B, C, C₂, D outputs + provider info (6 agents)
+- Judge draft report (Round 1)
+- Judge final report (Round 2)
+- `disagreement_log` — classification conflict (A vs A₂), severity conflict (C vs C₂), round-change weights per agent
 - Predicted threat label
 
 ### Baseline 2
-- Agent outputs from all 3 agents
-- Predicted label (from Agent A only)
+- Agent outputs from all 6 agents
+- Predicted label (from Agent A primary, index 0)
 - True label
 
 ## Rejected Samples
@@ -78,8 +79,8 @@ If validator rejects a threat (marked as `"status": "rejected"` in cache), it's 
 
 ## Performance
 
-- **First run (200 items, 4 agents):** ~200 API calls
-- **Resume from crash (100 items done, 100 new):** ~100 API calls
+- **First run (50 items, 6 agents, 2 rounds):** ~600 agent calls + 100 judge calls
+- **Resume from crash (30 items done, 20 new):** ~240 agent calls + 40 judge calls
 - **Resuming complete run:** ~0 API calls (metrics computed from cache)
 
 ## Troubleshooting
@@ -89,3 +90,5 @@ If validator rejects a threat (marked as `"status": "rejected"` in cache), it's 
 | "Item already cached but need to reprocess" | Delete that item from `results/eval_cache.json` manually, or use `--clear-cache` |
 | Cache seems corrupted (JSON parse error) | `rm results/eval_cache.json` — cache is auto-recreated on next run |
 | Metrics don't match expected | Check `results/eval_cache.json` has all items; use `wc -l` or jq to inspect |
+| Old cache items missing `disagreement_log` | `run_eval.py` auto-evicts stale items on startup — they will be re-run automatically |
+| Want to force re-run only stale items | Just run `python3 run_eval.py` — stale items are evicted, fresh items are kept |

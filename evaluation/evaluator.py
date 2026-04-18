@@ -77,6 +77,21 @@ def _save_sample_report(item: dict, result: dict, predicted: str, out_dir: str) 
                 lines.append(f"  {ln}")
             lines.append("")
 
+    # Disagreement log section
+    log = result.get("disagreement_log", {})
+    if log:
+        lines.append("CONSENSUS / DISAGREEMENT LOG")
+        lines.append(dash)
+        cl = log.get("classification", {})
+        sv = log.get("severity", {})
+        lines.append(f"  Classification: A1={cl.get('agent_a_primary')}  A2={cl.get('agent_a_secondary')}  conflict={cl.get('disagree')}")
+        lines.append(f"  Severity:       C1={sv.get('agent_c_primary')}  C2={sv.get('agent_c_secondary')}  conflict={sv.get('disagree')}")
+        rc = log.get("round_changes", {})
+        for agent_name, info in rc.items():
+            marker = "REVISED" if info["changed"] else "stable"
+            lines.append(f"  {agent_name}: {marker} (weight={info['weight']})")
+        lines.append("")
+
     lines.append(sep)
     lines.append("")
 
@@ -163,7 +178,7 @@ def run_baseline2_majority_vote(dataset_path: str, use_cache: bool = True):
         threat = item["threat_description"]
         agent_outputs = [agent.analyze(threat) for agent in council.agents]
 
-        # Only Agent A (index 0) is a classifier
+        # Agents at index 0 (A) and 1 (A₂) are classifiers — use A primary for label
         predicted = extract_label(agent_outputs[0]["output"])
 
         result = {"predicted_label": predicted, "true_label": item["true_label"], "agent_outputs": [ao.get("output", "") for ao in agent_outputs]}

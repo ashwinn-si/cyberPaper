@@ -182,20 +182,21 @@ notepad config\agent_config.py
 
 ```python
 from providers.llama_provider import LlamaProvider
+from providers.deepseek_r1_provider import DeepSeekR1Provider
+from providers.mistral_nemo_provider import MistralNemoProvider
 from providers.qwen2_5_provider import Qwen25Provider
 
-# ── DEFAULT (Available Ollama Models) ────────────────────────────
-# Using publicly available models (specialized security models not in Ollama registry)
+AGENT_VALIDATOR_PROVIDER = LlamaProvider(model_name="llama3", max_tokens=800)
+AGENT_A_PROVIDER         = DeepSeekR1Provider()    # Classifier (primary)
+AGENT_A_2_PROVIDER       = Qwen25Provider()         # Classifier (consensus secondary)
+AGENT_B_PROVIDER         = MistralNemoProvider()    # Vuln Analyst
+AGENT_C_PROVIDER         = DeepSeekR1Provider()     # Impact Assessor (primary)
+AGENT_C_2_PROVIDER       = Qwen25Provider()         # Impact Assessor (consensus secondary)
+AGENT_D_PROVIDER         = MistralNemoProvider()    # Remediation
+JUDGE_PROVIDER           = Qwen25Provider()         # Judge/CISO (72B)
 
-AGENT_VALIDATOR_PROVIDER = LlamaProvider(model_name="llama3", max_tokens=400)
-AGENT_A_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)      # Classifier
-AGENT_B_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)      # Vuln Analyst
-AGENT_C_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)      # Impact Assessor
-AGENT_D_PROVIDER         = LlamaProvider(model_name="llama3", max_tokens=400)      # Remediation
-JUDGE_PROVIDER           = Qwen25Provider()                                        # Judge
-
-# Execution: Parallel (all 4 agents run concurrently)
-# Peak memory: ~32GB (4×8B agents + 72B judge)
+# Execution: Parallel (all 6 agents run concurrently)
+# Peak memory: ~34GB (6 agents + 72B judge)
 # Performance: ~5–10 sec per threat
 ```
 
@@ -295,19 +296,22 @@ python main.py
 
 **What happens:**
 1. Validator checks threat (2–3 sec)
-2. Agents A, B, C, D run in parallel (3–5 sec)
-3. Judge synthesizes (3–5 sec)
-4. **Total: 5–10 sec**
+2. Agents A, A₂, B, C, C₂, D run in parallel (3–5 sec)
+3. Disagreement detection (A vs A₂, C vs C₂) — instant
+4. Judge synthesizes Round 1 → draft report (3–5 sec)
+5. All 6 agents re-analyze with draft context (3–5 sec)
+6. Round-change weighting applied
+7. Judge synthesizes Round 2 → final report (3–5 sec)
+8. **Total: 5–10 sec**
 
 **Expected output:**
 ```
 Status: analyzed
-Threat: [your threat]
-Classification: [Agent A output]
-Vulnerabilities: [Agent B output]
-Impact: [Agent C output]
-Remediation: [Agent D output]
-Final Report: [Judge synthesis]
+Round 1 — Agent Outputs (6 agents)
+Judge Draft Report
+Round 2 — Agent Outputs (6 agents, with draft context)
+Final Judge Report
+Disagreement / Consensus Log
 ```
 
 If this works, everything is set up correctly. ✓
@@ -915,15 +919,17 @@ python run_eval.py
 
 ### Current Default Setup
 
-**Llama-3 + Qwen (Available Ollama Models)** (CURRENT)
-- Agent 0: Llama-3 8B
-- Agent A: Llama-3 8B  
-- Agent B: Llama-3 8B
-- Agent C: Llama-3 8B
-- Agent D: Llama-3 8B
+**Mixed Models + Consensus Pairs** (CURRENT)
+- Agent 0 (Validator): Llama-3 8B
+- Agent A (Classifier, primary): DeepSeek-R1
+- Agent A₂ (Classifier, consensus): Qwen2.5 7B
+- Agent B (Vuln Analyst): Mistral-Nemo
+- Agent C (Impact, primary): DeepSeek-R1
+- Agent C₂ (Impact, consensus): Qwen2.5 7B
+- Agent D (Remediation): Mistral-Nemo
 - Judge: Qwen2.5-72B
-- **Performance:** 5–10 sec/threat, ~37GB peak memory
-- **Accuracy:** Good (generic models work well for threat analysis)
+- **Performance:** 5–10 sec/threat, ~34GB peak memory
+- **Key feature:** A/A₂ and C/C₂ disagreements logged and resolved by judge
 - **Availability:** All models on Ollama public registry ✓
 
 ---

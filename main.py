@@ -68,6 +68,23 @@ def main():
     print("FINAL JUDGE REPORT")
     print("=" * 60)
     print(result["final_report"])
+
+    # Disagreement log
+    log = result.get("disagreement_log", {})
+    if log:
+        print(f"\n{'=' * 60}")
+        print("DISAGREEMENT / CONSENSUS LOG")
+        print("=" * 60)
+        cl = log.get("classification", {})
+        sv = log.get("severity", {})
+        print(f"  Classification: A1={cl.get('agent_a_primary')}  A2={cl.get('agent_a_secondary')}  conflict={cl.get('disagree')}")
+        print(f"  Severity:       C1={sv.get('agent_c_primary')}  C2={sv.get('agent_c_secondary')}  conflict={sv.get('disagree')}")
+        rc = log.get("round_changes", {})
+        if rc:
+            print("  Round changes:")
+            for agent_name, info in rc.items():
+                marker = "REVISED (weight=1.5)" if info["changed"] else "stable  (weight=1.0)"
+                print(f"    {agent_name:<30} {marker}")
     print()
 
 

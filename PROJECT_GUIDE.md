@@ -19,26 +19,35 @@ Raw Threat Input
 └────────────┬────────────────────────┘
              │ Enriched threat
              ▼
-┌─────────────────────────────────────────────────────────────┐
-│                   ROUND 1 (parallel)                        │
-│   Agent A: Threat Classifier        ──┐                    │
-│   Agent B: Vulnerability Analyst    ──┼─→ asyncio.gather() │
-│   Agent C: Impact Assessor          ──┤                    │
-│   Agent D: Remediation Engineer     ──┘                    │
-└─────────────────┬───────────────────────────────────────────┘
-                  │ 4 agent outputs
+┌──────────────────────────────────────────────────────────────────┐
+│                   ROUND 1 (parallel)                             │
+│   Agent A:  Threat Classifier (primary)    ──┐                  │
+│   Agent A₂: Threat Classifier (consensus)  ──┤                  │
+│   Agent B:  Vulnerability Analyst          ──┼─→ asyncio.gather │
+│   Agent C:  Impact Assessor (primary)      ──┤                  │
+│   Agent C₂: Impact Assessor (consensus)   ──┤                  │
+│   Agent D:  Remediation Engineer           ──┘                  │
+└─────────────────┬────────────────────────────────────────────────┘
+                  │ 6 agent outputs
                   ▼
-         Judge: Round 1 synthesis
+    Disagreement detection (A vs A₂, C vs C₂)
+    → disagreement_log built
+                  │
+                  ▼
+         Judge: Round 1 synthesis + disagreement_log
              (draft report)
                   │
                   ▼
-┌─────────────────────────────────────────────────────────────┐
-│              ROUND 2 (parallel, sees draft)                 │
-│   Agents A, B, C, D re-analyze with draft context           │
-└─────────────────┬───────────────────────────────────────────┘
-                  │ 4 agent outputs (refined)
+┌──────────────────────────────────────────────────────────────────┐
+│              ROUND 2 (parallel, sees draft)                      │
+│   All 6 agents re-analyze with draft context                     │
+└─────────────────┬────────────────────────────────────────────────┘
+                  │ 6 agent outputs (refined)
                   ▼
-     Judge: Round 2 synthesis
+    Round-change weighting (revised agents → weight 1.5)
+                  │
+                  ▼
+     Judge: Round 2 synthesis + weights + disagreement_log
          (final SOC-ready report)
 ```
 
@@ -49,13 +58,15 @@ Raw Threat Input
 ```
 cyberPaper/
 ├── agents/                    # Agent implementations
-│   ├── base_agent.py         # Abstract BaseAgent class
-│   ├── validator_agent.py    # Agent 0 — input validation (pass_one, pass_two)
-│   ├── classifier_agent.py   # Agent A — threat classification
-│   ├── vuln_agent.py         # Agent B — CVE + MITRE mapping
-│   ├── impact_agent.py       # Agent C — severity scoring
-│   ├── remediation_agent.py  # Agent D — remediation prescription
-│   └── judge_agent.py        # Judge — synthesis & arbitration
+│   ├── base_agent.py            # Abstract BaseAgent class
+│   ├── validator_agent.py       # Agent 0 — input validation (pass_one, pass_two)
+│   ├── classifier_agent.py      # Agent A — threat classification (primary)
+│   ├── classifier_agent_2.py    # Agent A₂ — threat classification (consensus)
+│   ├── vuln_agent.py            # Agent B — CVE + MITRE mapping
+│   ├── impact_agent.py          # Agent C — severity scoring (primary)
+│   ├── impact_agent_2.py        # Agent C₂ — severity scoring (consensus)
+│   ├── remediation_agent.py     # Agent D — remediation prescription
+│   └── judge_agent.py           # Judge — synthesis, disagreement resolution & arbitration
 │
 ├── providers/                 # LLM Provider abstraction
 │   ├── base_provider.py      # Abstract BaseLLMProvider
@@ -166,16 +177,18 @@ JUDGE_PROVIDER   = ClaudeProvider("claude-sonnet-4-6")
 
 ### 2. Agent Specifications
 
-| Agent                   | File                   | Input                      | Output                                         | Constraints                              |
-| ----------------------- | ---------------------- | -------------------------- | ---------------------------------------------- | ---------------------------------------- |
-| **0 — Validator**       | `validator_agent.py`   | Raw threat description     | Pass / Needs Clarification / Invalid           | None                                     |
-| **A — Classifier**      | `classifier_agent.py`  | Enriched threat            | Threat category + confidence %                 | No CVEs, MITRE, impacts                  |
-| **B — Vuln Analyst**    | `vuln_agent.py`        | Enriched threat            | CVE ID, MITRE ATT&CK tactic/technique          | No classification, severity, actions     |
-| **C — Impact Assessor** | `impact_agent.py`      | Enriched threat            | Severity 1–10, affected scope, impacts         | No classification, CVEs, MITRE           |
-| **D — Remediation**     | `remediation_agent.py` | Enriched threat            | Patch, containment, tools, hardening, recovery | No classification, MITRE, severity       |
-| **Judge (CISO)**        | `judge_agent.py`       | Threat + all agent outputs | Final actionable report                        | Must synthesize + resolve contradictions |
+| Agent                    | File                      | Provider         | Output                                         | Constraints                              |
+| ------------------------ | ------------------------- | ---------------- | ---------------------------------------------- | ---------------------------------------- |
+| **0 — Validator**        | `validator_agent.py`      | Llama-3          | Pass / Needs Clarification / Invalid           | None                                     |
+| **A — Classifier**       | `classifier_agent.py`     | DeepSeek-R1      | Threat category + confidence %                 | No CVEs, MITRE, impacts                  |
+| **A₂ — Classifier-2**   | `classifier_agent_2.py`   | Qwen2.5 7B       | Threat category + confidence % (consensus)     | Same as A — cross-model verification     |
+| **B — Vuln Analyst**     | `vuln_agent.py`           | Mistral-Nemo     | CVE ID, MITRE ATT&CK tactic/technique          | No classification, severity, actions     |
+| **C — Impact Assessor**  | `impact_agent.py`         | DeepSeek-R1      | Severity 1–10, affected scope, impacts         | No classification, CVEs, MITRE           |
+| **C₂ — Impact-2**        | `impact_agent_2.py`       | Qwen2.5 7B       | Severity 1–10, affected scope (consensus)      | Same as C — cross-model verification     |
+| **D — Remediation**      | `remediation_agent.py`    | Mistral-Nemo     | Patch, containment, tools, hardening, recovery | No classification, MITRE, severity       |
+| **Judge (CISO)**         | `judge_agent.py`          | Qwen2.5-72B      | Final actionable report                        | Must synthesize + resolve contradictions |
 
-**Design:** Strict boundaries force specialization. Judge resolves conflicts.
+**Design:** Strict boundaries force specialization. A₂/C₂ pairs enable cross-model consensus. Judge receives disagreement_log and resolves conflicts explicitly.
 
 ---
 

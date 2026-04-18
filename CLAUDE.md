@@ -21,16 +21,29 @@
 ```
 Threat Input
     ↓
-┌─────────────────────────────────────┐
-│  Agent A: Threat Classifier         │ → classifies threat type
-│  Agent B: Vulnerability Analyst     │ → maps to CVE + MITRE ATT&CK
-│  Agent C: Impact Assessor           │ → scores severity + actions
-└─────────────────────────────────────┘
+Agent 0: Validator (2-pass enrichment)
+    ↓ Enriched threat
+┌──────────────────────────────────────────────┐
+│  ROUND 1 (parallel, 6 agents)                │
+│  Agent A:  Threat Classifier (primary)        │
+│  Agent A₂: Threat Classifier (consensus)     │
+│  Agent B:  Vulnerability Analyst              │
+│  Agent C:  Impact Assessor (primary)          │
+│  Agent C₂: Impact Assessor (consensus)       │
+│  Agent D:  Remediation Engineer               │
+└──────────────────────────────────────────────┘
     ↓
-    Judge Agent (CISO role)
-    → synthesizes all 3 outputs
-    → resolves contradictions
-    → produces final actionable report
+Disagreement detection (A vs A₂, C vs C₂) → disagreement_log
+    ↓
+    Judge Agent — Round 1 synthesis + disagreement_log → draft report
+    ↓
+┌──────────────────────────────────────────────┐
+│  ROUND 2 (parallel, 6 agents see draft)      │
+└──────────────────────────────────────────────┘
+    ↓
+Round-change weighting (revised agents → weight 1.5)
+    ↓
+    Judge Agent — Round 2 synthesis + weights → final report
 ```
 
 ### Layer Structure
@@ -185,24 +198,44 @@ For ablations (e.g., "council without judge"), modify `run_eval.py` to skip the 
 
 ## 📝 Agent Specifications
 
-### Agent A — Threat Classifier
+### Agent A — Threat Classifier (Primary)
 **File:** `agents/classifier_agent.py` → loads `prompts/prompt_a.txt`  
+**Provider:** DeepSeek-R1  
 **Output:** Category + Confidence % + Justification  
 **Constraints:** Cannot discuss CVEs, impacts, or remediation
 
+### Agent A₂ — Threat Classifier (Consensus)
+**File:** `agents/classifier_agent_2.py` → loads same `prompts/prompt_a.txt`  
+**Provider:** Qwen2.5 7B  
+**Purpose:** Cross-model verification of A's classification. Disagreements logged in `disagreement_log.classification`.
+
 ### Agent B — Vulnerability Analyst
 **File:** `agents/vuln_agent.py` → loads `prompts/prompt_b.txt`  
+**Provider:** Mistral-Nemo  
 **Output:** CVE ID + MITRE ATT&CK Tactic + Technique ID + Attack Chain + Affected Systems  
 **Constraints:** Cannot classify, suggest actions, or score severity
 
-### Agent C — Impact Assessor
+### Agent C — Impact Assessor (Primary)
 **File:** `agents/impact_agent.py` → loads `prompts/prompt_c.txt`  
+**Provider:** DeepSeek-R1  
 **Output:** Severity 1–10 + Affected Scope + Potential Impacts + Top 3 Immediate Actions  
 **Constraints:** Cannot discuss classification, CVEs, or ATT&CK techniques
 
+### Agent C₂ — Impact Assessor (Consensus)
+**File:** `agents/impact_agent_2.py` → loads same `prompts/prompt_c.txt`  
+**Provider:** Qwen2.5 7B  
+**Purpose:** Cross-model verification of C's severity score. Conflicts (>2 point gap) logged in `disagreement_log.severity`.
+
+### Agent D — Remediation Engineer
+**File:** `agents/remediation_agent.py` → loads `prompts/prompt_d.txt`  
+**Provider:** Mistral-Nemo  
+**Output:** Patch steps + containment + tools + hardening + recovery  
+**Constraints:** Cannot classify, reference CVEs, or score severity
+
 ### Judge Agent — CISO Synthesizer
 **File:** `agents/judge_agent.py` → loads `prompts/prompt_judge.txt`  
-**Method:** `synthesize(threat, agent_outputs)` combines all 3 and produces final report  
+**Provider:** Qwen2.5-72B  
+**Method:** `synthesize(threat, agent_outputs, disagreement_log, round_weights)` — combines all 6 outputs, explicitly resolves logged conflicts, weights revised agents higher  
 **Output:** Final classification + CVE/MITRE + Severity + Contradiction Report + Response Plan  
 **Key rule:** Must be decisive and usable by a real SOC team within 5 minutes
 
@@ -265,9 +298,9 @@ AGENT_A_PROVIDER = GeminiProvider()  # ← done
 ## 📂 File Reference
 
 ### Core Execution Flow
-- `main.py` — single threat test (edit `threat` variable, run `python3 main.py`)
-- `server.py` — Flask API + web UI (run `python3 server.py`, open http://127.0.0.1:5050)
-- `run_eval.py` — full dataset evaluation
+- `main.py` — single threat test (edit `threat` variable, run `python3 main.py`) — prints disagreement log
+- `server.py` — Flask API + web UI (run `python3 server.py`, open http://127.0.0.1:5050) — returns `disagreement_log` in API response
+- `run_eval.py` — full dataset evaluation — auto-evicts stale cache, saves `disagreement_stats` in output JSON
 - `run_baselines.py` — baseline comparisons
 - `scripts/build_dataset.py` — generate 50-sample dataset
 
@@ -275,13 +308,20 @@ AGENT_A_PROVIDER = GeminiProvider()  # ← done
 - `providers/base_provider.py` — abstract `BaseLLMProvider` interface
 - `providers/claude_provider.py` — Anthropic Claude implementation
 - `providers/openai_provider.py` — OpenAI GPT implementation
+- `providers/llama_provider.py` — Llama (Ollama) implementation
+- `providers/deepseek_r1_provider.py` — DeepSeek-R1 (Ollama)
+- `providers/mistral_nemo_provider.py` — Mistral-Nemo (Ollama)
+- `providers/qwen2_5_provider.py` — Qwen2.5 (Ollama)
 
 ### Agent Layer
 - `agents/base_agent.py` — abstract `BaseAgent` class with `load_prompt()`
-- `agents/classifier_agent.py` — Agent A
+- `agents/classifier_agent.py` — Agent A (primary)
+- `agents/classifier_agent_2.py` — Agent A₂ (consensus secondary)
 - `agents/vuln_agent.py` — Agent B
-- `agents/impact_agent.py` — Agent C
-- `agents/judge_agent.py` — Judge with `synthesize()` method
+- `agents/impact_agent.py` — Agent C (primary)
+- `agents/impact_agent_2.py` — Agent C₂ (consensus secondary)
+- `agents/remediation_agent.py` — Agent D
+- `agents/judge_agent.py` — Judge with `synthesize(threat, outputs, disagreement_log, round_weights)`
 
 ### System Prompts
 - `prompts/prompt_a.txt` — Threat Classifier instructions

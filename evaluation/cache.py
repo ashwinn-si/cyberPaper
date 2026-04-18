@@ -54,6 +54,25 @@ def get_cached_ids(cache_data: dict) -> set:
     return set()
 
 
+def invalidate_stale_items(cache_data: dict, required_keys: list, cache_name: str = "eval_cache") -> int:
+    """
+    Remove cached items that are missing any of the required_keys.
+    Useful when the result schema changes (e.g. new 'disagreement_log' field added).
+    Returns count of items removed.
+    """
+    if not cache_data or "items" not in cache_data:
+        return 0
+    stale = [
+        k for k, v in cache_data["items"].items()
+        if isinstance(v, dict) and any(key not in v for key in required_keys)
+    ]
+    for k in stale:
+        del cache_data["items"][k]
+    if stale:
+        save_cache(cache_data, cache_name)
+    return len(stale)
+
+
 def validate_cache(cache_name: str = "eval_cache") -> bool:
     """
     Validate cache file is valid JSON.

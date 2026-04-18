@@ -9,11 +9,11 @@ label classification accuracy and output richness.
 
 ## Evaluation Systems
 
-| System                             | Description                                                                    |
-| ---------------------------------- | ------------------------------------------------------------------------------ |
-| **Single Agent (Baseline 1)**      | One LLM call with a constrained prompt that outputs only a category label      |
-| **Council, No Judge (Baseline 2)** | Three specialist agents run; label taken from Agent A (Threat Classifier) only |
-| **Full Council + Judge**           | Three agents + Judge synthesizer; label extracted from final CISO report       |
+| System                             | Description                                                                              |
+| ---------------------------------- | ---------------------------------------------------------------------------------------- |
+| **Single Agent (Baseline 1)**      | One LLM call with a constrained prompt that outputs only a category label                |
+| **Council, No Judge (Baseline 2)** | Six specialist agents run; label taken from Agent A primary (Threat Classifier) only     |
+| **Full Council + Judge**           | Six agents + Judge synthesizer with disagreement resolution; label from final CISO report |
 
 ## Part 1 — Label Classification Metrics
 
@@ -69,10 +69,12 @@ the classifier alone, while also adding all the richness dimensions.
 
 ## Files in This Directory
 
-- `eval_results.json` — full metrics for all systems and richness scores
+- `eval_results.json` — full metrics for all systems, richness scores, and `disagreement_stats` block
 - `*_confusion.png` — confusion matrices per system
 - `*_metrics_bar.png` — bar charts per system
 - `comparison_chart.png` — side-by-side comparison of all systems
+- `eval_cache.json` — per-sample results cache (includes `disagreement_log` per item)
+- `samples/sample_NNN.txt` — per-sample full reports with consensus/disagreement section
 
 ---
 

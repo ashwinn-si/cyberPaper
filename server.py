@@ -31,8 +31,10 @@ sys.path.insert(0, os.path.dirname(__file__))
 from council.orchestrator import CyberCouncil
 from config.agent_config import (
     AGENT_VALIDATOR_PROVIDER,
-    AGENT_A_PROVIDER, AGENT_B_PROVIDER,
-    AGENT_C_PROVIDER, AGENT_D_PROVIDER,
+    AGENT_A_PROVIDER, AGENT_A_2_PROVIDER,
+    AGENT_B_PROVIDER,
+    AGENT_C_PROVIDER, AGENT_C_2_PROVIDER,
+    AGENT_D_PROVIDER,
     JUDGE_PROVIDER,
 )
 
@@ -87,13 +89,14 @@ def analyze():
             })
 
         return jsonify({
-            "status":          "analyzed",
-            "clean_threat":    result["clean_threat"],
-            "round1_outputs":  result["round1_outputs"],
-            "draft_report":    result["draft_report"],
-            "round2_outputs":  result["round2_outputs"],
-            "final_report":    result["final_report"],
-            "elapsed_sec":     elapsed,
+            "status":           "analyzed",
+            "clean_threat":     result["clean_threat"],
+            "round1_outputs":   result["round1_outputs"],
+            "draft_report":     result["draft_report"],
+            "round2_outputs":   result["round2_outputs"],
+            "final_report":     result["final_report"],
+            "disagreement_log": result.get("disagreement_log", {}),
+            "elapsed_sec":      elapsed,
         })
 
     except Exception as exc:
@@ -131,12 +134,14 @@ def health():
 def config():
     return jsonify({
         "agents": {
-            "validator":    AGENT_VALIDATOR_PROVIDER.provider_name(),
-            "classifier":   AGENT_A_PROVIDER.provider_name(),
-            "vuln_analyst": AGENT_B_PROVIDER.provider_name(),
-            "impact":       AGENT_C_PROVIDER.provider_name(),
-            "remediation":  AGENT_D_PROVIDER.provider_name(),
-            "judge":        JUDGE_PROVIDER.provider_name(),
+            "validator":       AGENT_VALIDATOR_PROVIDER.provider_name(),
+            "classifier":      AGENT_A_PROVIDER.provider_name(),
+            "classifier_2":    AGENT_A_2_PROVIDER.provider_name(),
+            "vuln_analyst":    AGENT_B_PROVIDER.provider_name(),
+            "impact":          AGENT_C_PROVIDER.provider_name(),
+            "impact_2":        AGENT_C_2_PROVIDER.provider_name(),
+            "remediation":     AGENT_D_PROVIDER.provider_name(),
+            "judge":           JUDGE_PROVIDER.provider_name(),
         }
     })
 
