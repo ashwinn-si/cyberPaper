@@ -130,55 +130,40 @@ Keep this window open, or let it run in background.
 
 ---
 
-## Step 4: Pull Models (Available on Ollama Registry)
-
-**IMPORTANT:** Use models actually available on Ollama. Not all specialized security models exist in the public registry.
+## Step 4: Pull Required Models
 
 **Open NEW Command Prompt or PowerShell window** (keep Ollama running in first window):
 
 ```cmd
-# Navigate to project
 cd C:\Users\ashwinsi\paper\cyberPaper
-
-# Activate venv
 venv\Scripts\activate
 
-# Pull available models from Ollama registry
-ollama pull llama3          # Generic 8B model (Agent 0, A, B, C, D)
-ollama pull gemma2          # Gemma 2 (alternative for comparison)
-ollama pull mistral         # Mistral 7B (alternative)
-ollama pull qwen2.5         # Qwen 2.5 72B (Judge)
-ollama pull neural-chat     # Neural Chat (alternative classifier)
-ollama pull openchat        # OpenChat (alternative)
+# REQUIRED — pull all 4 models used by current config
+ollama pull llama3          # Agent 0 (Validator) — 8B
+ollama pull deepseek-r1     # Agent A + C (primary classifiers) — ~8B
+ollama pull mistral-nemo    # Agent B + D (vuln analyst + remediation) — 12B
+ollama pull qwen2.5         # Agent A₂, C₂ (consensus) + Judge (72B)
 ```
 
-**Expected:**
-- Llama-3: ~5 min
-- Gemma2: ~5 min
-- Mistral: ~5 min
-- Qwen2.5: ~20 min
-- Neural-Chat: ~5 min
-- OpenChat: ~5 min
-- **Total: ~45 minutes**
+**Expected download times:**
+- llama3: ~5 min
+- deepseek-r1: ~5 min
+- mistral-nemo: ~8 min
+- qwen2.5: ~20 min (large — 72B quantized)
+- **Total: ~38 minutes**
 
-**Verify:**
+**Verify all 4 pulled:**
 ```cmd
 ollama list
 ```
 
-Should show all available models.
+Should show: `llama3`, `deepseek-r1`, `mistral-nemo`, `qwen2.5`
 
 ---
 
-### IMPORTANT: Update config/agent_config.py
+### config/agent_config.py — Already Correct
 
-Since specialized security models don't exist on Ollama, you must use generic models instead.
-
-```cmd
-notepad config\agent_config.py
-```
-
-**Replace the default section with:**
+No edits needed. Current config matches pulled models:
 
 ```python
 from providers.llama_provider import LlamaProvider
@@ -469,14 +454,11 @@ venv\Scripts\activate
 pip install -r requirements.txt
 copy .env.example .env
 
-# Pull available models from Ollama (~25 min)
-ollama pull llama3        # 8B for all agents
-ollama pull qwen2.5       # 72B for judge
-
-# Optional: Pull alternative models for experimentation
-ollama pull gemma2        # Alternative
-ollama pull mistral       # Alternative
-ollama pull neural-chat   # Alternative
+# Pull required models (~38 min total)
+ollama pull llama3        # Agent 0 (Validator)
+ollama pull deepseek-r1   # Agent A + C (primary)
+ollama pull mistral-nemo  # Agent B + D
+ollama pull qwen2.5       # Agent A₂, C₂ (consensus) + Judge (72B)
 
 # Verify setup
 python main.py                # Test single threat (~5–10 sec)
@@ -496,7 +478,7 @@ start results\comparison_chart.png
 python server.py  # Open http://127.0.0.1:5050 in browser
 ```
 
-**Total time (first run):** ~50 minutes (includes 25 min model pulls)  
+**Total time (first run):** ~55 minutes (includes ~38 min model pulls)  
 **Total time (subsequent runs, skip model pull):** ~15 minutes
 
 ---
@@ -526,11 +508,11 @@ net start Ollama
 
 **Solution:**
 ```cmd
-# Pull models again
 ollama pull llama3
+ollama pull deepseek-r1
+ollama pull mistral-nemo
 ollama pull qwen2.5
 
-# Verify
 ollama list
 ```
 
@@ -898,10 +880,12 @@ Before running evaluation:
 - [ ] Virtual environment created and activated
 - [ ] Dependencies installed (`pip install -r requirements.txt`)
 - [ ] `.env` copied (default settings OK)
-- [ ] Llama-3 pulled (`ollama pull llama3`)
-- [ ] Qwen2.5 pulled (`ollama pull qwen2.5`)
-- [ ] Verify models (`ollama list` shows both)
-- [ ] config/agent_config.py updated (using LlamaProvider + Qwen25Provider)
+- [ ] `ollama pull llama3` (Validator)
+- [ ] `ollama pull deepseek-r1` (Agent A, C)
+- [ ] `ollama pull mistral-nemo` (Agent B, D)
+- [ ] `ollama pull qwen2.5` (Agent A₂, C₂, Judge)
+- [ ] Verify: `ollama list` shows all 4 models
+- [ ] config/agent_config.py — no edits needed (already configured)
 - [ ] Single threat test passed (`python main.py`)
 - [ ] Local tests passed (`python tests/test_local.py`)
 
