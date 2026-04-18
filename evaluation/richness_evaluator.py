@@ -19,8 +19,9 @@ Total richness score = sum of all 5 dimensions (max 5).
 
 import re
 import json
+from tqdm import tqdm
 from council.orchestrator import CyberCouncil
-from providers.base_provider import BaseLLMProvider
+from evaluation.cache import load_cache, add_to_cache, get_cached_result
 
 
 # ── Dimension detectors ────────────────────────────────────────────────────
@@ -113,6 +114,8 @@ def evaluate_richness(dataset_path: str, use_judge: bool = True) -> dict:
         dataset = json.load(f)
 
     council = CyberCouncil()
+    cache_name = "richness_council_cache" if use_judge else "richness_single_cache"
+    cache = load_cache(cache_name)
 
     dimension_totals = {
         "threat_classified":   0,
@@ -124,22 +127,24 @@ def evaluate_richness(dataset_path: str, use_judge: bool = True) -> dict:
     }
 
     n = len(dataset)
-
     skipped = 0
-    for item in dataset:
-        result = council.analyze_sync(item["threat_description"])
+    label = "Full Council" if use_judge else "Single Agent"
 
-        if result["status"] == "rejected":
-            skipped += 1
-            continue
+    for item in tqdm(dataset, desc=f"Richness [{label}]", unit="sample"):
+        item_id = item.get("id", item["threat_description"][:40])
+        cached = get_cached_result(cache, item_id)
 
-        if use_judge:
-            text_to_score = result["final_report"]
+        if cached:
+            scores = cached
         else:
-            # Single-agent baseline: score only Agent A output
-            text_to_score = result["agent_outputs"][0]["output"]
+            result = council.analyze_sync(item["threat_description"])
+            if result["status"] == "rejected":
+                skipped += 1
+                continue
+            text_to_score = result["final_report"] if use_judge else result["agent_outputs"][0]["output"]
+            scores = score_output(text_to_score)
+            cache = add_to_cache(cache, item_id, scores, cache_name)
 
-        scores = score_output(text_to_score)
         for key in dimension_totals:
             dimension_totals[key] += scores[key]
 

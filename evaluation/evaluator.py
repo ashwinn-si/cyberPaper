@@ -19,14 +19,41 @@ def extract_label(text: str) -> str:
     """
     Extract the predicted threat category from the judge's final report.
 
-    Searches for canonical labels in priority order. Falls back to "Other"
-    if no known label is found. This is consistent with the fallback used
-    in baselines for fair comparison.
+    Priority:
+    1. Structured tag: FINAL_CLASSIFICATION: <label>
+    2. Text in the FINAL CLASSIFICATION section (before next section header)
+    3. First mention in full text (original fallback)
+    4. "Other"
     """
+    import re
+
+    # Priority 1: explicit structured tag (end of report)
+    m = re.search(r'FINAL_CLASSIFICATION:\s*([^\n]+)', text, re.IGNORECASE)
+    if m:
+        tag_text = m.group(1).strip().lower()
+        for label in LABEL_MAP:
+            if label.lower() in tag_text:
+                return label
+
+    # Priority 2: extract FINAL CLASSIFICATION section only (stops at next ### header)
+    section_match = re.search(
+        r'FINAL CLASSIFICATION[:\s\-#*]*\n(.*?)(?=\n###|\n\*\*FINAL|\Z)',
+        text, re.IGNORECASE | re.DOTALL
+    )
+    if section_match:
+        section = section_match.group(1)
+        # take only first 3 lines (label + reasoning sentence)
+        section_head = '\n'.join(section.strip().splitlines()[:3]).lower()
+        for label in LABEL_MAP:
+            if label.lower() in section_head:
+                return label
+
+    # Priority 3: first mention in full text (original behavior)
     text_lower = text.lower()
     for label in LABEL_MAP:
         if label.lower() in text_lower:
             return label
+
     return "Other"
 
 

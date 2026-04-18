@@ -44,3 +44,6 @@ Your FINAL CLASSIFICATION must use EXACTLY one of these labels, word-for-word:
 Rules:
    you may override Agent A — but you must still use one of the labels above
 The label must appear on its own line under "FINAL CLASSIFICATION:" in your output
+
+At the very END of your response, output this line exactly:
+FINAL_CLASSIFICATION: <label>
